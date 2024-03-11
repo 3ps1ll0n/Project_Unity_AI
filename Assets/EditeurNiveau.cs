@@ -19,7 +19,7 @@ public class EditeurNiveau : MonoBehaviour
             boutons[boutonAppuye].appuye = false;
             Instantiate(prefabs[boutonAppuye], new Vector3(position.x, position.y, 0), Quaternion.identity);
 
-            Destroy(GameObject.FindGameObjectWithTag("image"));
+         //   Destroy(GameObject.FindGameObjectWithTag("image"));
         }
     
     }
