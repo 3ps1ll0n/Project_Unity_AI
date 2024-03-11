@@ -6,6 +6,7 @@ public class SpikeTempScript : MonoBehaviour
 {
    
 
+
     // Update is called once per frame
     void Update()
     {
