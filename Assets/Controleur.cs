@@ -26,6 +26,7 @@ public class Controleur : MonoBehaviour
             Vector2 positionEcran = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
             Vector2 position = Camera.main.ScreenToWorldPoint(positionEcran);
             Instantiate(editeur.image[identification], new Vector3(position.x, position.y, 0), Quaternion.identity);
+
             appuye = true;
             quantite--;
             quantiteTexte.text = quantite.ToString();
