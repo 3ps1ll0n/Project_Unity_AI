@@ -15,7 +15,7 @@ public class SpikeScript : MonoBehaviour
     }
 
 
-    private void detruireObjet()
+    private void OnMouseOver()
     {
         if (Input.GetMouseButtonDown(0))
         {
