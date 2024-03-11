@@ -253,8 +253,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -331, y: 160.1}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 325.0376, y: 186.4587}
+  m_SizeDelta: {x: 55.9552, y: 53.0826}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &134960786
 MonoBehaviour:
@@ -366,6 +366,81 @@ MonoBehaviour:
   identification: 0
   quantite: 3
   quantiteTexte: {fileID: 225653507}
+--- !u!1 &171976281
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 171976282}
+  - component: {fileID: 171976284}
+  - component: {fileID: 171976283}
+  m_Layer: 5
+  m_Name: Panel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &171976282
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171976281}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1928623793}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 347.0634, y: 0}
+  m_SizeDelta: {x: -694.1268, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &171976283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171976281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &171976284
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171976281}
+  m_CullTransparentMesh: 1
 --- !u!1 &225653505
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,7 +475,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -33.95, y: 31.049995}
+  m_AnchoredPosition: {x: 18.7, y: 13.8}
   m_SizeDelta: {x: 67.9, y: 62.100006}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &225653507
@@ -585,8 +660,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.8, y: 11.92}
-  m_SizeDelta: {x: 75, y: 75}
+  m_AnchoredPosition: {x: 0.000011683, y: -0.0000047684}
+  m_SizeDelta: {x: 35, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &839664647
 MonoBehaviour:
@@ -724,8 +799,8 @@ Transform:
   m_GameObject: {fileID: 1507113638}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.279, y: -0.355, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.2964, y: -0.25, z: 0}
+  m_LocalScale: {x: 1.1853, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1564925974}
@@ -1920,84 +1995,100 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 1507113644}
     m_ColliderPaths:
-    - - X: 4799999
+    - - X: 11229118
         Y: -12799999
-      - X: -4799999
+      - X: -8020799
         Y: -12799999
-      - X: -4799999
+      - X: -8020799
         Y: -17600000
-      - X: 4799999
+      - X: 11229118
         Y: -17600000
-    - - X: -4800000
+    - - X: -8020800
         Y: -12799999
-      - X: -7999999
+      - X: -11229118
         Y: -12799999
-      - X: -7999999
+      - X: -11229118
         Y: -17600000
-      - X: -4800000
+      - X: -8020800
         Y: -17600000
-    - - X: -8000000
+    - - X: -11229119
         Y: -12799999
-      - X: -20800000
+      - X: -12833278
         Y: -12799999
-      - X: -20800000
+      - X: -12833278
         Y: -17600000
-      - X: -8000000
+      - X: -11229119
         Y: -17600000
-    - - X: -20800002
+    - - X: -12833279
         Y: -12799999
-      - X: -23999998
+      - X: -16041597
         Y: -12799999
-      - X: -23999998
+      - X: -16041597
         Y: -17600000
-      - X: -20800002
+      - X: -12833279
         Y: -17600000
-    - - X: -24000000
+    - - X: -16041600
         Y: -12799999
-      - X: -25600000
+      - X: -20854078
         Y: -12799999
-      - X: -25600000
+      - X: -20854078
         Y: -17600000
-      - X: -24000000
+      - X: -16041600
         Y: -17600000
-    - - X: -25600002
+    - - X: -20854080
         Y: -12799999
-      - X: -28799998
+      - X: -28874878
         Y: -12799999
-      - X: -28799998
+      - X: -28874878
         Y: -17600000
-      - X: -25600002
+      - X: -20854080
         Y: -17600000
-    - - X: 25599998
+    - - X: 25666556
         Y: -12799999
-      - X: 22400000
+      - X: 19249920
         Y: -12799999
-      - X: 22400000
+      - X: 19249920
         Y: -17600000
-      - X: 25599998
+      - X: 25666556
         Y: -17600000
-    - - X: 22399998
+    - - X: 19249918
         Y: -12799999
-      - X: 9600000
+      - X: 17645760
         Y: -12799999
-      - X: 9600000
+      - X: 17645760
         Y: -17600000
-      - X: 22399998
+      - X: 19249918
         Y: -17600000
-    - - X: 9599999
+    - - X: 17645758
         Y: -12799999
-      - X: 4800000
+      - X: 16041600
         Y: -12799999
-      - X: 4800000
+      - X: 16041600
         Y: -17600000
-      - X: 9599999
+      - X: 17645758
+        Y: -17600000
+    - - X: 16041598
+        Y: -12799999
+      - X: 12833281
+        Y: -12799999
+      - X: 12833281
+        Y: -17600000
+      - X: 16041598
+        Y: -17600000
+    - - X: 12833279
+        Y: -12799999
+      - X: 11229120
+        Y: -12799999
+      - X: 11229120
+        Y: -17600000
+      - X: 12833279
         Y: -17600000
   m_CompositePaths:
     m_Paths:
-    - - {x: 2.5599704, y: -1.76}
-      - {x: 2.5599704, y: -1.28}
-      - {x: -2.8799999, y: -1.2800292}
-      - {x: -2.8799706, y: -1.76}
+    - - {x: 2.5666265, y: -1.76}
+      - {x: 2.5666265, y: -1.28}
+      - {x: -2.887488, y: -1.2800292}
+      - {x: -2.8874583, y: -1.76}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
@@ -2204,6 +2295,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 171976282}
   - {fileID: 134960785}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
