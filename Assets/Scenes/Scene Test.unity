@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 134960786}
   - component: {fileID: 134960789}
   m_Layer: 5
-  m_Name: Button
+  m_Name: ButtonSpikes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -253,8 +253,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 325.0376, y: 186.4587}
-  m_SizeDelta: {x: 55.9552, y: 53.0826}
+  m_AnchoredPosition: {x: 323.1, y: 187.4}
+  m_SizeDelta: {x: 48.2952, y: 45.4226}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &134960786
 MonoBehaviour:
@@ -475,8 +475,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 18.7, y: 13.8}
-  m_SizeDelta: {x: 67.9, y: 62.100006}
+  m_AnchoredPosition: {x: 13.2079, y: 11.3553}
+  m_SizeDelta: {x: 65.7158, y: 60.7895}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &225653507
 MonoBehaviour:
