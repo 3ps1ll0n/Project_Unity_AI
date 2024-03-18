@@ -7,38 +7,41 @@ using UnityEngine;
 
 public class SpikeScript : MonoBehaviour
 {
-    public int identification;
+    public int identification; // Pour suivre quel objet on est en train d'ajouter
     private EditeurNiveau editeur;
     private Boolean detruit;
-    // Start is called before the first frame update
+  
     void Start()
     {
         detruit = false; 
-        editeur = GameObject.FindGameObjectWithTag("EditeurNiveau").GetComponent<EditeurNiveau>();
+        editeur = GameObject.FindGameObjectWithTag("EditeurNiveau").GetComponent<EditeurNiveau>(); //Retrouver le bon objet
 
     }
 
-    void OnBecameInvisible()
+    void OnBecameInvisible() //Si l'objet sort de l'écran (tombe)
     {
         if (!detruit)
         {
-            Destroy(this.gameObject);
-            editeur.boutons[identification].quantite++;
-            editeur.boutons[identification].quantiteTexte.text = editeur.boutons[identification].quantite.ToString();
+            supprimerObjet();
         }
     }
 
 
   
-
+    
     private void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)) //Clique gauche
         {
             detruit = true;
-            Destroy(this.gameObject);
-            editeur.boutons[identification].quantite++;
-            editeur.boutons[identification].quantiteTexte.text = editeur.boutons[identification].quantite.ToString();
+            supprimerObjet();
         }
+    }
+
+    private void supprimerObjet()
+    {
+        Destroy(this.gameObject);
+        editeur.boutons[identification].quantite++;
+        editeur.boutons[identification].quantiteTexte.text = editeur.boutons[identification].quantite.ToString();
     }
 }
