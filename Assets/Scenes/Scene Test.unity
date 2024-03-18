@@ -1875,8 +1875,7 @@ MonoBehaviour:
   VerifierSolDroite: {fileID: 131509194}
   animator: {fileID: 1675827659}
   spriteRenderer: {fileID: 1675827655}
-  aSaute: 0
-  auSol: 0
+  nombreSaut: 0
 --- !u!58 &1675827658
 CircleCollider2D:
   m_ObjectHideFlags: 0

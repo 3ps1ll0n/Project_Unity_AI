@@ -26,23 +26,28 @@ public class Mouvement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        auSol = Physics2D.Raycast(VerifierSolGauche.position, Vector2.down, 0.1f);
+        auSol = Physics2D.Raycast(VerifierSolGauche.position, Vector2.down, 0.01f);
         //Debug.Log(VerifierSolDroite.position + " | " + VerifierSolGauche.position);
         float mouvementHorizontal = 0f;
+
+        //Controlleur
         if(Input.GetKey(KeyCode.D)) {
             mouvementHorizontal = vitesseDeplacement * Time.deltaTime;
         }
         if(Input.GetKey(KeyCode.A)) {
             mouvementHorizontal = -vitesseDeplacement * Time.deltaTime;
         }
-        if(Input.GetKey(KeyCode.Space) && (auSol || (nombreSaut > 0 && rb.velocity.y <=0))){
+        if(Input.GetKey(KeyCode.Space))
+            if (auSol || (nombreSaut > 0 && rb.velocity.y <=0)){
             aSaute = true;
         }
+
         repos = false;
         if(auSol){
             if(nombreSaut != 2) repos = true;
             nombreSaut = 2;
         }
+
         deplacerJoueur(mouvementHorizontal);
         animator.SetFloat("Vitesse", Math.Abs(rb.velocity.x));
         animator.SetInteger("nbreSaut", nombreSaut);
