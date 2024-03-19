@@ -37,6 +37,7 @@ private Vector3 positionInitiale;
         if (remonte)
             {
                 transform.Translate(Vector3.up * Time.deltaTime * vitesse);
+                checkTimer = 0;
                 if (this.transform.position.y >= positionInitiale.y) { remonte = false; }
             }
         checkTimer += Time.deltaTime;
