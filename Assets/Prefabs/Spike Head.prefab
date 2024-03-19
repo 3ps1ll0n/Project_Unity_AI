@@ -174,7 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vitesse: 1
   portee: 3
-  delaisAttaque: 2
+  delaisAttaque: 4
 --- !u!114 &3984990569771210271
 MonoBehaviour:
   m_ObjectHideFlags: 0
