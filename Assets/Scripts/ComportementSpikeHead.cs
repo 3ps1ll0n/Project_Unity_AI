@@ -11,8 +11,10 @@ public class Comportement : MonoBehaviour
  [SerializeField]private float vitesse;
  [SerializeField]private float portee;
 [SerializeField] private float delaisAttaque;
+    [SerializeField] private float delaisRemonte;
 
 private float checkTimer;
+    private float checkTimerRemonte;
 
 
  private bool descend;
@@ -30,15 +32,24 @@ private Vector3 positionInitiale;
 
 //Bouger le spike head à sa destination
     if(descend){
-            
+
         transform.Translate(destination * Time.deltaTime * vitesse);
     }
     else {
-        if (remonte)
+
+            if (remonte)
             {
-                transform.Translate(Vector3.up * Time.deltaTime * vitesse);
-                checkTimer = 0;
-                if (this.transform.position.y >= positionInitiale.y) { remonte = false; }
+                checkTimerRemonte += Time.deltaTime;
+                if (checkTimerRemonte > delaisRemonte)
+                {
+                    transform.Translate(Vector3.up * Time.deltaTime * vitesse);
+                    checkTimer = 0;
+                    if (this.transform.position.y >= positionInitiale.y)
+                    {
+                        remonte = false;
+                        checkTimerRemonte = 0;
+                    }
+                }
             }
         checkTimer += Time.deltaTime;
         if (checkTimer > delaisAttaque){
@@ -58,7 +69,6 @@ private void Stop(){
 
 private void OnTriggerEnter2D(){
     Stop();
-        
         remonte = true;
     
 }
