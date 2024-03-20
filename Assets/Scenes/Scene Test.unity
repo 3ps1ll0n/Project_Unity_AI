@@ -4737,7 +4737,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forceDeSaut: 250
-  vitesseDeplacement: 200
+  vitesseDeplacement: 100
   rb: {fileID: 2020302819}
   VerifierSolGauche: {fileID: 979563642}
   VerifierSolDroite: {fileID: 85144406}

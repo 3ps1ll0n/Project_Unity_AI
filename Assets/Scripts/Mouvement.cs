@@ -21,15 +21,23 @@ public class Mouvement : MonoBehaviour
     private bool auSol;
     private bool repos = false;
     private Vector3 velocite = Vector3.zero;
+    private Vector3 positionInitiale;
 
-
+    private void Awake()
+    {
+        positionInitiale = this.transform.position;
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
         auSol = Physics2D.Raycast(VerifierSolGauche.position, Vector2.down, 0.01f);
         //Debug.Log(VerifierSolDroite.position + " | " + VerifierSolGauche.position);
         float mouvementHorizontal = 0f;
-
+        if (Input.GetKey(KeyCode.R))
+        {
+            this.transform.position = positionInitiale;
+           
+        }
         //Controlleur
         if (Input.GetKey(KeyCode.D))
         {
