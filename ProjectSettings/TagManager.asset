@@ -6,6 +6,7 @@ TagManager:
   tags:
   - EditeurNiveau
   - image
+  - Piege
   layers:
   - Default
   - TransparentFX

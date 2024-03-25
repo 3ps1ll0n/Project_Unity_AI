@@ -11,9 +11,21 @@ public class Respawn : MonoBehaviour
         initialPosition = personnage.transform.position;
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Piege"))
+        {
+            // Despawn the player
+            personnage.SetActive(false);
+
+            // Respawn the player after 3 seconds
+            Invoke("RespawnPlayer", 3f);
+        }
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Piege") || collision.gameObject.GetComponent<Comportement>() != null)
+        if (collision.gameObject.GetComponent<Comportement>() != null)
         {
             // Despawn the player
             personnage.SetActive(false);
@@ -32,4 +44,3 @@ public class Respawn : MonoBehaviour
         personnage.SetActive(true);
     }
 }
-

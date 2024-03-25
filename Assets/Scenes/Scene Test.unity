@@ -1324,6 +1324,7 @@ MonoBehaviour:
   - {fileID: 142524271}
   - {fileID: 737107503}
   - {fileID: 283423613}
+  tilemap: {fileID: 1507113641}
   boutonAppuye: 0
 --- !u!4 &568517778
 Transform:
@@ -4696,9 +4697,10 @@ GameObject:
   - component: {fileID: 2020302819}
   - component: {fileID: 2020302818}
   - component: {fileID: 2020302817}
+  - component: {fileID: 2020302824}
   m_Layer: 0
   m_Name: Personnage
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4744,6 +4746,7 @@ MonoBehaviour:
   animator: {fileID: 2020302817}
   spriteRenderer: {fileID: 2020302822}
   nombreSaut: 0
+  positionInitiale: {x: 0, y: 0, z: 0}
 --- !u!50 &2020302819
 Rigidbody2D:
   serializedVersion: 4
@@ -4920,6 +4923,19 @@ Transform:
   - {fileID: 85144406}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2020302824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2020302816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b2770628b4759246a89ce99518dfa2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  personnage: {fileID: 2020302816}
 --- !u!1 &2060384551
 GameObject:
   m_ObjectHideFlags: 0
