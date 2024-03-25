@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3984990569771210271}
   m_Layer: 0
   m_Name: Spike Head
-  m_TagString: Untagged
+  m_TagString: Piege
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -176,6 +176,9 @@ MonoBehaviour:
   portee: 3
   delaisAttaque: 2
   delaisRemonte: 2
+  onTrapActivated:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &3984990569771210271
 MonoBehaviour:
   m_ObjectHideFlags: 0
