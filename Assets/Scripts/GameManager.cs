@@ -1,49 +1,64 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour {
-    public static GameManager instance;
+public sealed class GameManager : MonoBehaviour {
+    private static GameManager _instance;
 
-    public EtatJeu etat;
+    public static GameManager Instance {
+        get
+        {
+            if (_instance is null)
+                Debug.LogError("Le GameManager est NULL!");
+            
+            return _instance;
+            
+        }
+    }
 
-    public static event Action<EtatJeu> changementEtatJeu;
+
+    public static EtatJeu etat;
 
     void Awake(){
-        instance = this;
+        _instance = this;
     }
 
     void Start(){
-        updateEtatJeu(EtatJeu.Menu);
+        UpdateEtatJeu(EtatJeu.Menu);
     }
     
-    public void updateEtatJeu(EtatJeu nouvelEtat){
+    public void UpdateEtatJeu(EtatJeu nouvelEtat){
         etat = nouvelEtat;
 
         switch (nouvelEtat){
-            case EtatJeu.Menu: 
+            case EtatJeu.Menu: ChangerScene(0);
                 break;
-            case EtatJeu.Options:
+            case EtatJeu.Options: ChangerScene(1);
                 break;
-            case EtatJeu.Jeu:
+            case EtatJeu.Jeu: ChangerScene(2);
                 break;
-            case EtatJeu.EditeurNIveau:
+            case EtatJeu.EditeurNiveau: ChangerScene(3);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(nouvelEtat), nouvelEtat, null);
 
         }
-        changementEtatJeu?.Invoke(nouvelEtat);
-        
+    }
+    private void ChangerScene(int numero){
+        SceneManager.LoadScene(numero);
     }
    
 }
+
+
 
 public enum EtatJeu {
     Menu,
     Options,
     Jeu,
-    EditeurNIveau
+    EditeurNiveau
 }
