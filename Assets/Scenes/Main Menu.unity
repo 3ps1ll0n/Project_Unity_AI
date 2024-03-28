@@ -1114,9 +1114,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1986876477}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: PlayGame
+      - m_Target: {fileID: 2072895827}
+        m_TargetAssemblyTypeName: LootLockerDir, Assembly-CSharp
+        m_MethodName: Jouer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1624,6 +1624,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb6fd0ab66e16446b64858560ec7673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2072895826
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2072895828}
+  - component: {fileID: 2072895827}
+  m_Layer: 0
+  m_Name: LootLockerDir
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2072895827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072895826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f84d5ca86cd88943a42904b55808b2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &2072895828
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072895826}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.39466262, y: -0.98, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2145125741
 GameObject:
   m_ObjectHideFlags: 0
@@ -1723,3 +1767,4 @@ SceneRoots:
   - {fileID: 2145125744}
   - {fileID: 1025740836}
   - {fileID: 797380659}
+  - {fileID: 2072895828}

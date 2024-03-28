@@ -48,7 +48,7 @@ public class Mouvement : MonoBehaviour
         {
             mouvementHorizontal = -vitesseDeplacement * Time.deltaTime;
         }
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W))
             if (auSol || (nombreSaut > 0 && rb.velocity.y <= 0))
             {
                 aSaute = true;
