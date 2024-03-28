@@ -20,10 +20,12 @@ public class NiveauManager : MonoBehaviour
             if (reponse.success)
             {
                 uploadDonneeNiveau(reponse.asset_candidate_id);
+                Debug.Log("réussi");
+
             }
             else
             {
-                Debug.Log("Erreur avec le candidat d'asset");//Si erreur
+                Debug.Log("Erreur avec le candidat d'asset prout");//Si erreur
             }
         });
     }

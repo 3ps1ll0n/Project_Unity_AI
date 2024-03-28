@@ -1,0 +1,2 @@
+Spike(Clone),1,212328,-1,287932,0
+PlateformeTournante(Clone),1,970952,0,78,0

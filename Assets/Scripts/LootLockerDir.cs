@@ -12,6 +12,7 @@ public class LootLockerDir : MonoBehaviour
             if (reponse.success)
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);//load la scène de jeu
+                Debug.Log("youpidou");
             }
             else
             {
