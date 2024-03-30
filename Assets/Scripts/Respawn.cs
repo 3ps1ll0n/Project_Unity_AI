@@ -13,27 +13,18 @@ public class Respawn : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("Collision detected");
         if (other.CompareTag("Piege"))
         {
+            Debug.Log("Player has been killed by a trap!");
             // Despawn the player
             personnage.SetActive(false);
 
             // Respawn the player after 3 seconds
             Invoke("RespawnPlayer", 3f);
-        }
+        } 
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.GetComponent<Comportement>() != null)
-        {
-            // Despawn the player
-            personnage.SetActive(false);
-
-            // Respawn the player after 3 seconds
-            Invoke("RespawnPlayer", 3f);
-        }
-    }
 
     void RespawnPlayer()
     {
