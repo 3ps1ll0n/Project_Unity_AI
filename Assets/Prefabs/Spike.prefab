@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2209210486529902156}
   - component: {fileID: 9159021219273918495}
   - component: {fileID: 7128098078406287832}
+  - component: {fileID: 5537791447019079664}
   m_Layer: 0
   m_Name: Spike
   m_TagString: Piege
@@ -172,3 +173,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   identification: 0
+--- !u!114 &5537791447019079664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2773124243444672720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06f10a735274812449ea9f3566fcf882, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 8868492734787740866, guid: cbe8e6dc776b65e47898769a91430afd, type: 3}
