@@ -2,35 +2,48 @@ using UnityEngine;
 
 public class Trap : MonoBehaviour
 {
-    public GameObject player; // Reference to the player GameObject
-    private Vector3 initialPosition; // Initial position of the player
+    // Array to store references to all player GameObjects
+    public GameObject[] players;
 
     void Start()
     {
-        // Find the player GameObject in the scene and store its initial position
-        player = GameObject.FindGameObjectWithTag("Player");
-        initialPosition = player.transform.position;
+        // Find all player GameObjects with the "Player" tag
+        players = GameObject.FindGameObjectsWithTag("Player");
+
+        // Store initial positions for each player
+        foreach (var p in players)
+        {
+            // You can adjust this based on your game design
+            p.GetComponent<Mouvement>().positionInitiale = p.transform.position;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject == player)
+        foreach (var p in players)
         {
-            Debug.Log("Player has been killed by a trap!");
-            // Despawn the player
-            player.SetActive(false);
+            if (other.gameObject == p)
+            {
+                Debug.Log($"Player {p.name} has been killed by a trap!");
+                // Despawn the player
+                p.SetActive(false);
 
-            // Respawn the player after 3 seconds
-            Invoke("RespawnPlayer", 3f);
+                // Respawn the player after 3 seconds
+                Invoke(nameof(RespawnPlayer), 3f);
+            }
         }
     }
 
     void RespawnPlayer()
     {
-        // Respawn the player at the initial position
-        player.transform.position = initialPosition;
+        foreach (var p in players)
+        {
+            // Respawn the player at their initial position
+            p.transform.position = p.GetComponent<Mouvement>().positionInitiale;
 
-        // Reactivate the player
-        player.SetActive(true);
+            // Reactivate the player
+            p.SetActive(true);
+        }
     }
 }
+
