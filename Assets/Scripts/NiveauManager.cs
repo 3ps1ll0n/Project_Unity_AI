@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.IO;
 using LootLocker.Requests;
 using UnityEngine.Networking;
+//POUR ELISABETH DU FUTUR : Add Mouvement.setCanMoveQuitter à BoutonQuitter :)
 
 public class NiveauManager : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class NiveauManager : MonoBehaviour
                 Debug.Log("Erreur avec le candidat d'asset prout");//Si erreur
             }
         });
+        Mouvement.setCanMove(true);
     }
 
     public void prendreCaptureEcran()
@@ -44,6 +46,7 @@ public class NiveauManager : MonoBehaviour
         prendreCaptureEcran();
         yield return new WaitForSeconds(1.0f);
         niveauUploadUI.SetActive(true);
+        Mouvement.setCanMove(false);
     }
     public void ouvrirNiveauUploadUI()
     {
