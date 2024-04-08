@@ -40,8 +40,11 @@ public class SpikeScript : MonoBehaviour
 
     private void supprimerObjet()
     {
-        Destroy(this.gameObject);
-        editeur.boutons[identification].quantite++;
-        editeur.boutons[identification].quantiteTexte.text = editeur.boutons[identification].quantite.ToString();
+        if (this.gameObject != null)
+        {
+            Destroy(this.gameObject);
+            editeur.boutons[identification].quantite++;
+            editeur.boutons[identification].quantiteTexte.text = editeur.boutons[identification].quantite.ToString();
+        }
     }
 }
