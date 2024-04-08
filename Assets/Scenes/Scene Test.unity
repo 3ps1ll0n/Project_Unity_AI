@@ -324,7 +324,6 @@ MonoBehaviour:
   joueur: {fileID: 1675827652}
   resolutionHauteur: 13
   resolutionLongueur: 21
-  hud: {fileID: 0}
 --- !u!1 &1507113638
 GameObject:
   m_ObjectHideFlags: 0
@@ -1913,7 +1912,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1675827652}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa74b6865eb8033429fea67babd85275, type: 3}
+  m_Script: {fileID: 11500000, guid: 51f4edfe7f4958447849250eba3c8e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   forceDeSaut: 250
