@@ -70,7 +70,7 @@ public class SauvegardeNiveau : MonoBehaviour
         lecteur.Close();
 
         StreamReader lecteur2 = new StreamReader(referenceFichier);
-
+        
         while (!lecteur2.EndOfStream)
         {
             for (int i = 0; i < nombreLignes; i++)

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System.IO;
 using LootLocker.Requests;
 using UnityEngine.Networking;
-//POUR ELISABETH DU FUTUR : Add Mouvement.setCanMoveQuitter à BoutonQuitter :)
+
 
 public class NiveauManager : MonoBehaviour
 {
