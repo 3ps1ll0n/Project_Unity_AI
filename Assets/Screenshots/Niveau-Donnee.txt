@@ -1,0 +1,2 @@
+LanceFlamme(Clone).2,350248.-0,82.0
+Spike(Clone).-0,8737906.-1,287749.0

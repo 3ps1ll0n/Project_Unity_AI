@@ -42,7 +42,7 @@ public class SauvegardeNiveau : MonoBehaviour
         StreamWriter ecrire = new StreamWriter(referenceFichier, false);
         for(int i = 0; i< assetsAsauvegarder.Length; i++)
         {
-            string info = nomsAssets[i] + "," + positionsAssets[i].x.ToString() + "," + positionsAssets[i].y.ToString() + ","
+            string info = nomsAssets[i] + "." + positionsAssets[i].x.ToString() + "." + positionsAssets[i].y.ToString() + "."
                 + positionsAssets[i].z.ToString();
             ecrire.WriteLine(info);
         }
@@ -75,7 +75,7 @@ public class SauvegardeNiveau : MonoBehaviour
         {
             for (int i = 0; i < nombreLignes; i++)
             {
-                string[] donnee = lecteur2.ReadLine().Split(',');
+                string[] donnee = lecteur2.ReadLine().Split('.');
                 nomsAssets[i] = donnee[0];
                 positionsAssets[i].x = float.Parse(donnee[1]);
                 positionsAssets[i].y = float.Parse(donnee[2]);
@@ -94,15 +94,13 @@ public class SauvegardeNiveau : MonoBehaviour
         {
             for(int j = 0;j<objetsPossibles.Length;j++)
             {
-                if (objetsPossibles[j].name == nomsAssets[i])
+                string nom = objetsPossibles[j].name + "(Clone)";
+                if (nom == nomsAssets[i])
                 {
                     Instantiate(objetsPossibles[j], positionsAssets[i],Quaternion.identity);
 
                 }
-                else
-                {
-                    Debug.Log("putain");
-                }
+                
             }
         }
     }
