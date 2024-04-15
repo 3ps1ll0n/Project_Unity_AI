@@ -1,0 +1,8 @@
+Spike Head(Clone).-0,304824.-1,075506.0
+Spike(Clone).0,6433842.-1,287935.0
+PlateformeTournante(Clone).1,591656.0,78.0
+Scie(Clone).0,6434159.0,46.0
+Boite(Clone).1,591656.-0,82.0
+MiniPlateforme(Clone).-1,63236.0,6199999.0
+LanceFlamme(Clone).-2,5806.-0,82.0
+Arrivée(Clone).1,781304.-0,02.0
