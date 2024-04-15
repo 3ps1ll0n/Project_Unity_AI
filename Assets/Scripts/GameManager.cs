@@ -1,35 +1,21 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public sealed class GameManager : MonoBehaviour {
-    private static GameManager _instance;
+public class GameManager : MonoBehaviour {
+    public static GameManager instance;
+    private static EtatJeu etat;
 
-    public static GameManager Instance {
-        get
-        {
-            if (_instance is null)
-                Debug.LogError("Le GameManager est NULL!");
-            
-            return _instance;
-            
+    private void Awake(){
+        if (instance == null){
+            instance = this;
         }
+        else{
+            Destroy(gameObject);
+        }
+        
     }
 
-
-    public static EtatJeu etat;
-
-    void Awake(){
-        _instance = this;
-    }
-
-    void Start(){
-        UpdateEtatJeu(EtatJeu.Menu);
-    }
     
     public void UpdateEtatJeu(EtatJeu nouvelEtat){
         etat = nouvelEtat;
@@ -37,9 +23,9 @@ public sealed class GameManager : MonoBehaviour {
         switch (nouvelEtat){
             case EtatJeu.Menu: ChangerScene(0);
                 break;
-            case EtatJeu.Options: ChangerScene(1);
+            case EtatJeu.Options: ChangerScene(2);
                 break;
-            case EtatJeu.Jeu: ChangerScene(2);
+            case EtatJeu.Jeu: ChangerScene(1);
                 break;
             case EtatJeu.EditeurNiveau: ChangerScene(3);
                 break;
