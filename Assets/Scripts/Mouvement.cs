@@ -20,21 +20,12 @@ public class Mouvement : MonoBehaviour
     private bool aSaute;
     private bool auSol;
     private bool repos = false;
-    private static bool canMove = true;
     private Vector3 velocite = Vector3.zero;
     public Vector3 positionInitiale;
 
     private void Awake()
     {
         positionInitiale = this.transform.position;
-    }
-    public static void setCanMove(bool move)
-    {
-        canMove = move;
-    }
-    public void setCanMoveQuitter()
-    {
-        Mouvement.canMove = true;
     }
     // Update is called once per frame
     void FixedUpdate()
@@ -43,27 +34,25 @@ public class Mouvement : MonoBehaviour
         auSol = Physics2D.Raycast(VerifierSolGauche.position, Vector2.down, 0.01f);
         //Debug.Log(VerifierSolDroite.position + " | " + VerifierSolGauche.position);
         float mouvementHorizontal = 0f;
-        if (Mouvement.canMove){ 
-            if (Input.GetKey(KeyCode.R))
-            {
-                this.transform.position = positionInitiale;
+        if (Input.GetKey(KeyCode.R))
+        {
+            this.transform.position = positionInitiale;
            
-            }
-            //Controlleur
-            if (Input.GetKey(KeyCode.D))
-            {
-                mouvementHorizontal = vitesseDeplacement * Time.deltaTime;
-            }
-            if (Input.GetKey(KeyCode.A))
-            {
-                mouvementHorizontal = -vitesseDeplacement * Time.deltaTime;
-            }
-            if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W))
-                if (auSol || (nombreSaut > 0 && rb.velocity.y <= 0))
-                {
-                    aSaute = true;
-                }
         }
+        //Controlleur
+        if (Input.GetKey(KeyCode.D))
+        {
+            mouvementHorizontal = vitesseDeplacement * Time.deltaTime;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            mouvementHorizontal = -vitesseDeplacement * Time.deltaTime;
+        }
+        if (Input.GetKey(KeyCode.Space))
+            if (auSol || (nombreSaut > 0 && rb.velocity.y <= 0))
+            {
+                aSaute = true;
+            }
 
         repos = false;
         if (auSol)

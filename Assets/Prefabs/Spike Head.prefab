@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -7994547760943255906}
   m_Layer: 0
   m_Name: Spike Head
-  m_TagString: Sauvegardable
+  m_TagString: Piege
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
