@@ -16,7 +16,13 @@ public class SauvegardeNiveau : MonoBehaviour
 
     public void trouverAssetsSauvegarde()
     {
-        if(assetsAsauvegarder != null)
+        if (assetsAsauvegarder == null || assetsAsauvegarder.Length == 0)
+        {
+            Debug.LogWarning("Aucun asset à sauvegarder trouvé.");
+            return; // Quitte la méthode si aucun asset n'est trouvé
+        }
+
+        if (assetsAsauvegarder != null)
         {
             for(int i =0; i<assetsAsauvegarder.Length; i++) { Destroy(assetsAsauvegarder[i]); }
         }
