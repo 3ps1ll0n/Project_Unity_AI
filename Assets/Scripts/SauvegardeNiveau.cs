@@ -16,16 +16,13 @@ public class SauvegardeNiveau : MonoBehaviour
 
     public void trouverAssetsSauvegarde()
     {
-        if (assetsAsauvegarder == null || assetsAsauvegarder.Length == 0)
-        {
-            Debug.LogWarning("Aucun asset à sauvegarder trouvé.");
-            return; // Quitte la méthode si aucun asset n'est trouvé
-        }
+        
 
         if (assetsAsauvegarder != null)
         {
             for(int i =0; i<assetsAsauvegarder.Length; i++) { Destroy(assetsAsauvegarder[i]); }
         }
+       
 
         assetsAsauvegarder = GameObject.FindGameObjectsWithTag(tagAssetsSauvegarde);
 
@@ -44,6 +41,7 @@ public class SauvegardeNiveau : MonoBehaviour
 
     public void sauvegarderDansFichier()
     {
+        
         string referenceFichier = "Assets/Screenshots/Niveau-Donnee.txt";
         StreamWriter ecrire = new StreamWriter(referenceFichier, false);
         for(int i = 0; i< assetsAsauvegarder.Length; i++)
@@ -69,6 +67,7 @@ public class SauvegardeNiveau : MonoBehaviour
 
         nomsAssets = new string[0];
         positionsAssets = new Vector3[0];
+        
 
         nomsAssets = new string[nombreLignes];
         positionsAssets = new Vector3[nombreLignes];

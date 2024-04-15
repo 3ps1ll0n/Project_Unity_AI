@@ -15,8 +15,14 @@ public class NiveauManager : MonoBehaviour
 
     public GameObject entreeNiveauItem;
     public Transform contenuDonneeNiveau;
+    HashSet<int> loadedAssetIdentifiers = new HashSet<int>();
     public void creerNiveau() //Sauvegarder un niveau
     {
+        if(GameObject.FindGameObjectsWithTag("Sauvegardable").Length == 0)
+        {
+            Debug.Log("On ne peut sauvegarder un niveau vide");
+            return;
+        }
 
         nomNiveau = nomNiveauInputField.text;
         LootLockerSDKManager.CreatingAnAssetCandidate(nomNiveau, (reponse) =>
@@ -85,10 +91,16 @@ public class NiveauManager : MonoBehaviour
 
     public void telechargerDonneeNiveau()
     {
+        
         LootLockerSDKManager.GetAssetListWithCount(10, (reponse) =>
         {
+            
             for(int i = 0; i< reponse.assets.Length; i++)
             {
+                if (loadedAssetIdentifiers.Contains(i))
+                {
+                    continue;
+                }
                 GameObject afficherItem = Instantiate(entreeNiveauItem, transform.position, Quaternion.identity);
                 afficherItem.transform.SetParent(contenuDonneeNiveau);
 
@@ -99,7 +111,8 @@ public class NiveauManager : MonoBehaviour
                 StartCoroutine(chargerImageNiveau(fichiersImageNiveau[0].url.ToString(), afficherItem.GetComponent<DonneeEntreeNiveau>().imageNiveau));
 
                 afficherItem.GetComponent<DonneeEntreeNiveau>().dossierTexteURL = fichiersImageNiveau[1].url.ToString();
-            
+
+                loadedAssetIdentifiers.Add(i);
             }
         }, null, true);
     }
