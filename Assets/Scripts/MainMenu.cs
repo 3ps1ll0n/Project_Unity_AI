@@ -1,12 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-
 public class MainMenu : MonoBehaviour
 {
-    public void PlayGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    public void PlayGame(){
+        GameManager.instance.UpdateEtatJeu(EtatJeu.Jeu);
+    }
+
+    public void AfficherOptions(){
+        GameManager.instance.UpdateEtatJeu(EtatJeu.Options);
+    }
+
+    public void Quitter(){
+        Application.Quit();
     }
 }
