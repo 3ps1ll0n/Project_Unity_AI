@@ -19,7 +19,7 @@ public class AIScripts : MonoBehaviour{
     private int[,] tilesData;
     private int[,] aiView;
     private bool montrerAI = false;
-    Vector3 v;
+    private Vector3Int relativeAIView;
     void Start()
     {
         levelTiledMap = GameObject.Find("Terrain").GetComponent<Tilemap>();
@@ -36,13 +36,13 @@ public class AIScripts : MonoBehaviour{
     {
         tilesData = getTiledMapData(levelTiledMap);
         aiView = copyTilesDataToView();
+        aiView = readTilesObject(getEveryTileObject(levelTiledMap), levelTiledMap, aiView);
         //DessinerData(tilesData);
 
         if(Input.GetKeyDown("p")) montrerAI = !montrerAI;
     }
 
     int[,] getTiledMapData(Tilemap map){
-
         BoundsInt vueTotal = levelTiledMap.cellBounds;
 
         TileBase[] allTiles = map.GetTilesBlock(vueTotal);
@@ -72,8 +72,8 @@ public class AIScripts : MonoBehaviour{
     int[,] copyTilesDataToView(){
         int[,] copiedMatrix = new int[resolutionHauteur, resolutionLongueur];
 
-        float longueurJoueur = joueur.GetComponent<SpriteRenderer>().bounds.size.x;
-        float hauteurJoueur = joueur.GetComponent<SpriteRenderer>().bounds.size.y;
+        float longueurJoueur = joueur.GetComponent<BoxCollider2D>().bounds.size.x;
+        float hauteurJoueur = joueur.GetComponent<BoxCollider2D>().bounds.size.y;
 
         Vector3Int relativeTileMapPos = levelTiledMap.layoutGrid.WorldToCell(levelTiledMap.transform.position);
         relativeTileMapPos.x = relativeTileMapPos.x - tilesData.GetLength(1)/2;
@@ -81,11 +81,11 @@ public class AIScripts : MonoBehaviour{
 
         Vector3Int relativePlayerPos = levelTiledMap.layoutGrid.WorldToCell(
                                                                             new Vector3(
-                                                                                        joueur.transform.position.x + longueurJoueur/2,
+                                                                                        joueur.transform.position.x,
                                                                                         joueur.transform.position.y + hauteurJoueur/2
                                                                             ));
-        Vector3Int relativeAIView = new Vector3Int  (
-                                                    relativePlayerPos.x - (resolutionLongueur/2),
+        relativeAIView = new Vector3Int  (
+                                                    relativePlayerPos.x - resolutionLongueur/2,
                                                     relativePlayerPos.y + 1
                                                     );
 
@@ -106,14 +106,46 @@ public class AIScripts : MonoBehaviour{
                     valueToCopy = tilesData[i - deltaPos.y, j - deltaPos.x];
                 }
                 if(copiedMatrix.GetLength(0) - i < copiedMatrix.GetLength(0) && copiedMatrix.GetLength(0) - i >= 0){
-                    copiedMatrix[copiedMatrix.GetLength(0) - i,j] = valueToCopy;
+                    copiedMatrix[copiedMatrix.GetLength(0) - i, j] = valueToCopy;
                 }
             }
         }
-
-        v =  levelTiledMap.layoutGrid.CellToWorld(relativeAIView);
         
         return copiedMatrix;
+    }
+
+    int[,] readTilesObject(GameObject[] tilesObject, Tilemap map, int[,] tileData){
+        foreach(GameObject gObj in tilesObject){
+
+            Vector3Int relPos = map.layoutGrid.WorldToCell(gObj.transform.position); //Pour avoir la position relatives des objects
+            Vector3 cellSize = map.layoutGrid.cellSize; //Pour avoir la taille relative des objects
+            
+            Vector3Int relSize = new Vector3Int(
+                (int)Math.Floor(gObj.GetComponent<BoxCollider2D>().bounds.size.x / cellSize.x),
+                (int)Math.Floor(gObj.GetComponent<BoxCollider2D>().bounds.size.y / cellSize.y)
+            );
+
+            relPos.x -= relSize.x/2;
+            relPos.y -= relSize.y/2;
+
+
+            Vector3Int deltaPos = new Vector3Int(
+                                                relPos.x - relativeAIView.x,
+                                                relPos.y - relativeAIView.y
+                                            );
+
+            int i = deltaPos.y < 0 ? 0 : deltaPos.y;
+
+            for(; i < relSize.y + deltaPos.y; i++){
+                int j = deltaPos.x < 0 ? 0 : deltaPos.x;
+                for(; j < relSize.x + deltaPos.x; j++){
+                    if(tileData.GetLength(0) - i < tileData.GetLength(0) && tileData.GetLength(0) - i >= 0 && j < tileData.GetLength(1)){
+                        tileData[tileData.GetLength(0) - i,j] = -1;
+                    }
+                }  
+            }
+        }
+    return tileData;
     }
 
     //*==================={Draw Method}===================
@@ -123,32 +155,38 @@ public class AIScripts : MonoBehaviour{
     {
         if(!montrerAI) return;
         //Rect rectScreen = cam.pixelRect;
-        float squareSize = 10;
+        float squareSize = 20;
 
         for(int i = 0; i < aiView.GetLength(0); i++){
             EditorGUI.TextField(new Rect(0, i*squareSize, squareSize, squareSize), i.ToString());
             for(int j = 0; j < aiView.GetLength(1); j++){
                 Color color = new Color(0, 0, 0, 0.5f);
-                if(aiView[i, j] > 0) color = new Color(255, 255, 255, 0.5f);
+                if(j==aiView.GetLength(1)/2 && i == aiView.GetLength(0) - 2) color = new Color(0, 0, 255, 1.0f);
+                else if(aiView[i, j] > 0) color = new Color(255, 255, 255, 0.5f);
                 else if (aiView[i, j] < 0) color = new Color(255, 0, 0, 0.5f);
+                
                 EditorGUI.DrawRect(new Rect(j * squareSize, i * squareSize, squareSize, squareSize), color);
             }
         }
+        for (int i = 0; i < aiView.GetLength(1); i++){
+            EditorGUI.TextField(new Rect(i*squareSize, 0, squareSize, squareSize), i.ToString());
+        }
         for (int i = 0; i < aiView.GetLength(0) + 1; i++){
-            EditorGUI.DrawRect(new Rect(0, i * squareSize, 2, aiView.GetLength(1) * squareSize), Color.black);
+            EditorGUI.DrawRect(new Rect(0, i * squareSize, aiView.GetLength(1) * squareSize, 1), Color.black);
         }
          for(int j = 0; j < aiView.GetLength(1) + 1; j++){
-            EditorGUI.DrawRect(new Rect(j * squareSize, 0, aiView.GetLength(0) * squareSize, 2), Color.black);
+            EditorGUI.DrawRect(new Rect(j * squareSize, 0, 1, aiView.GetLength(0) * squareSize), Color.black);
         }
-
-        EditorGUI.DrawRect(new Rect(
-           v.x,
-           v.y,
-           10,
-           10
-        ), 
-        Color.red);
         
+    }
+    //*==================={GETTER}===================
+    GameObject[] getEveryTileObject(Tilemap map){
+        GameObject[] tilesObject = new GameObject[map.transform.childCount];
+
+        for (int i = 0; i < map.transform.childCount; ++i)
+            tilesObject[i] = map.transform.GetChild(i).gameObject;
+
+        return tilesObject;
     }
 }
 
