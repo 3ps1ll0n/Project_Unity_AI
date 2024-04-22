@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1949202600201172294}
   - component: {fileID: 4543233756722355730}
   m_Layer: 0
-  m_Name: Plateforme
+  m_Name: Plateforme2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,4 +171,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2f5d7104a1d1624a9b3cc9316f177f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  identification: 8
+  identification: 11

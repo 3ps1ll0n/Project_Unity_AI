@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4159582301838453305}
   - component: {fileID: 5558757579112880215}
   m_Layer: 0
-  m_Name: Plateforme Temp
+  m_Name: Plateforme2 Temp
   m_TagString: image
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

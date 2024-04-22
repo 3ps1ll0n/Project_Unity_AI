@@ -22,6 +22,7 @@ public class Mouvement : MonoBehaviour
     private bool repos = false;
     private Vector3 velocite = Vector3.zero;
     public Vector3 positionInitiale;
+  
 
     private void Awake()
     {
@@ -94,6 +95,7 @@ public class Mouvement : MonoBehaviour
             spriteRenderer.flipX = true;
         }
     }
+
 
 }
 

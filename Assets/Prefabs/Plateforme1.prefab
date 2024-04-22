@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -6393328278277509114}
   - component: {fileID: -4037531353147922618}
   m_Layer: 0
-  m_Name: PlateformeTournante
+  m_Name: Plateforme1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
