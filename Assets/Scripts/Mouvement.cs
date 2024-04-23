@@ -28,11 +28,11 @@ public class Mouvement : MonoBehaviour
     {
         positionInitiale = this.transform.position;
     }
-    public static void setCanMove(bool move)
+    public static void setCanMove(bool move) // Empêcher le mouvement du personnage lorsque la fenêtre pour sauvegarder est ouverte
     {
         canMove = move;
     }
-    public void setCanMoveQuitter()
+    public void setCanMoveQuitter() // Re permettre le mouvement du personnage quand la fenêtre se ferme
     {
         Mouvement.canMove = true;
     }
@@ -43,7 +43,7 @@ public class Mouvement : MonoBehaviour
         auSol = Physics2D.Raycast(VerifierSolGauche.position, Vector2.down, 0.01f);
         //Debug.Log(VerifierSolDroite.position + " | " + VerifierSolGauche.position);
         float mouvementHorizontal = 0f;
-        if (Mouvement.canMove)
+        if (Mouvement.canMove) // Si la fenêtre sauvegarde est pas ouverte
         {
          if (Input.GetKey(KeyCode.R))
                 {

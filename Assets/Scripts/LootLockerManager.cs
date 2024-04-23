@@ -8,6 +8,7 @@ public class LootLockerDir : MonoBehaviour
 {
     public void Jouer()
     {
+
         LootLockerSDKManager.StartGuestSession((reponse) => {//Ouvrir la session dans lootlocker
             if (reponse.success)
             {
@@ -19,4 +20,5 @@ public class LootLockerDir : MonoBehaviour
             }
         });
     }
+    
 }
