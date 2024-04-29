@@ -1014,18 +1014,14 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 5a42d4d92f2984571a78eac3e662b084, type: 3}
   - nom: Reaparition
     clip: {fileID: 8300000, guid: cb78b0aaa9d534366aac4ff53fdc6f3a, type: 3}
-  - nom: PrendreObjet
-    clip: {fileID: 8300000, guid: e24a1bb1d8ae64cb48cad6c57dfce2d2, type: 3}
-  - nom: PoserObjet
-    clip: {fileID: 8300000, guid: 0072dd13ef3ac4e68ac08295a28df10e, type: 3}
-  - nom: RetirerObjet
-    clip: {fileID: 8300000, guid: 38db8e57c57fc4128936a857592590e1, type: 3}
   - nom: Boom
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: de3d875ad25864e0a8372a0105432575, type: 3}
   - nom: Trampoline
     clip: {fileID: 0}
   - nom: Victoire
     clip: {fileID: 8300000, guid: da4a2622abe334cb488e9a1baf0c8349, type: 3}
+  - nom: Clic
+    clip: {fileID: 8300000, guid: e24a1bb1d8ae64cb48cad6c57dfce2d2, type: 3}
   sourceMusique: {fileID: 906214820}
   sourceBruitage: {fileID: 1132244531}
 --- !u!4 &859281743

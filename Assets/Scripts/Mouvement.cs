@@ -61,11 +61,11 @@ public class Mouvement : MonoBehaviour
                 if (Input.GetKey(KeyCode.Space)){
             
                     if (auSol){
-                        AudioManager.Instance.JouerBruitage("Saut");
+                        AudioManager.instance.JouerBruitage("Saut");
                         aSaute = true;
                       }
                     if (nombreSaut > 0 && rb.velocity.y <= 0){
-                        AudioManager.Instance.JouerBruitage("DoubleSaut");
+                        AudioManager.instance.JouerBruitage("DoubleSaut");
                         aSaute = true;
                       }
                 }
