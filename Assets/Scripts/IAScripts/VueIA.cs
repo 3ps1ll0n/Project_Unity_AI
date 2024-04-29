@@ -15,6 +15,7 @@ public class VueIA : MonoBehaviour{
     public int resolutionHauteur;
     public int resolutionLongueur;
     public int tailleAffichageCellule;
+    public int camDecalageY;
     //*==================={PRIVATE}===================
     private Tilemap levelTiledMap;
     private int[,] tilesData;
@@ -96,7 +97,7 @@ public class VueIA : MonoBehaviour{
         );
         relativeAIView = new Vector3Int  (
                                                     relativePlayerPos.x - (int)Math.Floor((double)resolutionLongueur/2) + 1,
-                                                    relativePlayerPos.y + resolutionHauteur + 4
+                                                    relativePlayerPos.y + resolutionHauteur + camDecalageY
                                                     );
 
         Vector3Int deltaPos = new Vector3Int(
