@@ -1,0 +1,10 @@
+Boite(Clone).1,591656.-0,34.0
+Boite(Clone).1,022712.-0,34.0
+Boite(Clone).-1,442712.-0,98.0
+BouleAvecPics(Clone).0,2641199.1,58.0
+LanceFlamme(Clone).1,022712.0,3.0
+Spike Head(Clone).-0,304824.-1,041215.0
+Scie(Clone).1,781304.1,74.0
+Spike(Clone).-2,959917.-1,287734.0
+BouleAvecPics(Clone).-2,959895.0,46.0
+BouleAvecPics(Clone).1,591656.-1,14.0
