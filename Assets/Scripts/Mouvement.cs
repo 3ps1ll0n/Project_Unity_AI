@@ -43,6 +43,7 @@ public class Mouvement : MonoBehaviour
         auSol = Physics2D.Raycast(VerifierSolGauche.position, Vector2.down, 0.01f);
         //Debug.Log(VerifierSolDroite.position + " | " + VerifierSolGauche.position);
         float mouvementHorizontal = 0f;
+
         if (Mouvement.canMove) // Si la fen�tre sauvegarde est pas ouverte
         {
          if (Input.GetKey(KeyCode.R)){
@@ -76,6 +77,7 @@ public class Mouvement : MonoBehaviour
 
         if (auSol)
         {
+            AudioManager.instance.JouerBruitage("Atterissage");
             if (nombreSaut != 2) repos = true;
             nombreSaut = 2;
         }

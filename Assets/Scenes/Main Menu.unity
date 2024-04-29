@@ -996,7 +996,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musiques:
   - nom: Menu
-    clip: {fileID: 8300000, guid: cece461fff666a4d6b9ffa1c405c1891, type: 3}
+    clip: {fileID: 8300000, guid: 5bad19318d4b8527699548fa25ef04b9, type: 3}
   - nom: Editeur
     clip: {fileID: 0}
   - nom: Jeu1
@@ -1010,8 +1010,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 0121a659315624d7a96e98abd2d2a16d, type: 3}
   - nom: DoubleSaut
     clip: {fileID: 8300000, guid: 3907b9a66967648e0bd353f41fa2b1e5, type: 3}
-  - nom: Mort
-    clip: {fileID: 8300000, guid: 5a42d4d92f2984571a78eac3e662b084, type: 3}
+  - nom: Atterissage
+    clip: {fileID: 8300000, guid: 7f79857b28c5749218674d1994791213, type: 3}
   - nom: Reaparition
     clip: {fileID: 8300000, guid: cb78b0aaa9d534366aac4ff53fdc6f3a, type: 3}
   - nom: Boom
@@ -1022,6 +1022,10 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: da4a2622abe334cb488e9a1baf0c8349, type: 3}
   - nom: Clic
     clip: {fileID: 8300000, guid: e24a1bb1d8ae64cb48cad6c57dfce2d2, type: 3}
+  - nom: MortFeu
+    clip: {fileID: 8300000, guid: b36f950097f884c29af261cf227945b3, type: 3}
+  - nom: MortPiques
+    clip: {fileID: 8300000, guid: 5a42d4d92f2984571a78eac3e662b084, type: 3}
   sourceMusique: {fileID: 906214820}
   sourceBruitage: {fileID: 1132244531}
 --- !u!4 &859281743
@@ -1072,7 +1076,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
