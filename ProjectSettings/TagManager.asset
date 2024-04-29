@@ -7,7 +7,9 @@ TagManager:
   - EditeurNiveau
   - image
   - Piege
-  - Environnement
+  - Sauvegardable
+  - NiveauManager
+  - MenuTelechargement
   layers:
   - Default
   - TransparentFX

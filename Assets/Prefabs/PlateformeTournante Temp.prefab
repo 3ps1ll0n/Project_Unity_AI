@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1829845641137933832}
   - component: {fileID: -4927327676763208370}
   m_Layer: 0
-  m_Name: Plateforme1 Temp
+  m_Name: PlateformeTournante Temp
   m_TagString: image
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
