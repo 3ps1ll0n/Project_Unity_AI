@@ -994,8 +994,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bc352ed542b64a56ac68ae292236d59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musiques: []
-  bruitages: []
+  musiques:
+  - nom: Menu
+    clip: {fileID: 8300000, guid: cece461fff666a4d6b9ffa1c405c1891, type: 3}
+  - nom: Editeur
+    clip: {fileID: 0}
+  - nom: Jeu1
+    clip: {fileID: 8300000, guid: 76b53e46ff6ef6745931798de86f2bd4, type: 3}
+  - nom: Jeu2
+    clip: {fileID: 8300000, guid: 1071a86b0e4f9a34c93999f973edee04, type: 3}
+  - nom: Jeu3
+    clip: {fileID: 8300000, guid: eb50ae4393eff6045bce387e13552be5, type: 3}
+  bruitages:
+  - nom: Saut
+    clip: {fileID: 8300000, guid: 0121a659315624d7a96e98abd2d2a16d, type: 3}
+  - nom: DoubleSaut
+    clip: {fileID: 8300000, guid: 3907b9a66967648e0bd353f41fa2b1e5, type: 3}
+  - nom: Mort
+    clip: {fileID: 8300000, guid: 5a42d4d92f2984571a78eac3e662b084, type: 3}
+  - nom: Reaparition
+    clip: {fileID: 8300000, guid: cb78b0aaa9d534366aac4ff53fdc6f3a, type: 3}
+  - nom: PrendreObjet
+    clip: {fileID: 8300000, guid: e24a1bb1d8ae64cb48cad6c57dfce2d2, type: 3}
+  - nom: PoserObjet
+    clip: {fileID: 8300000, guid: 0072dd13ef3ac4e68ac08295a28df10e, type: 3}
+  - nom: RetirerObjet
+    clip: {fileID: 8300000, guid: 38db8e57c57fc4128936a857592590e1, type: 3}
+  - nom: Boom
+    clip: {fileID: 0}
+  - nom: Trampoline
+    clip: {fileID: 0}
+  - nom: Victoire
+    clip: {fileID: 8300000, guid: da4a2622abe334cb488e9a1baf0c8349, type: 3}
   sourceMusique: {fileID: 906214820}
   sourceBruitage: {fileID: 1132244531}
 --- !u!4 &859281743
