@@ -28,11 +28,11 @@ public class Mouvement : MonoBehaviour
     {
         positionInitiale = this.transform.position;
     }
-    public static void setCanMove(bool move) // Empêcher le mouvement du personnage lorsque la fenêtre pour sauvegarder est ouverte
+    public static void setCanMove(bool move) // Empï¿½cher le mouvement du personnage lorsque la fenï¿½tre pour sauvegarder est ouverte
     {
         canMove = move;
     }
-    public void setCanMoveQuitter() // Re permettre le mouvement du personnage quand la fenêtre se ferme
+    public void setCanMoveQuitter() // Re permettre le mouvement du personnage quand la fenï¿½tre se ferme
     {
         Mouvement.canMove = true;
     }
@@ -43,10 +43,9 @@ public class Mouvement : MonoBehaviour
         auSol = Physics2D.Raycast(VerifierSolGauche.position, Vector2.down, 0.01f);
         //Debug.Log(VerifierSolDroite.position + " | " + VerifierSolGauche.position);
         float mouvementHorizontal = 0f;
-        if (Mouvement.canMove) // Si la fenêtre sauvegarde est pas ouverte
+        if (Mouvement.canMove) // Si la fenï¿½tre sauvegarde est pas ouverte
         {
-         if (Input.GetKey(KeyCode.R))
-                {
+         if (Input.GetKey(KeyCode.R)){
                     this.transform.position = positionInitiale;
            
                 }
@@ -59,15 +58,22 @@ public class Mouvement : MonoBehaviour
                 {
                     mouvementHorizontal = -vitesseDeplacement * Time.deltaTime;
                 }
-                if (Input.GetKey(KeyCode.Space))
-                    if (auSol || (nombreSaut > 0 && rb.velocity.y <= 0))
-                    {
+                if (Input.GetKey(KeyCode.Space)){
+            
+                    if (auSol){
+                        AudioManager.Instance.JouerBruitage("Saut");
                         aSaute = true;
-                    }
+                      }
+                    if (nombreSaut > 0 && rb.velocity.y <= 0){
+                        AudioManager.Instance.JouerBruitage("DoubleSaut");
+                        aSaute = true;
+                      }
+                }
         }
-       
+
 
         repos = false;
+
         if (auSol)
         {
             if (nombreSaut != 2) repos = true;
