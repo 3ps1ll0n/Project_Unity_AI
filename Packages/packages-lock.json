@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.lootlocker.lootlockersdk": {
+      "version": "file:C:/Users/elisa/Downloads/unity-sdk-main/unity-sdk-main",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.unity.2d.animation": {
       "version": "9.0.4",
       "depth": 1,
@@ -195,7 +201,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.textmeshpro": {
-      "version": "3.0.6",
+      "version": "3.0.8",
       "depth": 0,
       "source": "registry",
       "dependencies": {

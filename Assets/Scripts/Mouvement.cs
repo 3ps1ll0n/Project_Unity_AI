@@ -15,36 +15,62 @@ public class Mouvement : MonoBehaviour
     public Animator animator;
     public SpriteRenderer spriteRenderer;
     public int nombreSaut = 0;
-    
+
     //*========================{PRIVATE}========================
     private bool aSaute;
     private bool auSol;
+    private static bool canMove = true;
     private bool repos = false;
     private Vector3 velocite = Vector3.zero;
+    public Vector3 positionInitiale;
 
-
+    private void Awake()
+    {
+        positionInitiale = this.transform.position;
+    }
+    public static void setCanMove(bool move) // Empêcher le mouvement du personnage lorsque la fenêtre pour sauvegarder est ouverte
+    {
+        canMove = move;
+    }
+    public void setCanMoveQuitter() // Re permettre le mouvement du personnage quand la fenêtre se ferme
+    {
+        Mouvement.canMove = true;
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
+
         auSol = Physics2D.Raycast(VerifierSolGauche.position, Vector2.down, 0.01f);
         //Debug.Log(VerifierSolDroite.position + " | " + VerifierSolGauche.position);
         float mouvementHorizontal = 0f;
-
-        //Controlleur
-        if(Input.GetKey(KeyCode.D)) {
-            mouvementHorizontal = vitesseDeplacement * Time.deltaTime;
+        if (Mouvement.canMove) // Si la fenêtre sauvegarde est pas ouverte
+        {
+         if (Input.GetKey(KeyCode.R))
+                {
+                    this.transform.position = positionInitiale;
+           
+                }
+                //Controlleur
+                if (Input.GetKey(KeyCode.D))
+                {
+                    mouvementHorizontal = vitesseDeplacement * Time.deltaTime;
+                }
+                if (Input.GetKey(KeyCode.A))
+                {
+                    mouvementHorizontal = -vitesseDeplacement * Time.deltaTime;
+                }
+                if (Input.GetKey(KeyCode.Space))
+                    if (auSol || (nombreSaut > 0 && rb.velocity.y <= 0))
+                    {
+                        aSaute = true;
+                    }
         }
-        if(Input.GetKey(KeyCode.A)) {
-            mouvementHorizontal = -vitesseDeplacement * Time.deltaTime;
-        }
-        if(Input.GetKey(KeyCode.Space))
-            if (auSol || (nombreSaut > 0 && rb.velocity.y <=0)){
-            aSaute = true;
-        }
+       
 
         repos = false;
-        if(auSol){
-            if(nombreSaut != 2) repos = true;
+        if (auSol)
+        {
+            if (nombreSaut != 2) repos = true;
             nombreSaut = 2;
         }
 
@@ -56,25 +82,31 @@ public class Mouvement : MonoBehaviour
         Flip(rb.velocity.x);
     }
 
-    void deplacerJoueur (float _mouvementHorizontal){
+    void deplacerJoueur(float _mouvementHorizontal)
+    {
         Vector3 velociteCible = new Vector2(_mouvementHorizontal, rb.velocity.y);
         rb.velocity = Vector3.SmoothDamp(rb.velocity, velociteCible, ref velocite, .05f);
 
-        if(aSaute){
+        if (aSaute)
+        {
             rb.AddForce(new Vector2(0.0f, forceDeSaut));
             aSaute = false;
             auSol = false;
-            nombreSaut --;
+            nombreSaut--;
         }
     }
 
-    void Flip(float _vitesse){
-        if(_vitesse > 0.1f){
+    void Flip(float _vitesse)
+    {
+        if (_vitesse > 0.1f)
+        {
             spriteRenderer.flipX = false;
-        } else if (_vitesse < -0.1f){
+        }
+        else if (_vitesse < -0.1f)
+        {
             spriteRenderer.flipX = true;
         }
     }
-  
+
 }
 
