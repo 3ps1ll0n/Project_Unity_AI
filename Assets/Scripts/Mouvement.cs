@@ -94,6 +94,5 @@ public class Mouvement : MonoBehaviour
             spriteRenderer.flipX = true;
         }
     }
-
 }
 
