@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
     public static GameManager instance;
-    private static EtatJeu etat;
+    private EtatJeu etat;
 
     private void Awake(){
         //Créer Singleton
@@ -28,7 +28,11 @@ public class GameManager : MonoBehaviour {
                 break;
             case EtatJeu.Options: ChangerScene(2);
                 break;
-            case EtatJeu.Jeu: ChangerScene(1);
+            case EtatJeu.Jeu:{ 
+                ChangerScene(1);
+                AudioManager.Instance.sourceMusique.Stop();
+                AudioManager.Instance.JouerMusique("Jeu"+UnityEngine.Random.Range(1,4));
+            }
                 break;
             case EtatJeu.EditeurNiveau: ChangerScene(3);
                 break;

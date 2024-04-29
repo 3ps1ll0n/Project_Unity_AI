@@ -48,13 +48,21 @@ public class Mouvement : MonoBehaviour
         {
             mouvementHorizontal = -vitesseDeplacement * Time.deltaTime;
         }
-        if (Input.GetKey(KeyCode.Space))
-            if (auSol || (nombreSaut > 0 && rb.velocity.y <= 0))
+        if (Input.GetKey(KeyCode.Space)){
+            
+        if (auSol)
             {
+                AudioManager.Instance.JouerBruitage("Saut");
                 aSaute = true;
             }
+        if (nombreSaut > 0 && rb.velocity.y <= 0){
+                AudioManager.Instance.JouerBruitage("DoubleSaut");
+                aSaute = true;
+            }
+        }
 
         repos = false;
+
         if (auSol)
         {
             if (nombreSaut != 2) repos = true;
