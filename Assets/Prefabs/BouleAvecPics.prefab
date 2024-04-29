@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 4159304409269195565}
   m_Layer: 0
   m_Name: BouleAvecPics
-  m_TagString: Untagged
+  m_TagString: Sauvegardable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

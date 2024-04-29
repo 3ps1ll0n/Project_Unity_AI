@@ -19,6 +19,7 @@ public class Mouvement : MonoBehaviour
     //*========================{PRIVATE}========================
     private bool aSaute;
     private bool auSol;
+    private static bool canMove = true;
     private bool repos = false;
     private Vector3 velocite = Vector3.zero;
     public Vector3 positionInitiale;
@@ -27,6 +28,14 @@ public class Mouvement : MonoBehaviour
     {
         positionInitiale = this.transform.position;
     }
+    public static void setCanMove(bool move) // Emp�cher le mouvement du personnage lorsque la fen�tre pour sauvegarder est ouverte
+    {
+        canMove = move;
+    }
+    public void setCanMoveQuitter() // Re permettre le mouvement du personnage quand la fen�tre se ferme
+    {
+        Mouvement.canMove = true;
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -34,27 +43,37 @@ public class Mouvement : MonoBehaviour
         auSol = Physics2D.Raycast(VerifierSolGauche.position, Vector2.down, 0.01f);
         //Debug.Log(VerifierSolDroite.position + " | " + VerifierSolGauche.position);
         float mouvementHorizontal = 0f;
-        if (Input.GetKey(KeyCode.R))
+        if (Mouvement.canMove) // Si la fen�tre sauvegarde est pas ouverte
         {
-            this.transform.position = positionInitiale;
+         if (Input.GetKey(KeyCode.R)){
+                    this.transform.position = positionInitiale;
            
+                }
+                //Controlleur
+                if (Input.GetKey(KeyCode.D))
+                {
+                    mouvementHorizontal = vitesseDeplacement * Time.deltaTime;
+                }
+                if (Input.GetKey(KeyCode.A))
+                {
+                    mouvementHorizontal = -vitesseDeplacement * Time.deltaTime;
+                }
+                if (Input.GetKey(KeyCode.Space)){
+            
+                    if (auSol){
+                        AudioManager.Instance.JouerBruitage("Saut");
+                        aSaute = true;
+                      }
+                    if (nombreSaut > 0 && rb.velocity.y <= 0){
+                        AudioManager.Instance.JouerBruitage("DoubleSaut");
+                        aSaute = true;
+                      }
+                }
         }
-        //Controlleur
-        if (Input.GetKey(KeyCode.D))
-        {
-            mouvementHorizontal = vitesseDeplacement * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            mouvementHorizontal = -vitesseDeplacement * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.Space))
-            if (auSol || (nombreSaut > 0 && rb.velocity.y <= 0))
-            {
-                aSaute = true;
-            }
+
 
         repos = false;
+
         if (auSol)
         {
             if (nombreSaut != 2) repos = true;

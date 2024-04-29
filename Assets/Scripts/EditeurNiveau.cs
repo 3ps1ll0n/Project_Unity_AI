@@ -1,14 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class EditeurNiveau : MonoBehaviour
 {
     public GameObject[] image; //Images plus transparentes pour imaginer de quoi l'item a l'air
-    public GameObject[] prefabs; //le GameObject lui-même
+    public GameObject[] prefabs; //le GameObject lui-mï¿½me
     public Controleur[] boutons;
     public Tilemap tilemap;
     public int boutonAppuye;

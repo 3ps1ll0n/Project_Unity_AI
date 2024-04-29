@@ -43,8 +43,6 @@ public class SpikeScript : MonoBehaviour
         if (this.gameObject != null)
         {
             Destroy(this.gameObject);
-            editeur.boutons[identification].quantite++;
-            editeur.boutons[identification].quantiteTexte.text = editeur.boutons[identification].quantite.ToString();
         }
     }
 }
