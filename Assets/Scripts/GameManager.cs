@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour {
     private static EtatJeu etat;
 
     private void Awake(){
+        //Créer Singleton
         if (instance == null){
             
             instance = this;
