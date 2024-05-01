@@ -14,7 +14,7 @@ public class Mouvement : MonoBehaviour
     public Transform VerifierSolDroite;
     public Animator animator;
     public SpriteRenderer spriteRenderer;
-    public int nombreSaut;
+    public int nombreSaut = 0;
 
     //*========================{PRIVATE}========================
     private bool aSaute;
@@ -43,7 +43,6 @@ public class Mouvement : MonoBehaviour
         auSol = Physics2D.Raycast(VerifierSolGauche.position, Vector2.down, 0.01f);
         //Debug.Log(VerifierSolDroite.position + " | " + VerifierSolGauche.position);
         float mouvementHorizontal = 0f;
-        canMove = true;
         if (Mouvement.canMove) // Si la fen�tre sauvegarde est pas ouverte
         {
          if (Input.GetKey(KeyCode.R)){
@@ -60,13 +59,13 @@ public class Mouvement : MonoBehaviour
                     mouvementHorizontal = -vitesseDeplacement * Time.deltaTime;
                 }
                 if (Input.GetKey(KeyCode.Space)){
-                    Debug.Log("HERE");
+            
                     if (auSol){
-                        //AudioManager.Instance.JouerBruitage("Saut");
+                        AudioManager.Instance.JouerBruitage("Saut");
                         aSaute = true;
                       }
                     if (nombreSaut > 0 && rb.velocity.y <= 0){
-                        //AudioManager.Instance.JouerBruitage("DoubleSaut");
+                        AudioManager.Instance.JouerBruitage("DoubleSaut");
                         aSaute = true;
                       }
                 }
@@ -80,6 +79,7 @@ public class Mouvement : MonoBehaviour
             if (nombreSaut != 2) repos = true;
             nombreSaut = 2;
         }
+
         deplacerJoueur(mouvementHorizontal);
         animator.SetFloat("Vitesse", Math.Abs(rb.velocity.x));
         animator.SetInteger("nbreSaut", nombreSaut);
@@ -95,7 +95,7 @@ public class Mouvement : MonoBehaviour
 
         if (aSaute)
         {
-            rb.velocity = new Vector3(0.0f, forceDeSaut);
+            rb.AddForce(new Vector2(0.0f, forceDeSaut));
             aSaute = false;
             auSol = false;
             nombreSaut--;

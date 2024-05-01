@@ -137,7 +137,7 @@ public class VueIA : MonoBehaviour{
             );
 
             relPos.x -= (int)((double)relSize.x/2);
-            relPos.y += (int)Math.Ceiling((double)relSize.y/2) + 4;
+            relPos.y += (int)Math.Ceiling((double)relSize.y/2) + 6;
 
 
             Vector3Int deltaPos = new Vector3Int(
