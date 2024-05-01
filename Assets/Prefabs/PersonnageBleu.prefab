@@ -272,14 +272,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51f4edfe7f4958447849250eba3c8e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceDeSaut: 250
+  forceDeSaut: 5
   vitesseDeplacement: 100
   rb: {fileID: 1360597426261310869}
   VerifierSolGauche: {fileID: 7823474843267781301}
   VerifierSolDroite: {fileID: 7222607906731755095}
   animator: {fileID: 5362896848760781704}
   spriteRenderer: {fileID: 8855380559291239385}
-  nombreSaut: 0
+  nombreSaut: 6
   positionInitiale: {x: 0, y: 0, z: 0}
 --- !u!95 &5362896848760781704
 Animator:
