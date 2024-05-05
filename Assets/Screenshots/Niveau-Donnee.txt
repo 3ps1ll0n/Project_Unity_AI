@@ -1,11 +1,1 @@
-Plateforme(Clone).1,402008.-1,3.0
-FallingPlatform(Clone).-2,5806.-0,18.0
-Spike(Clone).-1,822033.-1,287812.0
-Arrivée(Clone).1,781304.1,58.0
-Scie(Clone).1,022712.1,26.0
-Spike Head(Clone).1,591656.-0,9544279.0
-MiniPlateforme(Clone).-1,822008.0,46.0
-LanceFlamme(Clone).-0,6841199.0,14.0
-Boite(Clone).-0,304824.-0,34.0
-BouleAvecPics(Clone).-2,770248.1,26.0
-Trampoline(Clone).1,022712.-0,66.0
+Arrivée(Clone).2.1606.-0.82.0

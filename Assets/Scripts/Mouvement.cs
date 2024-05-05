@@ -69,10 +69,9 @@ public class Mouvement : MonoBehaviour
                         aSaute = true;
                       }
                 }
+                repos = false;
         }
 
-
-        repos = false;
 
         if (auSol)
         {
