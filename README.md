@@ -1,23 +1,10 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
+
 <a name="readme-top"></a>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
 
 
 
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
+
+
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -26,7 +13,7 @@
 
 
 
-<!-- PROJECT LOGO -->
+
 <br />
 <div align="center">
   <a href="https://github.com/3ps1ll0n/Project_Unity_AI">
@@ -42,7 +29,7 @@
 
 
 
-<!-- TABLE OF CONTENTS -->
+
 <details>
   <summary>Table des matières</summary>
   <ol>
@@ -60,7 +47,6 @@
 
 
 
-<!-- ABOUT THE PROJECT -->
 ## À propos du projet
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
@@ -83,7 +69,7 @@ Architecte Virtuel est un jeu en 2D, de style pixelisé, réalisé avec Unity 20
 
 
 
-<!-- LICENSE -->
+
 ## License
 
 Distribué sous la licence MIT. Voir `LICENSE.txt` pour plus d'informations.
@@ -92,7 +78,7 @@ Distribué sous la licence MIT. Voir `LICENSE.txt` pour plus d'informations.
 
 
 
-<!-- CONTACT -->
+
 ## Lien du projet
 
 Lien du projet: [https://github.com/3ps1ll0n/Project_Unity_AI](https://github.com3ps1ll0n/Project_Unity_AI)
@@ -101,7 +87,7 @@ Lien du projet: [https://github.com/3ps1ll0n/Project_Unity_AI](https://github.co
 
 
 
-<!-- ACKNOWLEDGMENTS -->
+
 ## Remerciements et sources
 
 * [Kshitijaucharmal, sur Medium](https://kshitijaucharmal21.medium.com/the-most-efficient-and-easy-way-to-write-the-neat-algorithm-in-python-fde6b7e0710a)
@@ -120,12 +106,11 @@ Lien du projet: [https://github.com/3ps1ll0n/Project_Unity_AI](https://github.co
 * [Coding in Flow, sur Youtube](https://www.youtube.com/@codinginflow)
 * [Documentation Unity](https://docs.unity.com/)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">revenir en haut</a>)</p>
 
 
 
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
 [contributors-shield]: https://img.shields.io/github/contributors/3ps1ll0n/Project_Unity_AI.svg?style=for-the-badge
 [contributors-url]: https://github.com/3ps1ll0n/Project_Unity_AI/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/3ps1ll0n/Project_Unity_AI.svg?style=for-the-badge
