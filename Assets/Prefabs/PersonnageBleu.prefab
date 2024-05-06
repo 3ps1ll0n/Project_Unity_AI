@@ -77,6 +77,7 @@ GameObject:
   - component: {fileID: 1360597426261310869}
   - component: {fileID: 8869041393907031105}
   - component: {fileID: 5362896848760781704}
+  - component: {fileID: 2271537098188610664}
   m_Layer: 0
   m_Name: PersonnageBleu
   m_TagString: Player
@@ -302,3 +303,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2271537098188610664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8868492734787740866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 205e4c36adf19984f9e0f681b6ead318, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  limite: -10
