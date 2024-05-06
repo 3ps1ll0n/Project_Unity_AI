@@ -204,6 +204,10 @@ public class VueIA : MonoBehaviour{
         return tilesObject;
     }
 
+    public Vector3 getPositionJoueur(){
+        return joueur.transform.position;
+    }
+
     public Vector3 getPositionArrive(){
         GameObject[] tileObject = getEveryTileObject(levelTiledMap);
 
@@ -213,7 +217,9 @@ public class VueIA : MonoBehaviour{
 
         return default;
     }
-
+    public Vector2Int getTailleVue(){
+        return new Vector2Int(resolutionLongueur, resolutionHauteur);
+    }
     public int[,] getVue(){
         return aiView;
     }
