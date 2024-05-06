@@ -49,7 +49,7 @@
 
 ## À propos du projet
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]](https://github.com/3ps1ll0n/Project_Unity_AI)
 
 Architecte Virtuel est un jeu en 2D, de style pixelisé, réalisé avec Unity 2022.3.17f1. C'est un jeu de style éditeur de niveau, dans lequel un joueur construit un niveau pour une intelligence artificielle. Ensuite, cette I.A a comme travail de naviguer et de battre le niveau créé par le joueur. Le drapeau, installé par défaut dans le niveau, indique le point d'arrivée. Le jeu utilise le packet d'assets gratuit Pixel Adventure 1, disponible sur le Unity Asset Store. Ce jeu a été conçu dans le cadre du projet d'intégration 420-204-RE de l'Hiver 2024 au Collège de Bois-de-Boulogne. 
 
