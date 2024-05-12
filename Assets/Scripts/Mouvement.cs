@@ -78,7 +78,8 @@ public class Mouvement : MonoBehaviour
             if (nombreSaut != 2) repos = true;
             nombreSaut = 2;
         }
-
+            
+        
         deplacerJoueur(mouvementHorizontal);
         animator.SetFloat("Vitesse", Math.Abs(rb.velocity.x));
         animator.SetInteger("nbreSaut", nombreSaut);
@@ -90,7 +91,7 @@ public class Mouvement : MonoBehaviour
     void deplacerJoueur(float _mouvementHorizontal)
     {
         Vector3 velociteCible = new Vector2(_mouvementHorizontal, rb.velocity.y);
-        rb.velocity = Vector3.SmoothDamp(rb.velocity, velociteCible, ref velocite, .05f);
+        rb.velocity = Vector3.SmoothDamp(rb.velocity, velociteCible, ref velocite, .05f, 100);
 
         if (aSaute)
         {
