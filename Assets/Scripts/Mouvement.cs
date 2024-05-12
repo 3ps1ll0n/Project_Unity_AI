@@ -14,7 +14,7 @@ public class Mouvement : MonoBehaviour
     public Transform VerifierSolDroite;
     public Animator animator;
     public SpriteRenderer spriteRenderer;
-    public int nombreSaut;
+    public int nombreSaut = 0;
 
     //*========================{PRIVATE}========================
     private bool aSaute;
@@ -22,6 +22,7 @@ public class Mouvement : MonoBehaviour
     private static bool canMove = true;
     private bool repos = false;
     private Vector3 velocite = Vector3.zero;
+    private float mouvementHorizontal = 0f;
     public Vector3 positionInitiale;
 
     private void Awake()
@@ -42,8 +43,7 @@ public class Mouvement : MonoBehaviour
 
         auSol = Physics2D.Raycast(VerifierSolGauche.position, Vector2.down, 0.01f);
         //Debug.Log(VerifierSolDroite.position + " | " + VerifierSolGauche.position);
-        float mouvementHorizontal = 0f;
-        canMove = true;
+        mouvementHorizontal = 0f;
         if (Mouvement.canMove) // Si la fen�tre sauvegarde est pas ouverte
         {
          if (Input.GetKey(KeyCode.R)){
@@ -53,33 +53,26 @@ public class Mouvement : MonoBehaviour
                 //Controlleur
                 if (Input.GetKey(KeyCode.D))
                 {
-                    mouvementHorizontal = vitesseDeplacement * Time.deltaTime;
+                    bougerDroite();
                 }
                 if (Input.GetKey(KeyCode.A))
                 {
-                    mouvementHorizontal = -vitesseDeplacement * Time.deltaTime;
+                    bougerGauche();
                 }
                 if (Input.GetKey(KeyCode.Space)){
-                    Debug.Log("HERE");
-                    if (auSol){
-                        //AudioManager.Instance.JouerBruitage("Saut");
-                        aSaute = true;
-                      }
-                    if (nombreSaut > 0 && rb.velocity.y <= 0){
-                        //AudioManager.Instance.JouerBruitage("DoubleSaut");
-                        aSaute = true;
-                      }
+                    sauter();
                 }
+                repos = false;
         }
 
-
-        repos = false;
 
         if (auSol)
         {
             if (nombreSaut != 2) repos = true;
             nombreSaut = 2;
         }
+            
+        
         deplacerJoueur(mouvementHorizontal);
         animator.SetFloat("Vitesse", Math.Abs(rb.velocity.x));
         animator.SetInteger("nbreSaut", nombreSaut);
@@ -95,13 +88,12 @@ public class Mouvement : MonoBehaviour
 
         if (aSaute)
         {
-            rb.velocity = new Vector3(0.0f, forceDeSaut);
+            rb.AddForce(new Vector2(0.0f, forceDeSaut));
             aSaute = false;
             auSol = false;
             nombreSaut--;
         }
     }
-
     void Flip(float _vitesse)
     {
         if (_vitesse > 0.1f)
@@ -111,6 +103,23 @@ public class Mouvement : MonoBehaviour
         else if (_vitesse < -0.1f)
         {
             spriteRenderer.flipX = true;
+        }
+    }
+    //*========================={MOUVEMENTS}=========================
+    public void bougerGauche(){
+        mouvementHorizontal = -vitesseDeplacement * Time.deltaTime;
+    }
+    public void bougerDroite(){
+        mouvementHorizontal = vitesseDeplacement * Time.deltaTime;
+    }
+    public void sauter(){
+        if (auSol){
+            //AudioManager.Instance.JouerBruitage("Saut");
+            aSaute = true;
+        }
+        if (nombreSaut > 0 && rb.velocity.y <= 0){
+            //AudioManager.Instance.JouerBruitage("DoubleSaut");
+            aSaute = true;
         }
     }
 }
