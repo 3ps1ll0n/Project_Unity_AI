@@ -8,14 +8,12 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class VueIA : MonoBehaviour{
+public class AIScripts : MonoBehaviour{
 
     //*==================={PUBLIC}===================
     public GameObject joueur;
     public int resolutionHauteur;
     public int resolutionLongueur;
-    public int tailleAffichageCellule;
-    public int camDecalageY;
     //*==================={PRIVATE}===================
     private Tilemap levelTiledMap;
     private int[,] tilesData;
@@ -65,18 +63,10 @@ public class VueIA : MonoBehaviour{
                 if(tab[j + (i * longueur)] != null) {
                     valeur = 1;
                 }
-                m[m.GetLength(0) - 1 - i, j] = valeur;
+                m[i, j] = valeur;
             }
         }
         return m;
-    }
-
-    int[,] renverserMatrice(int[,] m){
-        int[,] invM = new int[m.GetLength(0), m.GetLength(1)];
-
-        
-
-        return invM;
     }
 
     int[,] copyTilesDataToView(){
@@ -97,7 +87,7 @@ public class VueIA : MonoBehaviour{
         );
         relativeAIView = new Vector3Int  (
                                                     relativePlayerPos.x - (int)Math.Floor((double)resolutionLongueur/2) + 1,
-                                                    relativePlayerPos.y + resolutionHauteur + camDecalageY
+                                                    relativePlayerPos.y + 1
                                                     );
 
         Vector3Int deltaPos = new Vector3Int(
@@ -105,20 +95,22 @@ public class VueIA : MonoBehaviour{
                                                 relativeTileMapPos.y - relativeAIView.y
                                             );
 
-        int i = deltaPos.y >= 0 ? 0 : -deltaPos.y;
+        int i = deltaPos.y > 0 ? 0 : deltaPos.y;
+
+        Debug.Log(deltaPos.y);
 
         for(; i < resolutionHauteur; i++){
             int j = deltaPos.x < 0 ? 0 : deltaPos.x;
             for(; j < resolutionLongueur; j++){
                 int valueToCopy = 0;
-                if(i + deltaPos.y < tilesData.GetLength(0) && j - deltaPos.x < tilesData.GetLength(1) &&
-                    i + deltaPos.y >= 0 && j - deltaPos.x >= 0
+                if( i < tilesData.GetLength(0) && j - deltaPos.x < tilesData.GetLength(1) &&
+                    i >= 0 && j - deltaPos.x >= 0
                 ) {
-                    valueToCopy = tilesData[i + deltaPos.y, j - deltaPos.x];
+                    valueToCopy = tilesData[(tilesData.GetLength(0) - 1) - i, j - deltaPos.x];
                 }
                 if(copiedMatrix.GetLength(0) - i < copiedMatrix.GetLength(0) && copiedMatrix.GetLength(0) - i >= 0 
-                && i >= 0 && i < copiedMatrix.GetLength(0)){
-                    copiedMatrix[i, j] = valueToCopy;
+                && deltaPos.y + i >= 0 && deltaPos.y < copiedMatrix.GetLength(0)){
+                    copiedMatrix[deltaPos.y + i, j] = valueToCopy;
                 }
             } 
         }
@@ -137,7 +129,7 @@ public class VueIA : MonoBehaviour{
             );
 
             relPos.x -= (int)((double)relSize.x/2);
-            relPos.y += (int)Math.Ceiling((double)relSize.y/2) + 4;
+            relPos.y -= (int)((double)relSize.y/2);
 
 
             Vector3Int deltaPos = new Vector3Int(
@@ -145,17 +137,13 @@ public class VueIA : MonoBehaviour{
                                                 relPos.y - relativeAIView.y
                                             );
 
-            int i = deltaPos.y >= 0 ? 0 : -deltaPos.y;
-            int yMax = i + relSize.y;
+            int i = deltaPos.y < 0 ? 0 : deltaPos.y;
 
-            for(; i < yMax; i++){
+            for(; i < relSize.y + deltaPos.y; i++){
                 int j = deltaPos.x < 0 ? 0 : deltaPos.x;
-                int xMax = j + relSize.x;
-                for(; j < xMax; j++){
-                    if(i < tileData.GetLength(0) && i >= 0 && j < tileData.GetLength(1)){
-                        int value = -1;
-                        if(gObj.ToString().IndexOf("Arrivée(Clone)") > -1) value = 2;
-                        tileData[i,j] = value;
+                for(; j < relSize.x + deltaPos.x; j++){
+                    if(tileData.GetLength(0) - i < tileData.GetLength(0) && tileData.GetLength(0) - i >= 0 && j < tileData.GetLength(1)){
+                        tileData[tileData.GetLength(0) - i,j] = -1;
                     }
                 }  
             }
@@ -170,27 +158,29 @@ public class VueIA : MonoBehaviour{
     {
         if(!montrerAI) return;
         //Rect rectScreen = cam.pixelRect;
+        float squareSize = 20;
 
         for(int i = 0; i < aiView.GetLength(0); i++){
-            EditorGUI.TextField(new Rect(0, i*tailleAffichageCellule, tailleAffichageCellule, tailleAffichageCellule), i.ToString());
+            EditorGUI.TextField(new Rect(0, i*squareSize, squareSize, squareSize), i.ToString());
             for(int j = 0; j < aiView.GetLength(1); j++){
                 Color color = new Color(0, 0, 0, 0.5f);
                 if(j==aiView.GetLength(1)/2 && i == aiView.GetLength(0) - 2) color = new Color(0, 0, 255, 1.0f);
-                else if(aiView[i, j] == 2) color = new Color(255, 223, 0, 0.7f);
                 else if(aiView[i, j] > 0) color = new Color(255, 255, 255, 0.5f);
                 else if (aiView[i, j] < 0) color = new Color(255, 0, 0, 0.5f);
+
+                if(aiView[i, j] == 2 )color = new Color(0, 255, 0, 0.5f);
                 
-                EditorGUI.DrawRect(new Rect(j * tailleAffichageCellule, i * tailleAffichageCellule, tailleAffichageCellule, tailleAffichageCellule), color);
+                EditorGUI.DrawRect(new Rect(j * squareSize, i * squareSize, squareSize, squareSize), color);
             }
         }
         for (int i = 0; i < aiView.GetLength(1); i++){
-            EditorGUI.TextField(new Rect(i*tailleAffichageCellule, 0, tailleAffichageCellule, tailleAffichageCellule), i.ToString());
+            EditorGUI.TextField(new Rect(i*squareSize, 0, squareSize, squareSize), i.ToString());
         }
         for (int i = 0; i < aiView.GetLength(0) + 1; i++){
-            EditorGUI.DrawRect(new Rect(0, i * tailleAffichageCellule, aiView.GetLength(1) * tailleAffichageCellule, 1), Color.black);
+            EditorGUI.DrawRect(new Rect(0, i * squareSize, aiView.GetLength(1) * squareSize, 1), Color.black);
         }
          for(int j = 0; j < aiView.GetLength(1) + 1; j++){
-            EditorGUI.DrawRect(new Rect(j * tailleAffichageCellule, 0, 1, aiView.GetLength(0) * tailleAffichageCellule), Color.black);
+            EditorGUI.DrawRect(new Rect(j * squareSize, 0, 1, aiView.GetLength(0) * squareSize), Color.black);
         }
         
     }
@@ -203,31 +193,6 @@ public class VueIA : MonoBehaviour{
 
         return tilesObject;
     }
-
-    public Vector3 getPositionJoueur(){
-        return joueur.transform.position;
-    }
-
-    public Vector3 getPositionArrive(){
-        GameObject[] tileObject = getEveryTileObject(levelTiledMap);
-
-        foreach (GameObject tile in tileObject){
-            if (tile.ToString().IndexOf("Arrivée(Clone)") > -1 ) return tile.transform.position;
-        }
-
-        return default;
-    }
-    public Vector2Int getTailleVue(){
-        return new Vector2Int(resolutionLongueur, resolutionHauteur);
-    }
-    public GameObject getJoueur(){
-        return joueur;
-    }
-    public int[,] getVue(){
-        return aiView;
-    }
-    public bool getIAActivee(){return montrerAI;}
 }
-
 
 

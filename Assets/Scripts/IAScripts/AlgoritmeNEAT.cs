@@ -17,7 +17,8 @@ public class AlgoritmeNEAT : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(neat == default) neat = new NEAT(10, collecteDonne.getTailleVue().x, collecteDonne.getTailleVue().y);
+        if(!collecteDonne.getIAActivee()) return;
+        if(neat == default) neat = new NEAT(10, collecteDonne.getJoueur(), collecteDonne.getTailleVue().x, collecteDonne.getTailleVue().y);
         int[, ] vueIA = collecteDonne.getVue();
         Vector3 arrive = collecteDonne.getPositionArrive();
         if(arrive == default) Debug.Log("Veuillez Posez Un Drapeau");
