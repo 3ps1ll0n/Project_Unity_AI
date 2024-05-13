@@ -70,10 +70,9 @@ public class Mouvement : MonoBehaviour
                         aSaute = true;
                       }
                 }
+                repos = false;
         }
 
-
-        repos = false;
 
         if (auSol)
         {
@@ -115,6 +114,5 @@ public class Mouvement : MonoBehaviour
             spriteRenderer.flipX = true;
         }
     }
-
 }
 
