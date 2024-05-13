@@ -61,7 +61,7 @@ Architecte Virtuel est un jeu en 2D, de style pixelisé, réalisé avec Unity 20
 
 * [![Unity][Unity]][Unity-url]
 * [![UnityAssetStore][UnityAssetStore]][UnityAssetStore-url]
-* [![LootLocker][LootLocker]][LootLocker]
+* [![LootLocker][LootLocker]][LootLocker-url]
 * [![GitHub][GitHub]][GitHub-url]
 * [![CSharp][CSharp]][CSharp-url]
 * [![VS][VS]][VS-url]
