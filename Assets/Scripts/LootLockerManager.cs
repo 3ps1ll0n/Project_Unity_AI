@@ -29,5 +29,9 @@ public class LootLockerDir : MonoBehaviour
     {
         GameManager.instance.UpdateEtatJeu(EtatJeu.Menu);
     }
+    public void Quitter()
+    {
+        Application.Quit();
+    }
     
 }
