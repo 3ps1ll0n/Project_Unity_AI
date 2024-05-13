@@ -34,14 +34,15 @@
   <summary>Table des matières</summary>
   <ol>
     <li>
-      <a href="#about-the-project">À propos du projet</a>
+      <a href="#àproposduprojet">À propos du projet</a>
       <ul>
-        <li><a href="#built-with">Bâti avec</a></li>
+        <li><a href="#technologiesutilisees">Bâti avec</a></li>
       </ul>
     </li>
+    <li><a href="#exigences">Exigences</a></li>
     <li><a href="#license">License</a></li>
-    <li><a href="#contact">Lien du projet</a></li>
-    <li><a href="#acknowledgments">Remerciements</a></li>
+    <li><a href="#lienduprojet">Lien du projet</a></li>
+    <li><a href="#remerciements">Remerciements</a></li>
   </ol>
 </details>
 
@@ -67,7 +68,9 @@ Architecte Virtuel est un jeu en 2D, de style pixelisé, réalisé avec Unity 20
 * [![VS][VS]][VS-url]
 <p align="right">(<a href="#readme-top">revenir en haut</a>)</p>
 
-
+## Exigences
+* Compte LootLocker
+* Version 2022.3.17f1 de Unity
 
 
 ## License
