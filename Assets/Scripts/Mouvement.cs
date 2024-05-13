@@ -15,6 +15,7 @@ public class Mouvement : MonoBehaviour
     public Animator animator;
     public SpriteRenderer spriteRenderer;
     public int nombreSaut = 0;
+    public float limite;
 
     //*========================{PRIVATE}========================
     private bool aSaute;
@@ -44,6 +45,12 @@ public class Mouvement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (transform.position.y < limite)
+        {
+            repos = true;
+            transform.position = positionInitiale;
+        }
+
 
         auSol = Physics2D.Raycast(VerifierSolGauche.position, Vector2.down, 0.01f);
         //Debug.Log(VerifierSolDroite.position + " | " + VerifierSolGauche.position);
@@ -51,10 +58,7 @@ public class Mouvement : MonoBehaviour
 
         if (Mouvement.canMove) // Si la fen�tre sauvegarde est pas ouverte
         {
-         if (Input.GetKey(KeyCode.R)){
-                    this.transform.position = positionInitiale;
-           
-                }
+        
                 //Controlleur
                 if (Input.GetKey(KeyCode.D))
                 {

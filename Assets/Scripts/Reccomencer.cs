@@ -5,7 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class Reccomencer : MonoBehaviour
 {
- public void ReccomencerJeu()
+    public void Awake()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void ReccomencerJeu()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
