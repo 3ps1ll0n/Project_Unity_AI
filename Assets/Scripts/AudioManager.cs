@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager Instance;
+    public static AudioManager instance;
 
     public Sound[] musiques, bruitages;
     public AudioSource sourceMusique, sourceBruitage;
@@ -12,9 +12,9 @@ public class AudioManager : MonoBehaviour
     private void Awake()
     {
         // Créer Singleton
-        if (Instance == null)
+        if (instance == null)
         {
-            Instance = this;
+            instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else

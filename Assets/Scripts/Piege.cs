@@ -24,6 +24,7 @@ public class Trap : MonoBehaviour
         {
             if (other.gameObject == p)
             {
+                
                 Debug.Log($"Player {p.name} has been killed by a trap!");
                 // Despawn the player
                 p.SetActive(false);

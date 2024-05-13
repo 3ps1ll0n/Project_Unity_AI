@@ -43,6 +43,7 @@ public class Mouvement : MonoBehaviour
         auSol = Physics2D.Raycast(VerifierSolGauche.position, Vector2.down, 0.01f);
         //Debug.Log(VerifierSolDroite.position + " | " + VerifierSolGauche.position);
         float mouvementHorizontal = 0f;
+
         if (Mouvement.canMove) // Si la fen�tre sauvegarde est pas ouverte
         {
          if (Input.GetKey(KeyCode.R)){
@@ -61,11 +62,11 @@ public class Mouvement : MonoBehaviour
                 if (Input.GetKey(KeyCode.Space)){
             
                     if (auSol){
-                        AudioManager.Instance.JouerBruitage("Saut");
+                        AudioManager.instance.JouerBruitage("Saut");
                         aSaute = true;
                       }
                     if (nombreSaut > 0 && rb.velocity.y <= 0){
-                        AudioManager.Instance.JouerBruitage("DoubleSaut");
+                        AudioManager.instance.JouerBruitage("DoubleSaut");
                         aSaute = true;
                       }
                 }
@@ -75,6 +76,7 @@ public class Mouvement : MonoBehaviour
 
         if (auSol)
         {
+            AudioManager.instance.JouerBruitage("Atterissage");
             if (nombreSaut != 2) repos = true;
             nombreSaut = 2;
         }

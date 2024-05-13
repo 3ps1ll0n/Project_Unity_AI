@@ -68,9 +68,9 @@ private void Stop(){
 }
 
 private void OnTriggerEnter2D(){
+    AudioManager.instance.JouerBruitage("Boom");
     Stop();
-
-        remonte = true;
+    remonte = true;
     
 }
 
