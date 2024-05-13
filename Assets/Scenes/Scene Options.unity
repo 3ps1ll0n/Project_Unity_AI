@@ -441,7 +441,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 692133771858553457, guid: 8b61a9157e93bb34d9ca807a9cab39c8, type: 3}
         m_TargetAssemblyTypeName: LootLockerDir, Assembly-CSharp
-        m_MethodName: retourMenu
+        m_MethodName: retourMenuDeOptions
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

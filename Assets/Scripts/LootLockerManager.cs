@@ -29,6 +29,10 @@ public class LootLockerDir : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex -1);
     }
+    public void retourMenuDeOptions()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
+    }
     public void Quitter()
     {
         Application.Quit();
