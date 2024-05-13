@@ -23,20 +23,24 @@ public class Mouvement : MonoBehaviour
     private bool repos = false;
     private Vector3 velocite = Vector3.zero;
     private float mouvementHorizontal = 0f;
+    private float vitesseMax = 5f;
     public Vector3 positionInitiale;
 
     private void Awake()
     {
         positionInitiale = this.transform.position;
     }
+
     public static void setCanMove(bool move) // Emp�cher le mouvement du personnage lorsque la fen�tre pour sauvegarder est ouverte
     {
         canMove = move;
     }
+
     public void setCanMoveQuitter() // Re permettre le mouvement du personnage quand la fen�tre se ferme
     {
         Mouvement.canMove = true;
     }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -82,9 +86,14 @@ public class Mouvement : MonoBehaviour
     }
 
     void deplacerJoueur(float _mouvementHorizontal)
+    
     {
         Vector3 velociteCible = new Vector2(_mouvementHorizontal, rb.velocity.y);
         rb.velocity = Vector3.SmoothDamp(rb.velocity, velociteCible, ref velocite, .05f);
+
+        if(rb.velocity.magnitude > vitesseMax)
+            rb.velocity = rb.velocity.normalized * vitesseMax;
+    
 
         if (aSaute)
         {
@@ -93,6 +102,7 @@ public class Mouvement : MonoBehaviour
             auSol = false;
             nombreSaut--;
         }
+  
     }
     void Flip(float _vitesse)
     {
@@ -105,6 +115,7 @@ public class Mouvement : MonoBehaviour
             spriteRenderer.flipX = true;
         }
     }
+
     //*========================={MOUVEMENTS}=========================
     public void bougerGauche(){
         mouvementHorizontal = -vitesseDeplacement * Time.deltaTime;
