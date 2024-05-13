@@ -7078,6 +7078,10 @@ PrefabInstance:
       propertyPath: limite
       value: -5
       objectReference: {fileID: 0}
+    - target: {fileID: 2271537098188610664, guid: cbe8e6dc776b65e47898769a91430afd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8298427459002177438, guid: cbe8e6dc776b65e47898769a91430afd, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.852
@@ -7121,6 +7125,18 @@ PrefabInstance:
     - target: {fileID: 8868492734787740866, guid: cbe8e6dc776b65e47898769a91430afd, type: 3}
       propertyPath: m_Name
       value: PersonnageBleu
+      objectReference: {fileID: 0}
+    - target: {fileID: 8869041393907031105, guid: cbe8e6dc776b65e47898769a91430afd, type: 3}
+      propertyPath: limite
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8869041393907031105, guid: cbe8e6dc776b65e47898769a91430afd, type: 3}
+      propertyPath: positionInitiale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8869041393907031105, guid: cbe8e6dc776b65e47898769a91430afd, type: 3}
+      propertyPath: positionInitiale.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8639189844486138253, guid: cbe8e6dc776b65e47898769a91430afd, type: 3}

@@ -315,4 +315,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 205e4c36adf19984f9e0f681b6ead318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  limite: -10
+  limite: -5
