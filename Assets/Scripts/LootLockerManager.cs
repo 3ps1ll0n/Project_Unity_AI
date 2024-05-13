@@ -12,26 +12,26 @@ public class LootLockerDir : MonoBehaviour
         LootLockerSDKManager.StartGuestSession((reponse) => {//Ouvrir la session dans lootlocker
             if (reponse.success)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);//load la scène de jeu
+                GameManager.instance.UpdateEtatJeu(EtatJeu.Jeu);;//load la scï¿½ne de jeu
             }
             else
             {
-                Debug.Log("pas réussi");//Avertissement si la connexion à lootlocker ne fonctionne pas
+                Debug.Log("pas rï¿½ussi");//Avertissement si la connexion ï¿½ lootlocker ne fonctionne pas
             }
         });
     }
 
     public void Options()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
+        GameManager.instance.UpdateEtatJeu(EtatJeu.Options);
     }
     public void retourMenu()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex -1);
+         GameManager.instance.UpdateEtatJeu(EtatJeu.Menu);
     }
-    public void retourMenuDeOptions()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
+
+      
+
     }
     public void Quitter()
     {
