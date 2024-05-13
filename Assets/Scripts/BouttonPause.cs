@@ -13,6 +13,7 @@ public class BouttonPause : MonoBehaviour
        
         GetComponent<Button>().onClick.AddListener(TogglePause);
         Time.timeScale = 0.0f;
+
         
     }
 
