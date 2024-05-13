@@ -45,6 +45,8 @@ public class Mouvement : MonoBehaviour
     {
         repos = true;
         transform.position = positionInitiale;
+        Time.timeScale = 1f;
+
     }
 
     // Update is called once per frame
@@ -53,6 +55,7 @@ public class Mouvement : MonoBehaviour
         if (transform.position.y < limite)
         {
             respawn();
+
         }
 
 

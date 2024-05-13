@@ -51,7 +51,7 @@ public class NiveauManager : MonoBehaviour
     IEnumerator attenteCaptureEcran()
     {//Pour prendre la capture d'�cran avant que le UI ouvre
         prendreCaptureEcran();
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(1.0f);
         niveauUploadUI.SetActive(true);
         Mouvement.setCanMove(false);
     }
