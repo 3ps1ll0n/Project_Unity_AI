@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour {
     private EtatJeu etat;
 
     private void Awake(){
+        Time.timeScale = 0;
         //Créer Singleton
         if (instance == null){
             
