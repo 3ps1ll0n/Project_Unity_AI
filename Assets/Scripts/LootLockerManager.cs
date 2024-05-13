@@ -32,7 +32,7 @@ public class LootLockerDir : MonoBehaviour
 
       
 
-    }
+    
     public void Quitter()
     {
         Application.Quit();

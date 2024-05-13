@@ -33,8 +33,8 @@ public class GameManager : MonoBehaviour {
                 ChangerScene(1);
 
                     Time.timeScale = 0;
-                AudioManager.Instance.sourceMusique.Stop();
-                AudioManager.Instance.JouerMusique("Jeu"+UnityEngine.Random.Range(1,4));
+                AudioManager.instance.sourceMusique.Stop();
+                AudioManager.instance.JouerMusique("Jeu"+UnityEngine.Random.Range(1,4));
 
             }
                 break;

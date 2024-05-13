@@ -1,9 +1,9 @@
 Plateforme(Clone).1,402008.-1,3.0
 FallingPlatform(Clone).-2,5806.-0,18.0
-Spike(Clone).-1,822033.-1,287812.0
+Spike(Clone).-1,822035.-1,287306.0
 Arrivée(Clone).1,781304.1,58.0
 Scie(Clone).1,022712.1,26.0
-Spike Head(Clone).1,591656.-0,9544279.0
+Spike Head(Clone).1,591656.-0,9514192.0
 MiniPlateforme(Clone).-1,822008.0,46.0
 LanceFlamme(Clone).-0,6841199.0,14.0
 Boite(Clone).-0,304824.-0,34.0
