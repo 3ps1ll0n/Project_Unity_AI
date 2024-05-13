@@ -43,7 +43,6 @@ public class Mouvement : MonoBehaviour
 
         auSol = Physics2D.Raycast(VerifierSolGauche.position, Vector2.down, 0.01f);
         //Debug.Log(VerifierSolDroite.position + " | " + VerifierSolGauche.position);
-        mouvementHorizontal = 0f;
         if (Mouvement.canMove) // Si la fen�tre sauvegarde est pas ouverte
         {
          if (Input.GetKey(KeyCode.R)){
@@ -79,13 +78,16 @@ public class Mouvement : MonoBehaviour
         animator.SetBool("aSaute", !auSol);
         animator.SetBool("Repos", repos);
         Flip(rb.velocity.x);
+
+        mouvementHorizontal = 0f;
     }
 
     void deplacerJoueur(float _mouvementHorizontal)
     {
         Vector3 velociteCible = new Vector2(_mouvementHorizontal, rb.velocity.y);
         rb.velocity = Vector3.SmoothDamp(rb.velocity, velociteCible, ref velocite, .05f);
-
+        if(mouvementHorizontal != 0f) Debug.Log("BOUGER");
+        else{Debug.Log("PAS BOUGER");}
         if (aSaute)
         {
             rb.AddForce(new Vector2(0.0f, forceDeSaut));

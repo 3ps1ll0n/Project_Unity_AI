@@ -5,7 +5,7 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - joueur: {fileID: 8868492734787740866, guid: cbe8e6dc776b65e47898769a91430afd, type: 3}
-  executionOrder: 0
+  executionOrder: 30
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 
