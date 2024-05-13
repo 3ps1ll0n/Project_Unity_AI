@@ -518,8 +518,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 950298584}
-        m_TargetAssemblyTypeName: LootLockerDir, Assembly-CSharp
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: Quitter
         m_Mode: 1
         m_Arguments:
@@ -996,7 +996,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musiques:
   - nom: Menu
-    clip: {fileID: 8300000, guid: cece461fff666a4d6b9ffa1c405c1891, type: 3}
+    clip: {fileID: 8300000, guid: 5bad19318d4b8527699548fa25ef04b9, type: 3}
   - nom: Editeur
     clip: {fileID: 0}
   - nom: Jeu1
@@ -1010,22 +1010,22 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 0121a659315624d7a96e98abd2d2a16d, type: 3}
   - nom: DoubleSaut
     clip: {fileID: 8300000, guid: 3907b9a66967648e0bd353f41fa2b1e5, type: 3}
-  - nom: Mort
-    clip: {fileID: 8300000, guid: 5a42d4d92f2984571a78eac3e662b084, type: 3}
+  - nom: Atterissage
+    clip: {fileID: 8300000, guid: 7f79857b28c5749218674d1994791213, type: 3}
   - nom: Reaparition
     clip: {fileID: 8300000, guid: cb78b0aaa9d534366aac4ff53fdc6f3a, type: 3}
-  - nom: PrendreObjet
-    clip: {fileID: 8300000, guid: e24a1bb1d8ae64cb48cad6c57dfce2d2, type: 3}
-  - nom: PoserObjet
-    clip: {fileID: 8300000, guid: 0072dd13ef3ac4e68ac08295a28df10e, type: 3}
-  - nom: RetirerObjet
-    clip: {fileID: 8300000, guid: 38db8e57c57fc4128936a857592590e1, type: 3}
   - nom: Boom
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: de3d875ad25864e0a8372a0105432575, type: 3}
   - nom: Trampoline
     clip: {fileID: 0}
   - nom: Victoire
     clip: {fileID: 8300000, guid: da4a2622abe334cb488e9a1baf0c8349, type: 3}
+  - nom: Clic
+    clip: {fileID: 8300000, guid: e24a1bb1d8ae64cb48cad6c57dfce2d2, type: 3}
+  - nom: MortFeu
+    clip: {fileID: 8300000, guid: b36f950097f884c29af261cf227945b3, type: 3}
+  - nom: MortPiques
+    clip: {fileID: 8300000, guid: 5a42d4d92f2984571a78eac3e662b084, type: 3}
   sourceMusique: {fileID: 906214820}
   sourceBruitage: {fileID: 1132244531}
 --- !u!4 &859281743
@@ -1997,7 +1997,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1986876476}
-  - component: {fileID: 1986876477}
   m_Layer: 5
   m_Name: Main Menu
   m_TagString: Untagged
@@ -2027,18 +2026,6 @@ RectTransform:
   m_AnchoredPosition: {x: 15.5, y: -4.2}
   m_SizeDelta: {x: 200, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1986876477
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1986876475}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eeb6fd0ab66e16446b64858560ec7673, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2145125741
 GameObject:
   m_ObjectHideFlags: 0

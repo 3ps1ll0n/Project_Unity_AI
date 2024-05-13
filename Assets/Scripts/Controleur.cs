@@ -20,13 +20,14 @@ public class Controleur : MonoBehaviour
     //Ajouter un objet
     public void BoutonAppuye()
     {
+        AudioManager.instance.JouerBruitage("Clic");
 
-            Vector2 positionEcran = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-            Vector2 position = Camera.main.ScreenToWorldPoint(positionEcran);
-            Instantiate(editeur.image[identification], new Vector3(position.x, position.y, 0), Quaternion.identity);
-            
-            appuye = true;
-            editeur.boutonAppuye = identification;
+        Vector2 positionEcran = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        Vector2 position = Camera.main.ScreenToWorldPoint(positionEcran);
+        Instantiate(editeur.image[identification], new Vector3(position.x, position.y, 0), Quaternion.identity);
+
+        appuye = true;
+        editeur.boutonAppuye = identification;
 
       
     }
