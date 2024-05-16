@@ -14,7 +14,7 @@ public class Respawn : MonoBehaviour
     {
         if(transform.position.y < limite)
         {
-            
+            transform.position = new Vector3(0, 0, 0);
         }
     }
 }

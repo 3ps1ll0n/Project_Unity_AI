@@ -177,7 +177,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camEditeur: {fileID: 1297958195}
   camJeu: {fileID: 55430338}
-  taille: 2.01
 --- !u!114 &7867795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,7 +223,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7867794}
         m_TargetAssemblyTypeName: BouttonPause, Assembly-CSharp
-        m_MethodName: setTailleCameraJouer
+        m_MethodName: TogglePauseAndSwitchCamera
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -326,7 +325,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &55430337
 AudioListener:
   m_ObjectHideFlags: 0
@@ -370,7 +369,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4.5595164
+  orthographic size: 2.01
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -8858,6 +8857,7 @@ GameObject:
   - component: {fileID: 2009356034}
   - component: {fileID: 2009356033}
   - component: {fileID: 2009356032}
+  - component: {fileID: 2009356035}
   m_Layer: 5
   m_Name: Bouton Rejouer mm niveau
   m_TagString: Untagged
@@ -8929,9 +8929,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2062534453}
-        m_TargetAssemblyTypeName: Mouvement, Assembly-CSharp
-        m_MethodName: respawn
+      - m_Target: {fileID: 2063028105}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2009356035}
+        m_TargetAssemblyTypeName: ReccomencerMemeNiveau, Assembly-CSharp
+        m_MethodName: Reccomencer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8941,7 +8953,43 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2063028105}
+      - m_Target: {fileID: 1297958194}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 55430336}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 868700004}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 357758659}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -8991,6 +9039,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2009356030}
   m_CullTransparentMesh: 1
+--- !u!114 &2009356035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2009356030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abf971c6836fe55438da71095b58a7b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  joueur: {fileID: 1658261521}
 --- !u!1 &2029204587
 GameObject:
   m_ObjectHideFlags: 0
