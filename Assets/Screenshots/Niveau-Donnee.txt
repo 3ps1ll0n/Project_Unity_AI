@@ -1,2 +1,5 @@
 Arrivée.0,69.6,8.0
-BouleAvecPics(Clone).1,022712.-0,66.0
+Trampoline(Clone).0,4537679.-0,5.0
+Trampoline(Clone).0,4537679.1,1.0
+Trampoline(Clone).0,6434159.2,7.0
+Trampoline(Clone).0,6434159.4,46.0

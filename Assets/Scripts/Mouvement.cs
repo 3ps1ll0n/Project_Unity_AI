@@ -41,14 +41,21 @@ public class Mouvement : MonoBehaviour
     {
         Mouvement.canMove = true;
     }
+    public void respawn()
+    {
+        repos = true;
+        transform.position = positionInitiale;
+        Time.timeScale = 1f;
+
+    }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         if (transform.position.y < limite)
         {
-            repos = true;
-            transform.position = positionInitiale;
+            respawn();
+
         }
 
 
