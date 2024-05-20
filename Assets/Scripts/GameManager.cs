@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour {
     private EtatJeu etat;
 
     private void Awake(){
+        Time.timeScale = 0;
         //Créer Singleton
         if (instance == null){
             
@@ -30,8 +31,11 @@ public class GameManager : MonoBehaviour {
                 break;
             case EtatJeu.Jeu:{ 
                 ChangerScene(1);
+
+                    Time.timeScale = 0;
                 AudioManager.instance.sourceMusique.Stop();
                 AudioManager.instance.JouerMusique("Jeu"+UnityEngine.Random.Range(1,4));
+
             }
                 break;
             case EtatJeu.EditeurNiveau: ChangerScene(3);

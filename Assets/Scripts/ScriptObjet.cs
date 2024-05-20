@@ -18,14 +18,14 @@ public class SpikeScript : MonoBehaviour
 
     }
 
-    void OnBecameInvisible() //Si l'objet sort de l'écran (tombe)
+   /* void OnBecameInvisible() //Si l'objet sort de l'écran (tombe)
     {
         if (!detruit)
         {
             supprimerObjet();
         }
     }
-
+   */
 
   
     
