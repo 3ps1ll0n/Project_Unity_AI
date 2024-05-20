@@ -19,7 +19,9 @@ public class credits : MonoBehaviour
             GameManager.instance.UpdateEtatJeu(EtatJeu.Menu);
         }
 
-
+        if(position.localPosition.y > 1100){
+            GameManager.instance.UpdateEtatJeu(EtatJeu.Menu);
+        }
 
         position.Translate(translation*Time.deltaTime*vitesse);
 
