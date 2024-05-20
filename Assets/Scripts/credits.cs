@@ -25,8 +25,6 @@ public class Credits : MonoBehaviour
         }
 
         position.Translate(translation*Time.deltaTime*vitesse);
-        Debug.Log(Time.deltaTime);
-
     
     }
 }

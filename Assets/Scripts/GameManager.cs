@@ -25,7 +25,14 @@ public class GameManager : MonoBehaviour {
         etat = nouvelEtat;
 
         switch (nouvelEtat){
-            case EtatJeu.Menu: ChangerScene(0);
+            case EtatJeu.Menu:{
+                 ChangerScene(0);
+
+                AudioManager.instance.sourceMusique.Stop();
+                AudioManager.instance.JouerMusique("Menu");
+
+            
+            }
                 break;
 
             case EtatJeu.Jeu:{ 
