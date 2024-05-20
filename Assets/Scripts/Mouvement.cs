@@ -20,6 +20,8 @@ public class Mouvement : MonoBehaviour
     //*========================{PRIVATE}========================
     private bool aSaute;
     private bool auSol;
+
+    private bool atteris;
     private static bool canMove = true;
     private bool repos = false;
     private Vector3 velocite = Vector3.zero;
@@ -86,9 +88,15 @@ public class Mouvement : MonoBehaviour
 
         if (auSol)
         {
-            AudioManager.instance.JouerBruitage("Atterissage");
+            if(!atteris){
+                AudioManager.instance.JouerBruitage("Atterissage");
+                atteris = true;
+            }
             if (nombreSaut != 2) repos = true;
             nombreSaut = 2;
+        }
+        else{
+            atteris = false;
         }
             
         
