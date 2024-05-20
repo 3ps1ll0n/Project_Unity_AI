@@ -1977,6 +1977,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: "Arriv\xE9e"
       objectReference: {fileID: 0}
+    - target: {fileID: 8408158586303540271, guid: 54305a90b0d2c8d478c1be2e4ab760e0, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1540970518216938377, guid: 54305a90b0d2c8d478c1be2e4ab760e0, type: 3}
     - {fileID: 5680681065943699108, guid: 54305a90b0d2c8d478c1be2e4ab760e0, type: 3}

@@ -1,5 +1,5 @@
 Arrivée.0,69.6,8.0
-Trampoline(Clone).0,4537679.-0,5.0
-Trampoline(Clone).0,4537679.1,1.0
-Trampoline(Clone).0,6434159.2,7.0
-Trampoline(Clone).0,6434159.4,46.0
+Trampoline(Clone).0,2641199.-0,5.0
+Trampoline(Clone).0,2641199.0,9400001.0
+Trampoline(Clone).1,21236.3,18.0
+Trampoline(Clone).0,074472.4,94.0
