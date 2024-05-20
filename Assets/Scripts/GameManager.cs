@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour {
     private EtatJeu etat;
 
     private void Awake(){
+        Time.timeScale = 0;
         //Créer Singleton
         if (instance == null){
             
@@ -24,18 +25,32 @@ public class GameManager : MonoBehaviour {
         etat = nouvelEtat;
 
         switch (nouvelEtat){
-            case EtatJeu.Menu: ChangerScene(0);
-                break;
-            case EtatJeu.Options: ChangerScene(2);
-                break;
-            case EtatJeu.Jeu:{ 
-                ChangerScene(1);
+            case EtatJeu.Menu:{
+                 ChangerScene(0);
+
                 AudioManager.instance.sourceMusique.Stop();
-                AudioManager.instance.JouerMusique("Jeu"+UnityEngine.Random.Range(1,4));
+                AudioManager.instance.JouerMusique("Menu");
+
+            
             }
                 break;
-            case EtatJeu.EditeurNiveau: ChangerScene(3);
+
+            case EtatJeu.Jeu:{ 
+                ChangerScene(1);
+
+                    Time.timeScale = 0;
+                AudioManager.instance.sourceMusique.Stop();
+                AudioManager.instance.JouerMusique("Jeu"+UnityEngine.Random.Range(1,4));
+
+            }
                 break;
+                
+            case EtatJeu.Credits: {
+                Time.timeScale = 1;
+                ChangerScene(2);
+            }
+                break;
+
             default:
                 throw new ArgumentOutOfRangeException(nameof(nouvelEtat), nouvelEtat, null);
 
@@ -51,7 +66,6 @@ public class GameManager : MonoBehaviour {
 
 public enum EtatJeu {
     Menu,
-    Options,
-    Jeu,
-    EditeurNiveau
+    Credits,
+    Jeu
 }
