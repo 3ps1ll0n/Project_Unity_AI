@@ -21,16 +21,14 @@ public class LootLockerDir : MonoBehaviour
         });
     }
 
-    public void Options()
+    public void Credits()
     {
-        GameManager.instance.UpdateEtatJeu(EtatJeu.Options);
+        GameManager.instance.UpdateEtatJeu(EtatJeu.Credits);
     }
     public void retourMenu()
     {
          GameManager.instance.UpdateEtatJeu(EtatJeu.Menu);
     }
-
-      
 
     
     public void Quitter()

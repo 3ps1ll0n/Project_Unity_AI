@@ -27,8 +27,7 @@ public class GameManager : MonoBehaviour {
         switch (nouvelEtat){
             case EtatJeu.Menu: ChangerScene(0);
                 break;
-            case EtatJeu.Options: ChangerScene(2);
-                break;
+
             case EtatJeu.Jeu:{ 
                 ChangerScene(1);
 
@@ -38,8 +37,13 @@ public class GameManager : MonoBehaviour {
 
             }
                 break;
-            case EtatJeu.EditeurNiveau: ChangerScene(3);
+                
+            case EtatJeu.Credits: {
+                Time.timeScale = 1;
+                ChangerScene(2);
+            }
                 break;
+
             default:
                 throw new ArgumentOutOfRangeException(nameof(nouvelEtat), nouvelEtat, null);
 
@@ -55,7 +59,6 @@ public class GameManager : MonoBehaviour {
 
 public enum EtatJeu {
     Menu,
-    Options,
-    Jeu,
-    EditeurNiveau
+    Credits,
+    Jeu
 }
