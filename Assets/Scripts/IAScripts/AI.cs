@@ -2,32 +2,37 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Xml.Serialization;
 using Unity.Burst.Intrinsics;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Windows.Speech;
 
 public class VariablesGlobales{
     public static int NBRE_DONNER_SORTIE = 3;
 }
 
-enum TypesNeuronne{
+public enum TypesNeuronne{
     NULL,
     Entree,
     Sortie,
     Cache,
 }
-
+[Serializable]
 class NEAT{
     int populationSize;
     int generation;
     int iaActive = 0;
     double bestFitness;
-    double pourentageIndividuTue = 0.7;
+    double pourentageIndividuTue = 0.85;
     double distanceMaxEntreIndividu = 2;
     static List<Connexion> inovations;
+    public bool doitReset = false;
     public static Vector2 tailleVueIA;
     public static int NBRE_OUTPUT = 3;
+
     AI[] ais;
     Mouvement mouvementJoueur;
 
@@ -37,6 +42,7 @@ class NEAT{
     public NEAT(int populationSize, Mouvement mouvementJoueur, int vueIAW, int vueIAH){
         this.populationSize = populationSize;
         ais = new AI[populationSize];
+        iaActive = 0;
         inovations = new List<Connexion>();
         tailleVueIA.x = vueIAW;
         tailleVueIA.y = vueIAH;
@@ -44,6 +50,27 @@ class NEAT{
         for(int i = 0; i < populationSize; i++){
             ais[i] = new AI();
         }
+    }
+    public void resetAI(){
+        for(int i = 0; i < ais[iaActive].getNeuronnes().Count; i++){
+            ais[iaActive].getNeuronnes()[i].resetValeur();
+        }
+    }
+    public void passerProchainIndividu(){
+        if(ais[iaActive].getFitness() > bestFitness) bestFitness = ais[iaActive].getFitness();
+        iaActive++;
+        if(iaActive >= populationSize){
+            doitReset = true;
+            iaActive = 0;
+        }
+    }
+    public void genererNouvelleGeneration(){
+        reproduireIndividuesElites(retirerIAFaible(separerIaEnEspeces()));
+
+        foreach(AI ai in ais){
+            appliquerMutationAleatoire(ai);
+        }
+        generation++;
     }
     public void calculerFitnessIAActuelle(Vector3 pos, Vector3 posArrive){
         ais[iaActive].calculerFitness(pos, posArrive);
@@ -99,12 +126,27 @@ class NEAT{
         }
 
         double tot = sommesDesFitnessRelatives.Sum();
-        
-        for(int i = 0; i < sommesDesFitnessRelatives.Count; i++){//Determine combien d'individu il y aura dans chaque espece
-            if(sommesDesFitnessRelatives[i] == 0.0) individuesParEspeces.Add(1);
-            individuesParEspeces.Add((int)(sommesDesFitnessRelatives[i]/tot)); 
-        }
+        int sommeRestante = populationSize;
 
+        for(int i = 0; i < sommesDesFitnessRelatives.Count; i++)  {
+            if(sommesDesFitnessRelatives[i] == 0.0) {
+                sommeRestante--;
+            }
+        }
+        //Debug.Log(sommeRestante + " - " + generation);
+        //Debug.LogWarning(sommesDesFitnessRelatives.Sum() + " | " + tot + " / Count : " + sommesDesFitnessRelatives.Count + "  - " + generation);
+        for(int i = 0; i < sommesDesFitnessRelatives.Count; i++){//Determine combien d'individu il y aura dans chaque espece
+            if(sommesDesFitnessRelatives[i] == 0.0){
+                individuesParEspeces.Add(1);
+            } else {
+                individuesParEspeces.Add((int)(Math.Floor((sommesDesFitnessRelatives[i]/tot)*sommeRestante))); 
+                //Debug.Log("fr : " + sommesDesFitnessRelatives[i] + "  - " + generation);
+                //Debug.LogWarning(((double)sommesDesFitnessRelatives[i]/tot)*100.0 + "% | " + Math.Floor((sommesDesFitnessRelatives[i]/tot)*sommeRestante) + "  - " + generation);
+            }
+        }
+        //Debug.LogWarning("Somme : " + individuesParEspeces.Sum());
+        //Debug.Log(individuesParEspeces.Sum());
+        //Debug.Log(individuesParEspeces.ToString());
         while(individuesParEspeces.Sum() < populationSize){//S'assure que le nombre d'individu reste constant
             int index = individuesParEspeces.IndexOf(individuesParEspeces.Max());
             individuesParEspeces[index] = individuesParEspeces[index] + 1;
@@ -112,18 +154,108 @@ class NEAT{
 
         Dictionary<int, List<AI>> nouvellePopulation = new Dictionary<int, List<AI>>();
 
-        for(int i = 1; i <= iaElites.Count; i++){//! A FINIR
+        for(int i = 1; i <= iaElites.Count; i++){
+            var rand = new System.Random();
             nouvellePopulation.Add(i, new List<AI>());
-            
+            for(int j = 0; j < individuesParEspeces[i - 1]; j++){
+                int index1 = rand.Next(0, iaElites[i].Count());
+                int index2;
+                if (iaElites[i].Count() == 1){
+                    nouvellePopulation[i].Add(iaElites[i][0]);
+                }
+                else {
+                    do{
+                        index2 = rand.Next(0, iaElites[i].Count());
+                    }while(index2 == index1);
+                    nouvellePopulation[i].Add(appliquerCrossover(iaElites[i][index1], iaElites[i][index2]));
+                }
+            }
+        }
+        ais = new AI[populationSize];
+        int k = 0;
+        for(int i = 1; i <= nouvellePopulation.Count; i++){
+            for(int j = 0; j < nouvellePopulation[i].Count; j++){
+                //Debug.Log(" valeur de k : " + k + " | ind par espece : " + individuesParEspeces.Sum());
+                ais[k] = nouvellePopulation[i][j];
+                k++;
+            }
+        }
+        if(k != ais.Count()) Debug.LogError("PAS ASSEZ D'ÉLÉMENTS CRÉÉES");
+
+    }
+    AI appliquerCrossover(AI iaElites1, AI iaElites2){
+        AI nouvelleIA = new AI();
+
+        var c1 = AIMathFunction.trierListConnexion(iaElites1.getConnexions());
+        var c2 = AIMathFunction.trierListConnexion(iaElites2.getConnexions());
+
+        if(c1.Count == 0 && c2.Count == 0){
+            return new AI();
         }
 
+        if(c1.Count == 0) return iaElites2;
+        else if (c2.Count == 0) return iaElites1;
+        else {
+            for(int i = 0; i < c1.Count; i++){
+                for(int j = 0; j < c2.Count; j++){
+                //Debug.Log(i + " : " + c1.Count + " | " + j + " : " + c2.Count);
+                    if(c1[i].getNombreInovation() == c2[j].getNombreInovation()){
+                        nouvelleIA.addConnexion(new Connexion(
+                            (iaElites1.getFitness() < iaElites2.getFitness()) ? c1[i].getPoids() : c2[j].getPoids(),
+                            c1[i].getPositionEntre(),
+                            c1[i].getPositionSortie()
+                        ));
+                        nouvelleIA.ajouterNeuronne(c1[i].getPositionSortie());
+                        nouvelleIA.ajouterNeuronne(c1[i].getPositionEntre());
+                        c1.RemoveAt(i);
+                        c2.RemoveAt(j);
+                        //j--;
+                        //i--;
+                        if(c2.Count == j || c1.Count == i)break;
+                    }
+                }
+                if(c1.Count == i) break;
+            }
+        }
+
+        for(int i = 0; i < c1.Count(); i++){
+            nouvelleIA.addConnexion(c1[i]);
+            nouvelleIA.ajouterNeuronne(c1[i].getPositionSortie());
+            nouvelleIA.ajouterNeuronne(c1[i].getPositionEntre());
+        }
+        for(int i = 0; i < c2.Count(); i++){
+            nouvelleIA.addConnexion(c2[i]);
+            nouvelleIA.ajouterNeuronne(c2[i].getPositionSortie());
+            nouvelleIA.ajouterNeuronne(c2[i].getPositionEntre());
+        }
+
+        return nouvelleIA;
     }
-    public void appliquerCrossover(AI iaElites1, AI iaElites2){
 
-    }
-
-    public void appliquerMutationAleatoire(){
-
+    public void appliquerMutationAleatoire(AI ai){
+        var rand = new System.Random();
+        int nbreTentative = 1;
+        for(int i = 0;i < nbreTentative; i++){
+            if(rand.NextDouble() < 0.3){
+                var nbre = rand.Next(0, 10000);
+                if(nbre < 3000){
+                    ai.mutationAjouterConnexion();
+                    //Debug.Log("Connexion ajouté");
+                }
+                else if(nbre < 3010){
+                    ai.mutationAjouterNeuronne();
+                    //Debug.Log("Neurone ajouté");
+                }
+                else if(nbre < 3500){
+                    ai.mutationChangerEtatConnexion();
+                    //Debug.Log("Etat Connexion changé");
+                }
+                else if(nbre < 9500){
+                    ai.mutationModifierPoids();
+                    //Debug.Log("Poids Connexion Modifié");
+                }  
+            }
+        }
     }
     public static void ajouterSiInovation(Connexion connexion){
         for(int i = 0; i < inovations.Count(); i++){
@@ -152,26 +284,39 @@ class NEAT{
     }
 
     //*====================={GETTER ET SETTER}=====================
-
+    public bool[] getMouvementAJouer(){
+        return ais[iaActive].getDonneSortie();
+    }
     public void donnerEntree(int[, ] entree){
         ais[iaActive].avoirDonneEntre(entree);
     }
     public double getFitnessActive(){return ais[iaActive].getFitness();}
+    public int getIdentifiantIAActive(){
+        return iaActive;
+    }
+    public int getGeneration(){
+        return generation;
+    }
+    public double getMeilleurFitness () {return bestFitness;}
     /// <summary>
     /// Permet d'avoir l'IA qui joue
     /// </summary>
-    AI avoirIAActive(){
+    public AI avoirIAActive(){
         return ais[iaActive];
     }
 }
 //*============================{CLASS POUR IA}============================
-class Connexion{
+public class Connexion{
     double poids;
     int positionEntre;
     int positionSortie;
     int innovNbre;
     bool active = true;
-    public Connexion(double poids, int positionEntre, int positionSortie){}
+    public Connexion(double poids, int positionEntre, int positionSortie){
+        this.poids = poids;
+        this.positionEntre = positionEntre;
+        this.positionSortie = positionSortie;
+    }
     public double passeValeur(double donneEntree){
         return donneEntree * poids;
     }
@@ -185,7 +330,6 @@ class Connexion{
     public void setActive(bool estActive){this.active = estActive;}
 }
 class Neuronnes{
-    double biais;
     double valeurStocke;
     TypesNeuronne type; 
 
@@ -193,13 +337,11 @@ class Neuronnes{
         type = tn;
         valeurStocke = 0;
     }
-
-    public void setValeur(double v) {valeurStocke = v;}
+    public void resetValeur(){valeurStocke = 0;}
+    public void ajouterValeur(double v) {valeurStocke += v;}
     public double getValeurStocke(){return valeurStocke;}
-    public void modifierBiais(double valeurAjoutee){biais += valeurAjoutee;}
     public TypesNeuronne GetTypesNeuronne(){return type;}
 }
-
 class AI {
     List<Neuronnes> neuronnes = new List<Neuronnes>();
     List<Connexion> connexions = new List<Connexion>();
@@ -208,13 +350,13 @@ class AI {
     double fitnessCorrige;
 
     public AI(){
+        for (int i = 0; i < NEAT.NBRE_OUTPUT; i++){
+            neuronnes.Add(new Neuronnes(TypesNeuronne.Sortie));
+        }
         for (int i = 0; i < NEAT.tailleVueIA.x * NEAT.tailleVueIA.y; i++)
         {
             neuronnes.Add(new Neuronnes(TypesNeuronne.Entree));
             //Debug.Log("Neuronnes Entree");
-        }
-        for (int i = 0; i < NEAT.NBRE_OUTPUT; i++){
-            neuronnes.Add(new Neuronnes(TypesNeuronne.Sortie));
         }
     }
     //*========================={CALCUL}=========================
@@ -225,8 +367,15 @@ class AI {
     }
     public void calculerSortie(){
         foreach(Connexion connexion in connexions){
-            if(connexion.estActive())neuronnes[connexion.getPositionSortie()].setValeur(connexion.passeValeur(neuronnes[connexion.getPositionEntre()].getValeurStocke()));
+            //if(connexion.getPositionSortie() >= connexions.Count) neuronnes.Add(new Neuronnes(TypesNeuronne.Cache));
+            if(connexion.estActive()) neuronnes[connexion.getPositionSortie()].ajouterValeur(connexion.passeValeur(neuronnes[connexion.getPositionEntre()].getValeurStocke()));
         }
+    }
+
+    //*========================={METHODES}=========================
+
+    public void ajouterNeuronne(int index){
+        if(index >= neuronnes.Count()) neuronnes.Add(new Neuronnes(TypesNeuronne.Cache));
     }
 
     //*========================={MUTATION}=========================
@@ -239,13 +388,13 @@ class AI {
         int positionSortie = 0;
 
 
-        if(VariablesGlobales.NBRE_DONNER_SORTIE + (int)(NEAT.tailleVueIA.x * NEAT.tailleVueIA.y) > neuronnes.Count){
-            switch(rand.Next(0, 1)){
+        if(VariablesGlobales.NBRE_DONNER_SORTIE + (int)(NEAT.tailleVueIA.x * NEAT.tailleVueIA.y) < neuronnes.Count){
+            switch(rand.Next(0, 2)){
                 case 0:
                     positionSortie = rand.Next(0, VariablesGlobales.NBRE_DONNER_SORTIE);
                     break;
                 case 1:
-                    positionSortie = rand.Next((int)(NEAT.tailleVueIA.x * NEAT.tailleVueIA.y) + VariablesGlobales.NBRE_DONNER_SORTIE - 1, neuronnes.Count);
+                    positionSortie = rand.Next((int)(NEAT.tailleVueIA.x * NEAT.tailleVueIA.y) + VariablesGlobales.NBRE_DONNER_SORTIE, neuronnes.Count);
                     break;
             }
         } else {
@@ -281,8 +430,8 @@ class AI {
         int anciennePositionSortie = connexions[cIndex].getPositionSortie();
         double ancienPoids = connexions[cIndex].getPoids();
 
-        var NouvelleConnexionUne = new Connexion(1 , anciennePositionEntre, neuronnes.Count - 1);
-        var NouvelleConnexionDeux = new Connexion(ancienPoids, neuronnes.Count - 1, anciennePositionSortie);
+        var NouvelleConnexionUne = new Connexion(1 , anciennePositionEntre, neuronnes.Count() - 1);
+        var NouvelleConnexionDeux = new Connexion(ancienPoids, neuronnes.Count() - 1, anciennePositionSortie);
 
         NEAT.ajouterSiInovation(NouvelleConnexionUne);
         NEAT.ajouterSiInovation(NouvelleConnexionDeux);
@@ -307,7 +456,7 @@ class AI {
         connexions[cIndex].modifierPoids(rand.NextDouble() * 2.0 * AIMathFunction.genererSigneAleatoire());
     }
 
-    public void mutationChangerEtatCOnnexion(){
+    public void mutationChangerEtatConnexion(){
         if(connexions.Count == 0) return;
         var rand = new System.Random();
         var cIndex = rand.Next(0, connexions.Count());
@@ -318,15 +467,15 @@ class AI {
     public void avoirDonneEntre(int[,] donne){
         for(int i = 0; i < NEAT.tailleVueIA.y; i++){
             for(int j = 0; j < NEAT.tailleVueIA.x; j++){
-                neuronnes[j + i * (int)NEAT.tailleVueIA.x].setValeur(donne[i, j]);
+                neuronnes[j + i * (int)NEAT.tailleVueIA.x].ajouterValeur(donne[i, j]);
             }
         }
     }
     public bool[] getDonneSortie(){
+        calculerSortie();
         bool[] donneSortie = new bool[VariablesGlobales.NBRE_DONNER_SORTIE];
-
         for(int i = 0; i < donneSortie.GetLength(0); i++){
-            donneSortie[i] = neuronnes[i].getValeurStocke() > 0.5;
+            donneSortie[i] = neuronnes[i].getValeurStocke() > 0;
         }
 
         return donneSortie;
@@ -335,26 +484,31 @@ class AI {
     public double getFitnessCorrige(){return fitnessCorrige;}
     public int getNombreConnection(){return connexions.Count();}
     public List<Connexion> getConnexions(){return connexions;}
+    public List<Neuronnes> getNeuronnes(){return neuronnes;}
     public void setDonneeEntree(int[,] donneeEntree){
         for(int i = 0; i < donneeEntree.GetLength(0); i++){
             for(int j = 0; j < donneeEntree.GetLength(1); j++){
                 //Debug.Log(neuronnes.Count + " = " + donneeEntree.GetLength(1) * donneeEntree.GetLength(0));
-                neuronnes[i * donneeEntree.GetLength(1) + j + VariablesGlobales.NBRE_DONNER_SORTIE].setValeur(donneeEntree[i,j]);
+                neuronnes[i * donneeEntree.GetLength(1) + j + VariablesGlobales.NBRE_DONNER_SORTIE].ajouterValeur(donneeEntree[i,j]);
             }
         }
     }
     public void setFitnessCorrige(double cf){ fitnessCorrige = cf;}
+
+    public void addConnexion(Connexion connexion){
+        connexions.Add(connexion);
+    }
 }
 
 class AIMathFunction {
     //*=============================={CONSTANTES}==============================
-    private const double IMPACT_EXCES = 1;
-    private const double IMPACT_DISJOINT = 1;
-    private const double IMPACT_DIFFERENCES_POIDS = 1;
+    private const double IMPACT_EXCES = 0.3;
+    private const double IMPACT_DISJOINT = 0.3;
+    private const double IMPACT_DIFFERENCES_POIDS = 0.05;
     //*==============================={METHODES}===============================
     public static int genererSigneAleatoire(){
         var rand = new System.Random();
-        return rand.Next(0, 1) == 0 ?-11 : 1;
+        return rand.Next(0, 2) == 0 ? -1 : 1;
     }
     public static double[] sigmoid(double[] coucheData){
         double[] nouvelleDonne = new double[coucheData.Length];
@@ -370,15 +524,17 @@ class AIMathFunction {
         int maxGene = Math.Max(ai1.getNombreConnection(), ai2.getNombreConnection()); //Nombre de gene dans l'individu en contenant le plus
         int exces = Math.Abs(ai1.getNombreConnection() - ai2.getNombreConnection()); //Nombre de gene en exces
 
+        if(maxGene == 0) return 0;
+
         var geneCoIa1 = trierListConnexion(ai1.getConnexions());
         var geneCoIa2 = trierListConnexion(ai2.getConnexions());
 
         int disjoint = 0;
         double differencePoids = 0;
 
-        for(int i = 0; i < Math.Max(geneCoIa1.Count, geneCoIa2.Count); i++){
+        for(int i = 0; i < geneCoIa1.Count; i++){
             bool estDisjoint = true;
-            for(int j = 0; j < Math.Min(geneCoIa1.Count, geneCoIa2.Count); j++){
+            for(int j = 0; j < geneCoIa2.Count; j++){
                 if(geneCoIa1[i].getNombreInovation() == geneCoIa2[j].getNombreInovation()){//Calcule la différence de valeur entre les poids semblables
                     differencePoids += Math.Abs(geneCoIa1[i].getPoids() - geneCoIa2[j].getPoids());
                     estDisjoint = false;
@@ -389,7 +545,7 @@ class AIMathFunction {
         }   
         //Formule du calcul de la distance entre les individues
         reponse = (IMPACT_EXCES * exces) / maxGene + (IMPACT_DISJOINT * disjoint) / maxGene + IMPACT_DIFFERENCES_POIDS * differencePoids;
-
+        //Debug.Log("Distance : " + reponse);
         return reponse;
     }
 
@@ -405,7 +561,7 @@ class AIMathFunction {
         return somme;
     }
 
-    static List<Connexion> trierListConnexion(List<Connexion> connexions){
+    public static List<Connexion> trierListConnexion(List<Connexion> connexions){
         List<Connexion> list = new List<Connexion>();
 
         for(int i = 0; i < connexions.Count; i++){

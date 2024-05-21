@@ -42,6 +42,12 @@ public class VueIA : MonoBehaviour{
         //DessinerData(tilesData);
 
         if(Input.GetKeyDown("p")) montrerAI = !montrerAI;
+        if(Input.GetKeyDown(KeyCode.RightArrow)) {
+            Time.timeScale += 0.2f;
+        }
+        if(Input.GetKeyDown(KeyCode.LeftArrow)) {
+            Time.timeScale -= 0.2f;
+        }
     }
 
     int[,] getTiledMapData(Tilemap map){
@@ -167,7 +173,7 @@ public class VueIA : MonoBehaviour{
 
     
     void OnGUI()
-    {
+    {   /*
         if(!montrerAI) return;
         //Rect rectScreen = cam.pixelRect;
 
@@ -191,7 +197,7 @@ public class VueIA : MonoBehaviour{
         }
          for(int j = 0; j < aiView.GetLength(1) + 1; j++){
             EditorGUI.DrawRect(new Rect(j * tailleAffichageCellule, 0, 1, aiView.GetLength(0) * tailleAffichageCellule), Color.black);
-        }
+        }*/
         
     }
     //*==================={GETTER}===================
@@ -203,6 +209,7 @@ public class VueIA : MonoBehaviour{
 
         return tilesObject;
     }
+    public bool getMontrerAI(){return montrerAI;}
 
     public Vector3 getPositionJoueur(){
         return joueur.transform.position;
@@ -216,6 +223,18 @@ public class VueIA : MonoBehaviour{
         }
 
         return default;
+    }
+    public bool getJoueurMort(){
+        return !joueur.activeInHierarchy;
+    }
+    public void activerJoueur(){
+        joueur.SetActive(true);
+    }
+    public void desactiverJoueur(){
+        joueur.SetActive(false);
+    }
+    public void setPosJoueur(Vector3 pos){
+        joueur.transform.position = pos;
     }
     public Vector2Int getTailleVue(){
         return new Vector2Int(resolutionLongueur, resolutionHauteur);
