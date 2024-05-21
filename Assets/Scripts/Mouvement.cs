@@ -14,40 +14,57 @@ public class Mouvement : MonoBehaviour
     public Animator animator;
     public SpriteRenderer spriteRenderer;
     public int nombreSaut = 0;
+    public float limite;
 
     //*========================{PRIVATE}========================
     private bool aSaute;
     private bool auSol;
+
+    private bool atteris;
     private static bool canMove = true;
     private bool repos = false;
     private Vector3 velocite = Vector3.zero;
     private float mouvementHorizontal = 0f;
+    private float vitesseMax = 5f;
     public Vector3 positionInitiale;
 
     private void Awake()
     {
         positionInitiale = this.transform.position;
     }
+
     public static void setCanMove(bool move) // Emp�cher le mouvement du personnage lorsque la fen�tre pour sauvegarder est ouverte
     {
         canMove = move;
     }
+
     public void setCanMoveQuitter() // Re permettre le mouvement du personnage quand la fen�tre se ferme
     {
         Mouvement.canMove = true;
     }
+    public void respawn()
+    {
+        repos = true;
+        transform.position = positionInitiale;
+        Time.timeScale = 1f;
+
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (transform.position.y < limite)
+        {
+            respawn();
+
+        }
+
 
         auSol = Physics2D.Raycast(VerifierSolGauche.position, Vector2.down, 0.01f);
         //Debug.Log(VerifierSolDroite.position + " | " + VerifierSolGauche.position);
         if (Mouvement.canMove) // Si la fen�tre sauvegarde est pas ouverte
         {
-         if (Input.GetKey(KeyCode.R)){
-                    this.transform.position = positionInitiale;
-           
-                }
+        
                 //Controlleur
                 if (Input.GetKey(KeyCode.D))
                 {
@@ -58,7 +75,9 @@ public class Mouvement : MonoBehaviour
                     bougerGauche();
                 }
                 if (Input.GetKey(KeyCode.Space)){
+
                     sauter();
+
                 }
                 repos = false;
         }
@@ -66,8 +85,15 @@ public class Mouvement : MonoBehaviour
 
         if (auSol)
         {
+            if(!atteris){
+                AudioManager.instance.JouerBruitage("Atterissage");
+                atteris = true;
+            }
             if (nombreSaut != 2) repos = true;
             nombreSaut = 2;
+        }
+        else{
+            atteris = false;
         }
             
         
@@ -82,11 +108,14 @@ public class Mouvement : MonoBehaviour
     }
 
     void deplacerJoueur(float _mouvementHorizontal)
+    
     {
         Vector3 velociteCible = new Vector2(_mouvementHorizontal, rb.velocity.y);
         rb.velocity = Vector3.SmoothDamp(rb.velocity, velociteCible, ref velocite, .05f);
-        if(mouvementHorizontal != 0f) Debug.Log("BOUGER");
-        else{Debug.Log("PAS BOUGER");}
+
+        if(rb.velocity.magnitude > vitesseMax)
+            rb.velocity = rb.velocity.normalized * vitesseMax;
+    
         if (aSaute)
         {
             rb.AddForce(new Vector2(0.0f, forceDeSaut));
@@ -94,6 +123,7 @@ public class Mouvement : MonoBehaviour
             auSol = false;
             nombreSaut--;
         }
+  
     }
     void Flip(float _vitesse)
     {
@@ -106,6 +136,7 @@ public class Mouvement : MonoBehaviour
             spriteRenderer.flipX = true;
         }
     }
+
     //*========================={MOUVEMENTS}=========================
     public void bougerGauche(){
         mouvementHorizontal = -vitesseDeplacement * Time.deltaTime;
