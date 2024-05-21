@@ -29,7 +29,7 @@ public class NEAT{
     public double bestFitness;
     public double pourentageIndividuTue = 0.85;
     public double distanceMaxEntreIndividu = 2;
-    public List<Connexion> inovations;
+    public static List<Connexion> inovations;
     public bool doitReset = false;
     public bool aEteInitialise = false;
     
@@ -262,7 +262,6 @@ public class NEAT{
         }
     }
     public static void ajouterSiInovation(Connexion connexion){
-        var inov = getInovationList;
         for(int i = 0; i < inovations.Count(); i++){
             var c = inovations[i];
             if(c.getPositionEntre() == connexion.getPositionEntre() && c.getPositionSortie() == connexion.getPositionSortie()){

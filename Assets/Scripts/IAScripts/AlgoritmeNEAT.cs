@@ -66,7 +66,7 @@ public class AlgoritmeNEAT : MonoBehaviour
             fitnessMaxIndividuActuelle = -int.MaxValue;
         }
         if(neat.doitReset){
-            sauvegarderNEAT();
+            //sauvegarderNEAT();
             neat.genererNouvelleGeneration();
             neat.doitReset = false;
         }
