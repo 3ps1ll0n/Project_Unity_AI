@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml;
 using System.Xml.Serialization;
 using Unity.VisualScripting;
@@ -13,8 +14,10 @@ public class AlgoritmeNEAT : MonoBehaviour
 {
     public VueIA collecteDonne;
     public Mouvement mouvementJoueur;
-    public string nomFichier = Directory.GetCurrentDirectory() + "\\defaultAI.xml";
+    public string nomFichier = "defaultAI.xml";
     public int nombreIndividusParEspece;
+    public static Vector2 tailleVueIA;
+    public static int NBRE_OUTPUT = 3;
     private int[,] vueIA = new int[1,1];
     private bool pause;
     private int imageSansProgresser = 0;
@@ -29,8 +32,10 @@ public class AlgoritmeNEAT : MonoBehaviour
     {
         if(!collecteDonne.getIAActivee()) return;
         if(neat == default) {
-            //neat = chargerNEAT();
-            neat =  new NEAT(nombreIndividusParEspece, mouvementJoueur, collecteDonne.getTailleVue().x, collecteDonne.getTailleVue().y);
+            tailleVueIA = new Vector3(collecteDonne.getTailleVue().x, collecteDonne.getTailleVue().y);
+            neat = chargerNEAT();
+            if(!neat.aEteInitialise) neat.initNEAT(nombreIndividusParEspece);
+            neat.setMouvement(mouvementJoueur);
         }
         //if(neat == default) {return;}
         vueIA = collecteDonne.getVue();
@@ -96,26 +101,22 @@ public class AlgoritmeNEAT : MonoBehaviour
         GUI.Label(new Rect(0, 480, 150, 30), "Poids Total : " + sommeCo, style);
         */
     }
-    public void sauvegarderNEAT(){
-        if (neat == null) { return;}
-        try
-        {
-            XmlDocument xmlDocument = new XmlDocument();
-            XmlSerializer serializer = new XmlSerializer(neat.GetType());
-            using (MemoryStream stream = new MemoryStream())
-            {
-                serializer.Serialize(stream, neat);
-                stream.Position = 0;
-                xmlDocument.Load(stream);
-                xmlDocument.Save(nomFichier);
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError("" + ex.Message);
-        } 
+    private void sauvegarderNEAT() {
+        System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(neat.GetType());
+        //Stream s = new Stream(nomFichier, "write");
+        StreamWriter writer = File.CreateText(nomFichier);
+        x.Serialize(writer, neat);
+        Console.WriteLine();
+        Console.ReadLine();
+        writer.Close();
     }
-
+    private NEAT chargerNEAT(){
+        if(!File.Exists(nomFichier)) return new NEAT();
+        var mySerializer = new XmlSerializer(typeof(NEAT));
+        using var myFileStream = new FileStream(nomFichier, FileMode.Open);
+        var myObject = (NEAT)mySerializer.Deserialize(myFileStream);
+        return myObject;
+    }
     /*public NEAT chargerNEAT(){
         if (string.IsNullOrEmpty(nomFichier) || !File.Exists(nomFichier)) { return new NEAT(nombreIndividusParEspece, mouvementJoueur, collecteDonne.getTailleVue().x, collecteDonne.getTailleVue().y); }
         NEAT objectOut = new NEAT(nombreIndividusParEspece, mouvementJoueur, collecteDonne.getTailleVue().x, collecteDonne.getTailleVue().y);

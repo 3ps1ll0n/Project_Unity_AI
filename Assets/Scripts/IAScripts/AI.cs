@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 using Unity.Burst.Intrinsics;
 using Unity.Mathematics;
 using Unity.VisualScripting;
+using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Windows.Speech;
@@ -13,7 +14,7 @@ using UnityEngine.Windows.Speech;
 public class VariablesGlobales{
     public static int NBRE_DONNER_SORTIE = 3;
 }
-
+[Serializable]
 public enum TypesNeuronne{
     NULL,
     Entree,
@@ -21,32 +22,32 @@ public enum TypesNeuronne{
     Cache,
 }
 [Serializable]
-class NEAT{
-    int populationSize;
-    int generation;
-    int iaActive = 0;
-    double bestFitness;
-    double pourentageIndividuTue = 0.85;
-    double distanceMaxEntreIndividu = 2;
-    static List<Connexion> inovations;
+public class NEAT{
+    public int populationSize;
+    public int generation;
+    public int iaActive = 0;
+    public double bestFitness;
+    public double pourentageIndividuTue = 0.85;
+    public double distanceMaxEntreIndividu = 2;
+    public List<Connexion> inovations;
     public bool doitReset = false;
-    public static Vector2 tailleVueIA;
-    public static int NBRE_OUTPUT = 3;
+    public bool aEteInitialise = false;
+    
+    public int NBRE_OUTPUT = 3;
 
-    AI[] ais;
-    Mouvement mouvementJoueur;
+    public AI[] ais;
+    private Mouvement mouvementJoueur;
 
     /// <summary>
     /// Constructeur de la class NEAT
     /// </summary>
-    public NEAT(int populationSize, Mouvement mouvementJoueur, int vueIAW, int vueIAH){
+    public NEAT(){}
+    public void initNEAT(int populationSize){
         this.populationSize = populationSize;
         ais = new AI[populationSize];
         iaActive = 0;
         inovations = new List<Connexion>();
-        tailleVueIA.x = vueIAW;
-        tailleVueIA.y = vueIAH;
-        this.mouvementJoueur = mouvementJoueur;
+        aEteInitialise = true;
         for(int i = 0; i < populationSize; i++){
             ais[i] = new AI();
         }
@@ -200,11 +201,14 @@ class NEAT{
                 for(int j = 0; j < c2.Count; j++){
                 //Debug.Log(i + " : " + c1.Count + " | " + j + " : " + c2.Count);
                     if(c1[i].getNombreInovation() == c2[j].getNombreInovation()){
-                        nouvelleIA.addConnexion(new Connexion(
-                            (iaElites1.getFitness() < iaElites2.getFitness()) ? c1[i].getPoids() : c2[j].getPoids(),
+                        Connexion co = new Connexion();
+                        co.initConnexions((
+                            iaElites1.getFitness() < iaElites2.getFitness()) ? c1[i].getPoids() : c2[j].getPoids(),
                             c1[i].getPositionEntre(),
                             c1[i].getPositionSortie()
-                        ));
+                        );
+                        
+                        nouvelleIA.addConnexion(co);
                         nouvelleIA.ajouterNeuronne(c1[i].getPositionSortie());
                         nouvelleIA.ajouterNeuronne(c1[i].getPositionEntre());
                         c1.RemoveAt(i);
@@ -258,6 +262,7 @@ class NEAT{
         }
     }
     public static void ajouterSiInovation(Connexion connexion){
+        var inov = getInovationList;
         for(int i = 0; i < inovations.Count(); i++){
             var c = inovations[i];
             if(c.getPositionEntre() == connexion.getPositionEntre() && c.getPositionSortie() == connexion.getPositionSortie()){
@@ -284,6 +289,9 @@ class NEAT{
     }
 
     //*====================={GETTER ET SETTER}=====================
+    public static Connexion[] getInovationList(){
+        return inovations.ToArray();
+    }
     public bool[] getMouvementAJouer(){
         return ais[iaActive].getDonneSortie();
     }
@@ -304,15 +312,20 @@ class NEAT{
     public AI avoirIAActive(){
         return ais[iaActive];
     }
+    public void setMouvement(Mouvement m){
+        mouvementJoueur = m;
+    }
 }
 //*============================{CLASS POUR IA}============================
+[Serializable]
 public class Connexion{
-    double poids;
-    int positionEntre;
-    int positionSortie;
-    int innovNbre;
-    bool active = true;
-    public Connexion(double poids, int positionEntre, int positionSortie){
+    public double poids;
+    public int positionEntre;
+    public int positionSortie;
+    public int innovNbre;
+    public bool active = true;
+    public Connexion(){}
+    public void initConnexions(double poids, int positionEntre, int positionSortie){
         this.poids = poids;
         this.positionEntre = positionEntre;
         this.positionSortie = positionSortie;
@@ -329,12 +342,12 @@ public class Connexion{
     public void setNombreInovation(int innovNbre){this.innovNbre = innovNbre;}
     public void setActive(bool estActive){this.active = estActive;}
 }
-class Neuronnes{
-    double valeurStocke;
-    TypesNeuronne type; 
+[Serializable]
+public class Neuronnes{
+    public double valeurStocke;
+    public TypesNeuronne type; 
 
-    public Neuronnes(TypesNeuronne tn){
-        type = tn;
+    public Neuronnes(){
         valeurStocke = 0;
     }
     public void resetValeur(){valeurStocke = 0;}
@@ -342,20 +355,21 @@ class Neuronnes{
     public double getValeurStocke(){return valeurStocke;}
     public TypesNeuronne GetTypesNeuronne(){return type;}
 }
-class AI {
-    List<Neuronnes> neuronnes = new List<Neuronnes>();
-    List<Connexion> connexions = new List<Connexion>();
-    int espece;
-    double fitness;
-    double fitnessCorrige;
+[Serializable]
+public class AI {
+    public List<Neuronnes> neuronnes = new List<Neuronnes>();
+    public List<Connexion> connexions = new List<Connexion>();
+    public int espece;
+    public double fitness;
+    public double fitnessCorrige;
 
     public AI(){
-        for (int i = 0; i < NEAT.NBRE_OUTPUT; i++){
-            neuronnes.Add(new Neuronnes(TypesNeuronne.Sortie));
+        for (int i = 0; i < AlgoritmeNEAT.NBRE_OUTPUT; i++){
+            neuronnes.Add(new Neuronnes());
         }
-        for (int i = 0; i < NEAT.tailleVueIA.x * NEAT.tailleVueIA.y; i++)
+        for (int i = 0; i < AlgoritmeNEAT.tailleVueIA.x * AlgoritmeNEAT.tailleVueIA.y; i++)
         {
-            neuronnes.Add(new Neuronnes(TypesNeuronne.Entree));
+            neuronnes.Add(new Neuronnes());
             //Debug.Log("Neuronnes Entree");
         }
     }
@@ -375,7 +389,7 @@ class AI {
     //*========================={METHODES}=========================
 
     public void ajouterNeuronne(int index){
-        if(index >= neuronnes.Count()) neuronnes.Add(new Neuronnes(TypesNeuronne.Cache));
+        if(index >= neuronnes.Count()) neuronnes.Add(new Neuronnes());
     }
 
     //*========================={MUTATION}=========================
@@ -383,37 +397,41 @@ class AI {
     public void mutationAjouterConnexion(){
         var rand = new System.Random();
         Connexion connexion;
-
-        int positionEntre = rand.Next(VariablesGlobales.NBRE_DONNER_SORTIE, (int)(NEAT.tailleVueIA.x * NEAT.tailleVueIA.y));
+        int positionEntre = rand.Next(VariablesGlobales.NBRE_DONNER_SORTIE, (int)(AlgoritmeNEAT.tailleVueIA.x * AlgoritmeNEAT.tailleVueIA.y));
         int positionSortie = 0;
 
 
-        if(VariablesGlobales.NBRE_DONNER_SORTIE + (int)(NEAT.tailleVueIA.x * NEAT.tailleVueIA.y) < neuronnes.Count){
+        if(VariablesGlobales.NBRE_DONNER_SORTIE + (int)(AlgoritmeNEAT.tailleVueIA.x * AlgoritmeNEAT.tailleVueIA.y) < neuronnes.Count){
             switch(rand.Next(0, 2)){
                 case 0:
                     positionSortie = rand.Next(0, VariablesGlobales.NBRE_DONNER_SORTIE);
                     break;
                 case 1:
-                    positionSortie = rand.Next((int)(NEAT.tailleVueIA.x * NEAT.tailleVueIA.y) + VariablesGlobales.NBRE_DONNER_SORTIE, neuronnes.Count);
+                    positionSortie = rand.Next((int)(AlgoritmeNEAT.tailleVueIA.x * AlgoritmeNEAT.tailleVueIA.y) + VariablesGlobales.NBRE_DONNER_SORTIE, neuronnes.Count);
                     break;
             }
         } else {
             positionSortie = rand.Next(0, VariablesGlobales.NBRE_DONNER_SORTIE);
         }
-        connexion = new Connexion(
+        connexion = new Connexion();
+        connexion.initConnexions(
                                     rand.NextDouble() * AIMathFunction.genererSigneAleatoire(), 
                                     positionEntre,
-                                    positionSortie);
+                                    positionSortie
+                                );
+        
         connexions.Insert(0, connexion);
 
         if (neuronnes[positionSortie].GetTypesNeuronne() == TypesNeuronne.Cache){
             positionEntre = positionSortie;
             positionSortie = rand.Next(0, VariablesGlobales.NBRE_DONNER_SORTIE);
             
-            connexion = new Connexion(
+            connexion = new Connexion();
+            connexion.initConnexions(
                                         rand.NextDouble() * AIMathFunction.genererSigneAleatoire(), 
                                         positionEntre,
-                                        positionSortie);
+                                        positionSortie
+                                    );
             connexions.Add(connexion);
         }
         NEAT.ajouterSiInovation(connexion);
@@ -424,14 +442,17 @@ class AI {
         var rand = new System.Random();
         int cIndex = rand.Next(0, connexions.Count());
 
-        neuronnes.Add(new Neuronnes(TypesNeuronne.Cache));
+        neuronnes.Add(new Neuronnes());
 
         int anciennePositionEntre = connexions[cIndex].getPositionEntre();
         int anciennePositionSortie = connexions[cIndex].getPositionSortie();
         double ancienPoids = connexions[cIndex].getPoids();
 
-        var NouvelleConnexionUne = new Connexion(1 , anciennePositionEntre, neuronnes.Count() - 1);
-        var NouvelleConnexionDeux = new Connexion(ancienPoids, neuronnes.Count() - 1, anciennePositionSortie);
+        var NouvelleConnexionUne = new Connexion();
+        var NouvelleConnexionDeux = new Connexion();
+
+        NouvelleConnexionUne.initConnexions(1 , anciennePositionEntre, neuronnes.Count() - 1);
+        NouvelleConnexionDeux.initConnexions(ancienPoids, neuronnes.Count() - 1, anciennePositionSortie);
 
         NEAT.ajouterSiInovation(NouvelleConnexionUne);
         NEAT.ajouterSiInovation(NouvelleConnexionDeux);
@@ -465,9 +486,9 @@ class AI {
 
     //*====================={GETTER ET SETTER}=====================
     public void avoirDonneEntre(int[,] donne){
-        for(int i = 0; i < NEAT.tailleVueIA.y; i++){
-            for(int j = 0; j < NEAT.tailleVueIA.x; j++){
-                neuronnes[j + i * (int)NEAT.tailleVueIA.x].ajouterValeur(donne[i, j]);
+        for(int i = 0; i < AlgoritmeNEAT.tailleVueIA.y; i++){
+            for(int j = 0; j < AlgoritmeNEAT.tailleVueIA.x; j++){
+                neuronnes[j + i * (int)AlgoritmeNEAT.tailleVueIA.x].ajouterValeur(donne[i, j]);
             }
         }
     }

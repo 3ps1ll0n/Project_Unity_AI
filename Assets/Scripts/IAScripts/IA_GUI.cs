@@ -133,7 +133,7 @@ public class IA_GUI : MonoBehaviour
             entre.z = 0;
             
             if((entre == default || sortie == default) && touteLesConnexions.Count != 0){
-                Debug.Log("ERRORRR");
+                Debug.Log("ERREURRR");
             }
             vertices.Add(entre);
             vertices.Add(sortie);
@@ -154,13 +154,13 @@ public class IA_GUI : MonoBehaviour
         Graphics.DrawMesh(m, Vector3.zero, Quaternion.identity, mat, 0, Camera.main, 0);
 
         //*============================{AFFICHAGE DATA}==========================
-        GUI.Label(new Rect(0 + decalageX, 240 + decalageY, 150, 30), "Fitness Max : " + neat.getMeilleurFitness(), style);
-        GUI.Label(new Rect(0 + decalageX, 270 + decalageY, 150, 30), "Fitness Max Individu : " + neat.getFitnessMaxIndividus(), style);
-        GUI.Label(new Rect(0 + decalageX, 300 + decalageY, 150, 30), "Fitness : " + neat.getFitnessActive(), style);
+        GUI.Label(new Rect(0 + decalageX, 240 + decalageY, 150, 30), "Habilite Max : " + neat.getMeilleurFitness(), style);
+        GUI.Label(new Rect(0 + decalageX, 270 + decalageY, 150, 30), "Habilite Max Individu : " + neat.getFitnessMaxIndividus(), style);
+        GUI.Label(new Rect(0 + decalageX, 300 + decalageY, 150, 30), "Habilite : " + neat.getFitnessActive(), style);
         GUI.Label(new Rect(0 + decalageX, 330 + decalageY, 150, 30), "Individu : " + neat.getIdentifiantActif(), style);
         GUI.Label(new Rect(0 + decalageX, 360 + decalageY, 150, 30), "Generation : " + neat.getGeneration(), style);
         GUI.Label(new Rect(0 + decalageX, 390 + decalageY, 150, 30), "Connexions : " + neat.getConnexions(), style);
-        GUI.Label(new Rect(0 + decalageX, 420 + decalageY, 150, 30), "Neuronnes Cache : " + neat.getNbreNeuronnesCache(), style);
+        GUI.Label(new Rect(0 + decalageX, 420 + decalageY, 150, 30), "Neuronnes Caches : " + neat.getNbreNeuronnesCache(), style);
         GUI.Label(new Rect(0 + decalageX, 450 + decalageY, 150, 30), "Vitesse temps : " + Time.timeScale, style);
     }
 }
