@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 public class Mouvement : MonoBehaviour
 {
@@ -86,7 +83,7 @@ public class Mouvement : MonoBehaviour
         if (auSol)
         {
             if(!atteris){
-                AudioManager.instance.JouerBruitage("Atterissage");
+                //AudioManager.instance.JouerBruitage("Atterissage");
                 atteris = true;
             }
             if (nombreSaut != 2) repos = true;

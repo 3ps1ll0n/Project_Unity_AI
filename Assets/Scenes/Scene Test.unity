@@ -3669,6 +3669,7 @@ GameObject:
   - component: {fileID: 852651436}
   - component: {fileID: 852651435}
   - component: {fileID: 852651434}
+  - component: {fileID: 852651437}
   m_Layer: 0
   m_Name: IA
   m_TagString: Untagged
@@ -3689,6 +3690,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collecteDonne: {fileID: 852651435}
+  mouvementJoueur: {fileID: 2062534453}
+  nomFichier: defaultAI.xml
+  nombreIndividusParEspece: 150
 --- !u!114 &852651435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3702,8 +3706,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joueur: {fileID: 1658261521}
-  resolutionHauteur: 15
-  resolutionLongueur: 33
+  resolutionHauteur: 20
+  resolutionLongueur: 30
   tailleAffichageCellule: 15
   camDecalageY: 1
 --- !u!4 &852651436
@@ -3721,6 +3725,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &852651437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852651433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4306210edfe66b448ba4585f988bac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tailleAffichageCellule: 15
+  vue: {fileID: 852651435}
+  neat: {fileID: 852651434}
+  mat: {fileID: 2100000, guid: d75b8f41e959450c84ac6e967084d3e1, type: 2}
+  decalageX: 10
+  decalageY: 100
 --- !u!1 &868700004
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEditor;
@@ -21,7 +20,7 @@ public class DonneeEntreeNiveau : MonoBehaviour
         transform.localScale = Vector3.one;
 
         nomTexte.text = nomNiveau;
-        imageNiveau.sprite = imageNiveau.sprite;//Pour actualiser l'image téléchargée
+        imageNiveau.sprite = imageNiveau.sprite;//Pour actualiser l'image tï¿½lï¿½chargï¿½e
 
     }
     public void chargerNiveau()

@@ -1,15 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Xml.Serialization;
-using Unity.Burst.Intrinsics;
-using Unity.Mathematics;
-using Unity.VisualScripting;
-using UnityEditor.Search;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.Windows.Speech;
+
 
 public class VariablesGlobales{
     public static int NBRE_DONNER_SORTIE = 3;
