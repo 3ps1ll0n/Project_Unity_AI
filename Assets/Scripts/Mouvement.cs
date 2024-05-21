@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-
 public class Mouvement : MonoBehaviour
 {
     //*========================{PUBLIC}========================
@@ -63,8 +62,6 @@ public class Mouvement : MonoBehaviour
 
         auSol = Physics2D.Raycast(VerifierSolGauche.position, Vector2.down, 0.01f);
         //Debug.Log(VerifierSolDroite.position + " | " + VerifierSolGauche.position);
-       
-
         if (Mouvement.canMove) // Si la fen�tre sauvegarde est pas ouverte
         {
         
@@ -106,7 +103,7 @@ public class Mouvement : MonoBehaviour
         animator.SetBool("aSaute", !auSol);
         animator.SetBool("Repos", repos);
         Flip(rb.velocity.x);
-        
+
         mouvementHorizontal = 0f;
     }
 
@@ -119,7 +116,6 @@ public class Mouvement : MonoBehaviour
         if(rb.velocity.magnitude > vitesseMax)
             rb.velocity = rb.velocity.normalized * vitesseMax;
     
-
         if (aSaute)
         {
             rb.AddForce(new Vector2(0.0f, forceDeSaut));
