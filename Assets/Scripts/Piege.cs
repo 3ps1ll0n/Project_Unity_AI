@@ -1,50 +1,60 @@
 using UnityEngine;
 
-public class Trap : MonoBehaviour
+public class Piège : MonoBehaviour
 {
-    // Array to store references to all player GameObjects
-    public GameObject[] players;
+    // Tableau pour stocker les références à tous les GameObjects des joueurs
+    public GameObject[] joueurs;
 
+    /// <summary>
+    /// Start est appelé avant la première frame update
+    /// </summary>
     void Start()
     {
-        // Find all player GameObjects with the "Player" tag
-        players = GameObject.FindGameObjectsWithTag("Player");
+        // Trouve tous les GameObjects des joueurs avec le tag "Player"
+        joueurs = GameObject.FindGameObjectsWithTag("Player");
 
-        // Store initial positions for each player
-        foreach (var p in players)
+        // Stocke les positions initiales pour chaque joueur
+        foreach (var j in joueurs)
         {
-            // You can adjust this based on your game design
-            p.GetComponent<Mouvement>().positionInitiale = p.transform.position;
+            // Vous pouvez ajuster cela en fonction de la conception de votre jeu
+            j.GetComponent<Mouvement>().positionInitiale = j.transform.position;
         }
     }
 
+    /// <summary>
+    /// OnTriggerEnter2D est appelé lorsque l'objet entre en collision avec un trigger 2D
+    /// </summary>
+    /// <param name="other">Le collider de l'objet entrant en collision</param>
     void OnTriggerEnter2D(Collider2D other)
     {
-        foreach (var p in players)
+        foreach (var j in joueurs)
         {
-            if (other.gameObject == p)
+            if (other.gameObject == j)
             {
-                
-                Debug.Log($"Player {p.name} has been killed by a trap!");
-                // Despawn the player
-                p.SetActive(false);
+                Debug.Log($"Le joueur {j.name} a été tué par un piège !");
+                // Désactive le joueur
+                j.SetActive(false);
 
-                // Respawn the player after 3 seconds
-                Invoke(nameof(RespawnPlayer), 3f);
+                // Fait réapparaître le joueur après 3 secondes
+                Invoke(nameof(ReapparaitreJoueur), 3f);
             }
         }
     }
 
-    void RespawnPlayer()
+    /// <summary>
+    /// Réapparaît le joueur à sa position initiale
+    /// </summary>
+    void ReapparaitreJoueur()
     {
-        foreach (var p in players)
+        foreach (var j in joueurs)
         {
-            // Respawn the player at their initial position
-            p.transform.position = p.GetComponent<Mouvement>().positionInitiale;
+            // Réapparaît le joueur à sa position initiale
+            j.transform.position = j.GetComponent<Mouvement>().positionInitiale;
 
-            // Reactivate the player
-            p.SetActive(true);
+            // Réactive le joueur
+            j.SetActive(true);
         }
     }
 }
+
 

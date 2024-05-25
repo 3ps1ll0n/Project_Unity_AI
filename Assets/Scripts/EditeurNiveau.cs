@@ -5,49 +5,58 @@ using UnityEngine.Tilemaps;
 
 public class EditeurNiveau : MonoBehaviour
 {
-    public GameObject[] image; //Images plus transparentes pour imaginer de quoi l'item a l'air
-    public GameObject[] prefabs; //le GameObject lui-meme
-    public Controleur[] boutons;
-    public Tilemap tilemap;
-    public int boutonAppuye;
+    public GameObject[] image; // Images transparentes pour visualiser l'apparence des items
+    public GameObject[] prefabs; // Les GameObjects eux-mêmes à instancier
+    public Controleur[] boutons; // Les boutons de contrôle pour sélectionner les items
+    public Tilemap tilemap; // La tilemap où les items seront placés
+    public int boutonAppuye; // Index du bouton actuellement appuyé
+
 
     private void Update()
     {
-        Vector2 positionEcran = new Vector2(Input.mousePosition.x, Input.mousePosition.y); //suivre
+        // Récupère la position de la souris sur l'écran
+        Vector2 positionEcran = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        // Convertit la position de l'écran en position dans le monde
         Vector2 position = Camera.main.ScreenToWorldPoint(positionEcran);
 
+        // Vérifie si le bouton de la souris est enfoncé et si le bouton de contrôle est activé
         if (Input.GetMouseButtonDown(0) && boutons[boutonAppuye].appuye)
         {
-            boutons[boutonAppuye].appuye = false;
-            InstantiateInsideTilemap(prefabs[boutonAppuye], position); // Instantiate prefab inside the Tilemap
-            RemoveTemporaryImage(); // Remove the temporary image
+            boutons[boutonAppuye].appuye = false; // Désactive le bouton de contrôle
+            CreerDansTilemaps(prefabs[boutonAppuye], position); // Instancie le prefab dans la tilemap
+            EnleverImageTemporaire(); // Supprime l'image temporaire
         }
     }
 
-    // Method to instantiate prefab inside the Tilemap
-    private void InstantiateInsideTilemap(GameObject prefab, Vector2 position)
+    /// <summary>
+    /// Instancie le prefab à l'intérieur de la tilemap
+    /// </summary>
+    /// <param name="prefab">Le prefab à instancier</param>
+    /// <param name="position">La position où instancier le prefab</param>
+    private void CreerDansTilemaps(GameObject prefab, Vector2 position)
     {
-        // Get the cell position in the Tilemap
-        Vector3Int cellPosition = tilemap.WorldToCell(new Vector3(position.x, position.y, 0));
+        // Récupère la position de la cellule dans la tilemap
+        Vector3Int positionCase = tilemap.WorldToCell(new Vector3(position.x, position.y, 0));
 
-        // Get the world position of the cell center
-        Vector3 cellCenter = tilemap.GetCellCenterWorld(cellPosition);
+        // Récupère la position centrale de la cellule
+        Vector3 centreCase = tilemap.GetCellCenterWorld(positionCase);
 
-        // Instantiate the prefab at the center of the tile
-        GameObject instantiatedPrefab = Instantiate(prefab, cellCenter, Quaternion.identity);
-        // Optional: Parent the instantiated prefab to the Tilemap for organizational purposes
-        instantiatedPrefab.transform.SetParent(tilemap.transform);
+        // Instancie le prefab au centre de la cellule
+        GameObject prefabInstancie = Instantiate(prefab, centreCase, Quaternion.identity);
+        // Facultatif : Parent le prefab instancié à la tilemap pour des raisons d'organisation
+        prefabInstancie.transform.SetParent(tilemap.transform);
     }
 
-    // Method to remove the temporary image
-    private void RemoveTemporaryImage()
+    /// <summary>
+    /// Supprime l'image temporaire
+    /// </summary>
+    private void EnleverImageTemporaire()
     {
-        GameObject imageObject = GameObject.FindGameObjectWithTag("image");
+        GameObject imageObject = GameObject.FindGameObjectWithTag("image"); // Trouve l'objet avec le tag "image"
         if (imageObject != null)
         {
-            Destroy(imageObject);
+            Destroy(imageObject); // Supprime l'objet si trouvé
         }
     }
 }
-
 
