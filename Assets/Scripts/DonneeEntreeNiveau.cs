@@ -23,6 +23,7 @@ public class DonneeEntreeNiveau : MonoBehaviour
         imageNiveau.sprite = imageNiveau.sprite;//Pour actualiser l'image t�l�charg�e
 
     }
+   
     public void chargerNiveau()
     {
         StartCoroutine(telechargerDossierTexteNiveau(dossierTexteURL));

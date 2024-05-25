@@ -30,12 +30,12 @@ public class Mouvement : MonoBehaviour
         positionInitiale = this.transform.position;
     }
 
-    public static void setCanMove(bool move) // Emp�cher le mouvement du personnage lorsque la fen�tre pour sauvegarder est ouverte
+    public static void setCanMove(bool move) // Empecher le mouvement du personnage lorsque la fenetre pour sauvegarder est ouverte
     {
         canMove = move;
     }
 
-    public void setCanMoveQuitter() // Re permettre le mouvement du personnage quand la fen�tre se ferme
+    public void setCanMoveQuitter() // Re permettre le mouvement du personnage quand la fenetre se ferme
     {
         Mouvement.canMove = true;
     }

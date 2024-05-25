@@ -6,17 +6,20 @@ using LootLocker.Requests;
 
 public class LootLockerDir : MonoBehaviour
 {
+    /// <summary>
+    /// Lancer le jeu
+    /// </summary>
     public void Jouer()
     {
 
         LootLockerSDKManager.StartGuestSession((reponse) => {//Ouvrir la session dans lootlocker
             if (reponse.success)
             {
-                GameManager.instance.UpdateEtatJeu(EtatJeu.Jeu);;//load la sc�ne de jeu
+                GameManager.instance.UpdateEtatJeu(EtatJeu.Jeu);;//load la scene de jeu
             }
             else
             {
-                Debug.Log("pas r�ussi");//Avertissement si la connexion � lootlocker ne fonctionne pas
+                Debug.Log("pas reussi");//Avertissement si la connexion � lootlocker ne fonctionne pas
             }
         });
     }

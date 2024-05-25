@@ -10,6 +10,9 @@ public class SuivreCamera : MonoBehaviour
 
     [SerializeField] private Transform cible;
 
+    /// <summary>
+    /// Camera qui suit le personnage lorsque le mode jouer est activé
+    /// </summary>
     private void Update()
     {
         Vector3 positionCible = cible.position + decalage;

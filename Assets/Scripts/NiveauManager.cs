@@ -16,6 +16,8 @@ public class NiveauManager : MonoBehaviour
     public GameObject entreeNiveauItem;
     public Transform contenuDonneeNiveau;
     HashSet<int> loadedAssetIdentifiers = new HashSet<int>();
+
+  
     public void creerNiveau() //Sauvegarder un niveau
     {
         if (GameObject.FindGameObjectsWithTag("Sauvegardable").Length == 0)
@@ -49,7 +51,7 @@ public class NiveauManager : MonoBehaviour
     }
 
     IEnumerator attenteCaptureEcran()
-    {//Pour prendre la capture d'�cran avant que le UI ouvre
+    {//Pour prendre la capture d'ecran avant que le UI ouvre
         prendreCaptureEcran();
         yield return new WaitForSeconds(1.0f);
         niveauUploadUI.SetActive(true);
@@ -59,18 +61,22 @@ public class NiveauManager : MonoBehaviour
     {
         StartCoroutine(attenteCaptureEcran());
     }
-
+    /// <summary>
+    /// Charger les informations pour chaque niveau 1 par 1
+    /// </summary>
+    /// <param name="idNiveau"></param> garder le compte de quel niveau nous avons
     public void uploadDonneeNiveau(int idNiveau)
     {
         string referenceCaptureEcran = "Assets/Screenshots/Niveau-Screenshot.png";
         LootLocker.LootLockerEnums.FilePurpose typeDossierCaptureEcran = LootLocker.LootLockerEnums.FilePurpose.primary_thumbnail;
+        //upload capture d'écran
         LootLockerSDKManager.AddingFilesToAssetCandidates(idNiveau, referenceCaptureEcran, "Niveau-Screenshot.png", typeDossierCaptureEcran, (reponseCaptureEcran) =>
         {
             if (reponseCaptureEcran.success)
             {
                 string referenceDossierTexte = "Assets/Screenshots/Niveau-Donnee.txt";
                 LootLocker.LootLockerEnums.FilePurpose typeDossierTexte = LootLocker.LootLockerEnums.FilePurpose.file;
-
+                //Upload le dossier texter
                 LootLockerSDKManager.AddingFilesToAssetCandidates(idNiveau, referenceDossierTexte, "Niveau-Donnee.txt", typeDossierTexte, (reponseTexte) =>
                 {
                     if (reponseTexte.success)
@@ -89,10 +95,10 @@ public class NiveauManager : MonoBehaviour
             }
         });
     }
-
+    
     public void telechargerDonneeNiveau()
     {
-        LootLockerSDKManager.GetAssetListWithCount(10, (reponse) =>
+        LootLockerSDKManager.GetAssetListWithCount(10, (reponse) =>//Prendre seulement 10 niveaux
         {
             for (int i = 0; i < reponse.assets.Length; i++)
             {
@@ -103,6 +109,7 @@ public class NiveauManager : MonoBehaviour
                 GameObject afficherItem = Instantiate(entreeNiveauItem, transform.position, Quaternion.identity);
                 afficherItem.transform.SetParent(contenuDonneeNiveau);
 
+                //Pour identifier chaque niveau, il a une identification et un nom
                 afficherItem.GetComponent<DonneeEntreeNiveau>().identification = i;
                 afficherItem.GetComponent<DonneeEntreeNiveau>().nomNiveau = reponse.assets[i].name;
 
@@ -115,7 +122,12 @@ public class NiveauManager : MonoBehaviour
             }
         }, null, true);
     }
-   
+   /// <summary>
+   /// avoir l'image du niveau en format Image
+   /// </summary>
+   /// <param name="imageURL"></param> lien image
+   /// <param name="imageNiveau"></param> image
+   /// <returns></returns>
     IEnumerator chargerImageNiveau(string imageURL, Image imageNiveau)
     {
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(imageURL);

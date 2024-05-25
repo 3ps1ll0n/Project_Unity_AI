@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 public class EditeurNiveau : MonoBehaviour
 {
     public GameObject[] image; //Images plus transparentes pour imaginer de quoi l'item a l'air
-    public GameObject[] prefabs; //le GameObject lui-m�me
+    public GameObject[] prefabs; //le GameObject lui-meme
     public Controleur[] boutons;
     public Tilemap tilemap;
     public int boutonAppuye;
