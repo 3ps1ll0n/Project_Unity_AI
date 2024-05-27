@@ -69,34 +69,9 @@ public class AlgoritmeNEAT : MonoBehaviour
         dernierePos = collecteDonne.getPositionJoueur();
     }
 
-    void OnGUI(){
-        if(neat == default) return;
-        /*GUIStyle style = new GUIStyle();
-        style.fontSize = 30;
-        GUI.Label(new Rect(0, 270, 150, 30), "Fitness Max Individu : " + fitnessMaxIndividuActuelle, style);
-        GUI.Label(new Rect(0, 300, 150, 30), "Fitness : " + neat.getFitnessActive(), style);
-        GUI.Label(new Rect(0,330, 150, 30), "Individu : " + (neat.getIdentifiantIAActive() + 1), style);
-        GUI.Label(new Rect(0, 360, 150, 30), "Generation : " + neat.getGeneration(), style);
-        GUI.Label(new Rect(0, 390, 150, 30), "Connexions : " + neat.avoirIAActive().getConnexions().Count, style);
-        GUI.Label(new Rect(0, 510, 150, 30), "Vitesse temps : " + Time.timeScale, style);
-
-        int somme = 0;*/
-        
-        /*for(int i = 0; i < vueIA.GetLength(0); i++){
-            for(int j = 0; j < vueIA.GetLength(1); j++){
-                somme += vueIA[i,j];
-            }
-        }
-        double sommeCo = 0;
-        for(int i = 0; i < neat.avoirIAActive().getConnexions().Count; i++){
-            sommeCo += neat.avoirIAActive().getConnexions()[i].getPoids();
-        }
-
-        GUI.Label(new Rect(0, 420, 150, 30), "Somme Donne Entre : " + somme, style);
-        GUI.Label(new Rect(0, 450, 150, 30), "Taille Input : " + vueIA.GetLength(0) * vueIA.GetLength(1), style);
-        GUI.Label(new Rect(0, 480, 150, 30), "Poids Total : " + sommeCo, style);
-        */
-    }
+    /// <summary>
+    /// Sert a sauvegardé dans un fichier xml l'algithme actuel
+    /// </summary>
     private void sauvegarderNEAT() {
         System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(neat.GetType());
         //Stream s = new Stream(nomFichier, "write");
@@ -106,6 +81,10 @@ public class AlgoritmeNEAT : MonoBehaviour
         Console.ReadLine();
         writer.Close();
     }
+    /// <summary>
+    /// Sert a charger un algorithme enregistré
+    /// </summary>
+    /// <returns>Un algorithme</returns>
     private NEAT chargerNEAT(){
         if(!File.Exists(nomFichier)) return new NEAT();
         var mySerializer = new XmlSerializer(typeof(NEAT));
