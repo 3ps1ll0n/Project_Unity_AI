@@ -6,8 +6,10 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance;
     private EtatJeu etat;
 
+    
     private void Awake(){
         Time.timeScale = 0;
+
         //Créer Singleton
         if (instance == null){
             
@@ -20,7 +22,9 @@ public class GameManager : MonoBehaviour {
         
     }
 
-    
+    /// <summary>
+    /// Changer la scène du jeu selon le nom
+    /// </summary>
     public void UpdateEtatJeu(EtatJeu nouvelEtat){
         etat = nouvelEtat;
 
@@ -56,6 +60,7 @@ public class GameManager : MonoBehaviour {
 
         }
     }
+    
     private void ChangerScene(int numero){
         SceneManager.LoadScene(numero);
     }
@@ -63,7 +68,9 @@ public class GameManager : MonoBehaviour {
 }
 
 
-
+/// <summary>
+/// Enum des états du jeu possibles
+/// </summary>
 public enum EtatJeu {
     Menu,
     Credits,

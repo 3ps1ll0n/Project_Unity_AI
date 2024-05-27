@@ -13,7 +13,9 @@ public class Credits : MonoBehaviour
     public Transform position;
     
 
-    // Update is called once per frame
+    /// <summary>
+    /// Update en montant les crédits selon un translation
+    /// </summary>
     void Update()
     {
         if(Input.GetKey(KeyCode.Escape)){

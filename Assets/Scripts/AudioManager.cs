@@ -27,7 +27,9 @@ public class AudioManager : MonoBehaviour
     private void Start(){
         JouerMusique("Menu");
     }
-
+    /// <summary>
+    /// Lancée une musique selon le nom
+    /// </summary>
     public void JouerMusique(string nom){
         Sound s = Array.Find(musiques, x => x.nom == nom);
 
@@ -40,6 +42,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Lancée un bruitage selon le nom
+    /// </summary>
     public void JouerBruitage(string nom){
         Sound s = Array.Find(bruitages, x => x.nom == nom);
 

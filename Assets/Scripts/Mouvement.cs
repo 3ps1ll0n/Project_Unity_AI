@@ -47,7 +47,9 @@ public class Mouvement : MonoBehaviour
 
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Update du personnage avec les controles du joueur
+    /// </summary>
     void FixedUpdate()
     {
         if (transform.position.y < limite)
@@ -104,6 +106,9 @@ public class Mouvement : MonoBehaviour
         mouvementHorizontal = 0f;
     }
 
+    /// <summary>
+    /// Actualise la position du joueur
+    /// </summary>
     void deplacerJoueur(float _mouvementHorizontal)
     
     {
@@ -122,6 +127,10 @@ public class Mouvement : MonoBehaviour
         }
   
     }
+
+    /// <summary>
+    /// Lance l'animation de flip
+    /// </summary>
     void Flip(float _vitesse)
     {
         if (_vitesse > 0.1f)
