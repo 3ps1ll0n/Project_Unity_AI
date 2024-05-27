@@ -11,16 +11,16 @@ public class VueIA : MonoBehaviour{
     public int tailleAffichageCellule;
     public int camDecalageY;
     //*==================={PRIVATE}===================
-    private Tilemap levelTiledMap;
+    private Tilemap tileMapDuNiveau;
     private int[,] tilesData;
-    private int[,] aiView;
+    private int[,] vueIA;
     private bool montrerAI = false;
-    private Vector3Int relativeAIView;
+    private Vector3Int vueIARelative;
     void Start()
     {
-        levelTiledMap = GameObject.Find("Terrain").GetComponent<Tilemap>();
+        tileMapDuNiveau = GameObject.Find("Terrain").GetComponent<Tilemap>();
         //levelTiledMap = GetComponent<Tilemap>();
-        if(levelTiledMap == null) Debug.Log("CAN'T FIND REQUESTED TILEDMAP !");
+        if(tileMapDuNiveau == null) Debug.Log("CAN'T FIND REQUESTED TILEDMAP !");
 
         for(int i = 0; i < Display.displays.Length; i++){
                 Display.displays[i].Activate(Display.displays[i].systemHeight, Display.displays[i].systemWidth, new RefreshRate());
@@ -30,9 +30,9 @@ public class VueIA : MonoBehaviour{
     // Update is called once per frame
     void Update()
     {
-        tilesData = getTiledMapData(levelTiledMap);
-        aiView = copyTilesDataToView();
-        aiView = readTilesObject(getEveryTileObject(levelTiledMap), levelTiledMap, aiView);
+        tilesData = getDonneTiledMap(tileMapDuNiveau);
+        vueIA = CopierDonneTilesAVue();
+        vueIA = lireObjet(getToutLesObjets(tileMapDuNiveau), tileMapDuNiveau, vueIA);
         //DessinerData(tilesData);
 
         if(Input.GetKeyDown("p")) montrerAI = !montrerAI;
@@ -44,8 +44,8 @@ public class VueIA : MonoBehaviour{
         }
     }
 
-    int[,] getTiledMapData(Tilemap map){
-        BoundsInt vueTotal = levelTiledMap.cellBounds;
+    int[,] getDonneTiledMap(Tilemap map){
+        BoundsInt vueTotal = tileMapDuNiveau.cellBounds;
 
         TileBase[] allTiles = map.GetTilesBlock(vueTotal);
 
@@ -74,35 +74,36 @@ public class VueIA : MonoBehaviour{
     int[,] renverserMatrice(int[,] m){
         int[,] invM = new int[m.GetLength(0), m.GetLength(1)];
 
-        
-
         return invM;
     }
-
-    int[,] copyTilesDataToView(){
-        int[,] copiedMatrix = new int[resolutionHauteur, resolutionLongueur];
+    /// <summary>
+    /// Passe les donne collecte a la vue de l'IA
+    /// </summary>
+    /// <returns>la vue de l'IA</returns>
+    int[,] CopierDonneTilesAVue(){
+        int[,] matriceCopie = new int[resolutionHauteur, resolutionLongueur];
 
         float longueurJoueur = joueur.GetComponent<BoxCollider2D>().bounds.size.x;
         float hauteurJoueur = joueur.GetComponent<BoxCollider2D>().bounds.size.y;
 
-        Vector3Int relativeTileMapPos = levelTiledMap.layoutGrid.WorldToCell(levelTiledMap.transform.position);
+        Vector3Int relativeTileMapPos = tileMapDuNiveau.layoutGrid.WorldToCell(tileMapDuNiveau.transform.position);
         relativeTileMapPos.x -= tilesData.GetLength(1)/2;
         relativeTileMapPos.y += (int)Math.Floor((double)tilesData.GetLength(0)/2);
 
-        Vector3Int relativePlayerPos = levelTiledMap.layoutGrid.WorldToCell(
+        Vector3Int relativePlayerPos = tileMapDuNiveau.layoutGrid.WorldToCell(
                                                                         new Vector3 (
                                                                             joueur.transform.position.x, 
                                                                             joueur.transform.position.y + hauteurJoueur/2
                                                                             )
         );
-        relativeAIView = new Vector3Int  (
+        vueIARelative = new Vector3Int  (
                                                     relativePlayerPos.x - (int)Math.Floor((double)resolutionLongueur/2) + 1,
                                                     relativePlayerPos.y + resolutionHauteur + camDecalageY
                                                     );
 
         Vector3Int deltaPos = new Vector3Int(
-                                                relativeTileMapPos.x - relativeAIView.x,
-                                                relativeTileMapPos.y - relativeAIView.y
+                                                relativeTileMapPos.x - vueIARelative.x,
+                                                relativeTileMapPos.y - vueIARelative.y
                                             );
 
         int i = deltaPos.y >= 0 ? 0 : -deltaPos.y;
@@ -116,17 +117,23 @@ public class VueIA : MonoBehaviour{
                 ) {
                     valueToCopy = tilesData[i + deltaPos.y, j - deltaPos.x];
                 }
-                if(copiedMatrix.GetLength(0) - i < copiedMatrix.GetLength(0) && copiedMatrix.GetLength(0) - i >= 0 
-                && i >= 0 && i < copiedMatrix.GetLength(0)){
-                    copiedMatrix[i, j] = valueToCopy;
+                if(matriceCopie.GetLength(0) - i < matriceCopie.GetLength(0) && matriceCopie.GetLength(0) - i >= 0 
+                && i >= 0 && i < matriceCopie.GetLength(0)){
+                    matriceCopie[i, j] = valueToCopy;
                 }
             } 
         }
-        return copiedMatrix;
+        return matriceCopie;
     }
-
-    int[,] readTilesObject(GameObject[] tilesObject, Tilemap map, int[,] tileData){
-        foreach(GameObject gObj in tilesObject){
+    /// <summary>
+    /// sert a regarder les autres objets
+    /// </summary>
+    /// <param name="objet"></param>
+    /// <param name="map"></param>
+    /// <param name="donne"></param>
+    /// <returns>le prochain objet a copier dans la vue</returns>
+    int[,] lireObjet(GameObject[] objet, Tilemap map, int[,] donne){
+        foreach(GameObject gObj in objet){
 
             Vector3Int relPos = map.layoutGrid.WorldToCell(gObj.transform.position); //Pour avoir la position relatives des objects
             Vector3 cellSize = map.layoutGrid.cellSize; //Pour avoir la taille relative des objects
@@ -141,8 +148,8 @@ public class VueIA : MonoBehaviour{
 
 
             Vector3Int deltaPos = new Vector3Int(
-                                                relPos.x - relativeAIView.x,
-                                                relPos.y - relativeAIView.y
+                                                relPos.x - vueIARelative.x,
+                                                relPos.y - vueIARelative.y
                                             );
 
             int i = deltaPos.y >= 0 ? 0 : -deltaPos.y;
@@ -152,50 +159,19 @@ public class VueIA : MonoBehaviour{
                 int j = deltaPos.x < 0 ? 0 : deltaPos.x;
                 int xMax = j + relSize.x;
                 for(; j < xMax; j++){
-                    if(i < tileData.GetLength(0) && i >= 0 && j < tileData.GetLength(1)){
+                    if(i < donne.GetLength(0) && i >= 0 && j < donne.GetLength(1)){
                         int value = -1;
                         if(gObj.ToString().IndexOf("Arrivée(Clone)") > -1) value = 2;
-                        tileData[i,j] = value;
+                        donne[i,j] = value;
                     }
                 }  
             }
         }
-    return tileData;
+    return donne;
     }
 
-    //*==================={Draw Method}===================
-
-    
-    void OnGUI()
-    {   /*
-        if(!montrerAI) return;
-        //Rect rectScreen = cam.pixelRect;
-
-        for(int i = 0; i < aiView.GetLength(0); i++){
-            EditorGUI.TextField(new Rect(0, i*tailleAffichageCellule, tailleAffichageCellule, tailleAffichageCellule), i.ToString());
-            for(int j = 0; j < aiView.GetLength(1); j++){
-                Color color = new Color(0, 0, 0, 0.5f);
-                if(j==aiView.GetLength(1)/2 && i == aiView.GetLength(0) - 2) color = new Color(0, 0, 255, 1.0f);
-                else if(aiView[i, j] == 2) color = new Color(255, 223, 0, 0.7f);
-                else if(aiView[i, j] > 0) color = new Color(255, 255, 255, 0.5f);
-                else if (aiView[i, j] < 0) color = new Color(255, 0, 0, 0.5f);
-                
-                EditorGUI.DrawRect(new Rect(j * tailleAffichageCellule, i * tailleAffichageCellule, tailleAffichageCellule, tailleAffichageCellule), color);
-            }
-        }
-        for (int i = 0; i < aiView.GetLength(1); i++){
-            EditorGUI.TextField(new Rect(i*tailleAffichageCellule, 0, tailleAffichageCellule, tailleAffichageCellule), i.ToString());
-        }
-        for (int i = 0; i < aiView.GetLength(0) + 1; i++){
-            EditorGUI.DrawRect(new Rect(0, i * tailleAffichageCellule, aiView.GetLength(1) * tailleAffichageCellule, 1), Color.black);
-        }
-         for(int j = 0; j < aiView.GetLength(1) + 1; j++){
-            EditorGUI.DrawRect(new Rect(j * tailleAffichageCellule, 0, 1, aiView.GetLength(0) * tailleAffichageCellule), Color.black);
-        }*/
-        
-    }
     //*==================={GETTER}===================
-    GameObject[] getEveryTileObject(Tilemap map){
+    GameObject[] getToutLesObjets(Tilemap map){
         GameObject[] tilesObject = new GameObject[map.transform.childCount];
 
         for (int i = 0; i < map.transform.childCount; ++i)
@@ -210,9 +186,9 @@ public class VueIA : MonoBehaviour{
     }
 
     public Vector3 getPositionArrive(){
-        GameObject[] tileObject = getEveryTileObject(levelTiledMap);
+        GameObject[] objets = getToutLesObjets(tileMapDuNiveau);
 
-        foreach (GameObject tile in tileObject){
+        foreach (GameObject tile in objets){
             if (tile.ToString().IndexOf("Arrivée(Clone)") > -1 ) return tile.transform.position;
         }
 
@@ -237,7 +213,7 @@ public class VueIA : MonoBehaviour{
         return joueur;
     }
     public int[,] getVue(){
-        return aiView;
+        return vueIA;
     }
     public bool getIAActivee(){return montrerAI;}
 }

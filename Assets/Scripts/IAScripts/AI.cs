@@ -4,9 +4,6 @@ using System.Linq;
 using UnityEngine;
 
 
-public class VariablesGlobales{
-    public static int NBRE_DONNER_SORTIE = 3;
-}
 [Serializable]
 public enum TypesNeuronne{
     NULL,
@@ -73,6 +70,11 @@ public class NEAT{
     public void trierAI(){
 
     }
+    /// <summary>
+    /// Classer ia en espèce
+    /// </summary>
+    /// <returns>Dictionnaire des ia classé par espèces</returns>
+
     public Dictionary<int, List<AI>> separerIaEnEspeces(){
         Dictionary<int, List<AI>> espece = new Dictionary<int, List<AI>>();
         for(int i = 0; i < ais.GetLength(0); i++){
@@ -93,6 +95,11 @@ public class NEAT{
         }
         return espece;
     }
+    /// <summary>
+    /// Selection naturelle
+    /// </summary>
+    /// <param name="touteLesEspeces">Dictionnaire des différentes espèces</param>
+    /// <returns></returns>
     public Dictionary<int, List<AI>> retirerIAFaible(Dictionary<int, List<AI>> touteLesEspeces){
         for(int i = 1; i <= touteLesEspeces.Count; i++){
             for(int j = 0; j < touteLesEspeces[i].Count; j++){
@@ -106,6 +113,10 @@ public class NEAT{
         }
         return touteLesEspeces;
     }
+    /// <summary>
+    /// Choisir qui va se reproduire avec qui
+    /// </summary>
+    /// <param name="iaElites"></param>
     public void reproduireIndividuesElites(Dictionary<int, List<AI>> iaElites){
         List<double> sommesDesFitnessRelatives = new List<double>();
         List<int> individuesParEspeces = new List<int>();
@@ -177,6 +188,12 @@ public class NEAT{
         if(k != ais.Count()) Debug.LogError("PAS ASSEZ D'ÉLÉMENTS CRÉÉES");
 
     }
+    /// <summary>
+    /// Faire se reproduire deux ia
+    /// </summary>
+    /// <param name="iaElites1">IA 1</param>
+    /// <param name="iaElites2">IA 2</param>
+    /// <returns></returns>
     AI appliquerCrossover(AI iaElites1, AI iaElites2){
         AI nouvelleIA = new AI();
 
@@ -254,6 +271,10 @@ public class NEAT{
             }
         }
     }
+    /// <summary>
+    /// Ajoute un lien dans la liste des innovations si il n'a jamais été découvert
+    /// </summary>
+    /// <param name="connexion"></param>
     public static void ajouterSiInovation(Connexion connexion){
         for(int i = 0; i < inovations.Count(); i++){
             var c = inovations[i];
@@ -385,25 +406,27 @@ public class AI {
     }
 
     //*========================={MUTATION}=========================
-
+    /// <summary>
+    /// Ajoute une connection entre deux neuronnes
+    /// </summary>
     public void mutationAjouterConnexion(){
         var rand = new System.Random();
         Connexion connexion;
-        int positionEntre = rand.Next(VariablesGlobales.NBRE_DONNER_SORTIE, (int)(AlgoritmeNEAT.tailleVueIA.x * AlgoritmeNEAT.tailleVueIA.y));
+        int positionEntre = rand.Next(AlgoritmeNEAT.NBRE_OUTPUT, (int)(AlgoritmeNEAT.tailleVueIA.x * AlgoritmeNEAT.tailleVueIA.y));
         int positionSortie = 0;
 
 
-        if(VariablesGlobales.NBRE_DONNER_SORTIE + (int)(AlgoritmeNEAT.tailleVueIA.x * AlgoritmeNEAT.tailleVueIA.y) < neuronnes.Count){
+        if(AlgoritmeNEAT.NBRE_OUTPUT + (int)(AlgoritmeNEAT.tailleVueIA.x * AlgoritmeNEAT.tailleVueIA.y) < neuronnes.Count){
             switch(rand.Next(0, 2)){
                 case 0:
-                    positionSortie = rand.Next(0, VariablesGlobales.NBRE_DONNER_SORTIE);
+                    positionSortie = rand.Next(0, AlgoritmeNEAT.NBRE_OUTPUT);
                     break;
                 case 1:
-                    positionSortie = rand.Next((int)(AlgoritmeNEAT.tailleVueIA.x * AlgoritmeNEAT.tailleVueIA.y) + VariablesGlobales.NBRE_DONNER_SORTIE, neuronnes.Count);
+                    positionSortie = rand.Next((int)(AlgoritmeNEAT.tailleVueIA.x * AlgoritmeNEAT.tailleVueIA.y) + AlgoritmeNEAT.NBRE_OUTPUT, neuronnes.Count);
                     break;
             }
         } else {
-            positionSortie = rand.Next(0, VariablesGlobales.NBRE_DONNER_SORTIE);
+            positionSortie = rand.Next(0, AlgoritmeNEAT.NBRE_OUTPUT);
         }
         connexion = new Connexion();
         connexion.initConnexions(
@@ -416,7 +439,7 @@ public class AI {
 
         if (neuronnes[positionSortie].GetTypesNeuronne() == TypesNeuronne.Cache){
             positionEntre = positionSortie;
-            positionSortie = rand.Next(0, VariablesGlobales.NBRE_DONNER_SORTIE);
+            positionSortie = rand.Next(0, AlgoritmeNEAT.NBRE_OUTPUT);
             
             connexion = new Connexion();
             connexion.initConnexions(
@@ -428,7 +451,9 @@ public class AI {
         }
         NEAT.ajouterSiInovation(connexion);
     }
-
+    /// <summary>
+    /// Ahoute un neuronne entre deux connexion
+    /// </summary>
     public void mutationAjouterNeuronne(){
         if(connexions.Count == 0) return;
         var rand = new System.Random();
@@ -461,14 +486,18 @@ public class AI {
         var nIndex = rand.Next(0, neuronnes.Count());
         neuronnes[nIndex].modifierBiais(rand.NextDouble() * 0.5 * AIMathFunction.genererSigneAleatoire());
     }*/
-
+    /// <summary>
+    /// Changer le poids d'une connexion
+    /// </summary>
     public void mutationModifierPoids(){
         if(connexions.Count == 0) return;
         var rand = new System.Random();
         var cIndex = rand.Next(0, connexions.Count());
         connexions[cIndex].modifierPoids(rand.NextDouble() * 2.0 * AIMathFunction.genererSigneAleatoire());
     }
-
+    /// <summary>
+    /// Choisi si on allume ou eteint une connection
+    /// </summary>
     public void mutationChangerEtatConnexion(){
         if(connexions.Count == 0) return;
         var rand = new System.Random();
@@ -486,7 +515,7 @@ public class AI {
     }
     public bool[] getDonneSortie(){
         calculerSortie();
-        bool[] donneSortie = new bool[VariablesGlobales.NBRE_DONNER_SORTIE];
+        bool[] donneSortie = new bool[AlgoritmeNEAT.NBRE_OUTPUT];
         for(int i = 0; i < donneSortie.GetLength(0); i++){
             donneSortie[i] = neuronnes[i].getValeurStocke() > 0;
         }
@@ -502,7 +531,7 @@ public class AI {
         for(int i = 0; i < donneeEntree.GetLength(0); i++){
             for(int j = 0; j < donneeEntree.GetLength(1); j++){
                 //Debug.Log(neuronnes.Count + " = " + donneeEntree.GetLength(1) * donneeEntree.GetLength(0));
-                neuronnes[i * donneeEntree.GetLength(1) + j + VariablesGlobales.NBRE_DONNER_SORTIE].ajouterValeur(donneeEntree[i,j]);
+                neuronnes[i * donneeEntree.GetLength(1) + j + AlgoritmeNEAT.NBRE_OUTPUT].ajouterValeur(donneeEntree[i,j]);
             }
         }
     }
@@ -523,6 +552,12 @@ class AIMathFunction {
         var rand = new System.Random();
         return rand.Next(0, 2) == 0 ? -1 : 1;
     }
+    /// <summary>
+    /// Sert a appliquer une fonction sigmoid sur un ensemble de donné
+    /// Au final, on en aura pas besoin de cette fonction
+    /// </summary>
+    /// <param name="coucheData"> la couche de neuronne final</param>
+    /// <returns> des valeurs lissé</returns>
     public static double[] sigmoid(double[] coucheData){
         double[] nouvelleDonne = new double[coucheData.Length];
 
@@ -531,6 +566,12 @@ class AIMathFunction {
         }
         return nouvelleDonne;
     }
+    /// <summary>
+    /// Formule pour calculer la similitude entre deux individus
+    /// </summary>
+    /// <param name="ai1">Première IA</param>
+    /// <param name="ai2">Deuxième IA</param>
+    /// <returns></returns>
     public static double calculerDistanceIndividu(AI ai1, AI  ai2){ //! Methodes vraiment importante
         double reponse;
 

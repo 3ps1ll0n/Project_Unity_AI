@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
+using UnityEngine.UIElements;
+using System;
 
 public class IA_GUI : MonoBehaviour
 {
@@ -11,7 +13,19 @@ public class IA_GUI : MonoBehaviour
     public Material mat;
     public int decalageX;
     public int decalageY;
-    int[,] aiView;
+    int[,] vueIA;
+    Texture2D pixelNoir;
+    Texture2D pixelBlanc;
+    Texture2D pixelRouge;
+    Texture2D pixelBleu;
+    Texture2D pixelJaune;
+    Texture2D pixelBordure;
+    GUIStyle stylePixelNoir;
+    GUIStyle stylePixelBlanc;
+    GUIStyle stylePixelRouge;
+    GUIStyle stylePixelBleu;
+    GUIStyle stylePixelJaune;
+    GUIStyle stylePixelBordure;
 
     int HAUTEUR_DONNE_SORTIE = 50;
     int LARGEUR_DONNE_SORTIE = 150;
@@ -19,49 +33,91 @@ public class IA_GUI : MonoBehaviour
     int DECALAGE_NEURONNES_CACHES = 100;
     string[] bouton = {"Saut", "Droite", "Gauche"};
 
+    void Start(){
+        pixelNoir = new Texture2D(1, 1); 
+        pixelNoir.SetPixel(0, 0, new Color(0, 0, 0, 0.5f));
+        pixelNoir.Apply();
+        stylePixelNoir = new GUIStyle();
+        stylePixelNoir.normal.background = pixelNoir;
+
+        pixelBlanc = new Texture2D(1, 1);
+        pixelBlanc.SetPixel(0, 0, new Color(255, 255, 255, 0.5f));
+        pixelBlanc.Apply();
+        stylePixelBlanc = new GUIStyle();
+        stylePixelBlanc.normal.background = pixelBlanc;
+
+        pixelRouge = new Texture2D(1, 1);
+        pixelRouge.SetPixel(0, 0, new Color(255, 0, 0, 0.5f));
+        pixelRouge.Apply();
+        stylePixelRouge = new GUIStyle();
+        stylePixelRouge.normal.background = pixelRouge;
+
+        pixelBleu = new Texture2D(1, 1);
+        pixelBleu.SetPixel(0, 0, new Color(0, 0, 255, 0.5f));
+        pixelBleu.Apply();
+        stylePixelBleu = new GUIStyle();
+        stylePixelBleu.normal.background = pixelBleu;
+
+        pixelJaune = new Texture2D(1, 1);
+        pixelJaune.SetPixel(0, 0, new Color(255, 223, 0, 0.7f));
+        pixelJaune.Apply();
+        stylePixelJaune = new GUIStyle();
+        stylePixelJaune.normal.background = pixelJaune;
+
+        pixelBordure = new Texture2D(1, 1);
+        pixelBordure.SetPixel(0, 0, new Color(0, 0, 0, 1f));
+        pixelBordure.Apply();
+        stylePixelBordure = new GUIStyle();
+        stylePixelBordure.normal.background = pixelBordure;
+    }
+
+    /// <summary>
+    /// Fonction pour dessiner le réseau de neuronne
+    /// </summary>
     void OnGUI(){
         if(!vue.getMontrerAI()) return;
         if(!neat.neatEstDefini()) return;
-        aiView = vue.getVue();
+        
+        vueIA = vue.getVue();
         GUIStyle style = new GUIStyle();
         style.fontSize = 30;
-        if(aiView == default) return;
-        for(int i = 0; i < aiView.GetLength(0); i++){
-            EditorGUI.TextField(new Rect(0 + decalageX, i*tailleAffichageCellule + decalageY, tailleAffichageCellule, tailleAffichageCellule), i.ToString());
-            for(int j = 0; j < aiView.GetLength(1); j++){
-                Color color = new Color(0, 0, 0, 0.5f);
-                if(j==aiView.GetLength(1)/2 && i == aiView.GetLength(0) - 2) color = new Color(0, 0, 255, 1.0f);
-                else if(aiView[i, j] == 2) color = new Color(255, 223, 0, 0.7f);
-                else if(aiView[i, j] > 0) color = new Color(255, 255, 255, 0.5f);
-                else if (aiView[i, j] < 0) color = new Color(255, 0, 0, 0.5f);
-                
-                EditorGUI.DrawRect(new Rect(j * tailleAffichageCellule + decalageX, i * tailleAffichageCellule + decalageY, tailleAffichageCellule, tailleAffichageCellule), color);
+        if(vueIA == default) return;
+        
+        for(int i = 0; i < vueIA.GetLength(0); i++){
+            GUI.TextField(new Rect(0 + decalageX, i*tailleAffichageCellule + decalageY, tailleAffichageCellule, tailleAffichageCellule), i.ToString());
+            for(int j = 0; j < vueIA.GetLength(1); j++){
+                if(j==vueIA.GetLength(1)/2 && i == vueIA.GetLength(0) - 2) GUI.Label(new Rect(j * tailleAffichageCellule + decalageX, i * tailleAffichageCellule + decalageY, tailleAffichageCellule, tailleAffichageCellule), "" ,stylePixelBleu);
+                else if(vueIA[i, j] == 2)  GUI.Label(new Rect(j * tailleAffichageCellule + decalageX, i * tailleAffichageCellule + decalageY, tailleAffichageCellule, tailleAffichageCellule), "" ,stylePixelJaune);
+                else if(vueIA[i, j] > 0) GUI.Label(new Rect(j * tailleAffichageCellule + decalageX, i * tailleAffichageCellule + decalageY, tailleAffichageCellule, tailleAffichageCellule), "" , stylePixelBlanc);
+                else if (vueIA[i, j] < 0) GUI.Label(new Rect(j * tailleAffichageCellule + decalageX, i * tailleAffichageCellule + decalageY, tailleAffichageCellule, tailleAffichageCellule), "" ,stylePixelRouge);
+                else GUI.Label(new Rect(j * tailleAffichageCellule + decalageX, i * tailleAffichageCellule + decalageY, tailleAffichageCellule, tailleAffichageCellule), "" , stylePixelNoir);
+                //EditorGUI.DrawRect(new Rect(j * tailleAffichageCellule + decalageX, i * tailleAffichageCellule + decalageY, tailleAffichageCellule, tailleAffichageCellule), color);
             }
         }
-        for (int i = 0; i < aiView.GetLength(1); i++){
-            EditorGUI.TextField(new Rect(decalageX + i*tailleAffichageCellule, decalageY, tailleAffichageCellule, tailleAffichageCellule), i.ToString());
-        }
-        for (int i = 0; i < aiView.GetLength(0) + 1; i++){
-            EditorGUI.DrawRect(new Rect(decalageX, i * tailleAffichageCellule + decalageY, aiView.GetLength(1) * tailleAffichageCellule, 1), Color.black);
-        }
-         for(int j = 0; j < aiView.GetLength(1) + 1; j++){
-            EditorGUI.DrawRect(new Rect(j * tailleAffichageCellule + decalageX, 0 + decalageY, 1, aiView.GetLength(0) * tailleAffichageCellule), Color.black);
+        for (int i = 0; i < vueIA.GetLength(1); i++){
+            GUI.TextField(new Rect(decalageX + i*tailleAffichageCellule, decalageY, tailleAffichageCellule, tailleAffichageCellule), i.ToString());
         }
 
-        var nbreNeuronnesCache = neat.getNombreNeurones() - (aiView.GetLength(0) * aiView.GetLength(1) + 3);
+        for (int i = 0; i < vueIA.GetLength(0) + 1; i++){
+            GUI.Label(new Rect(decalageX, i * tailleAffichageCellule + decalageY, vueIA.GetLength(1) * tailleAffichageCellule, 1), "", stylePixelBordure);
+        }
+         for(int j = 0; j < vueIA.GetLength(1) + 1; j++){
+            GUI.Label(new Rect(j * tailleAffichageCellule + decalageX, 0 + decalageY, 1, vueIA.GetLength(0) * tailleAffichageCellule), "", stylePixelBordure);
+        }
 
-        Color couleurCache = new Color(0, 0, 255, 0.8f);
+        var nbreNeuronnesCache = neat.getNombreNeurones() - (vueIA.GetLength(0) * vueIA.GetLength(1) + 3);
+
         for(int i = 0; i < nbreNeuronnesCache; i++){
-            EditorGUI.DrawRect(new Rect(decalageX +  (aiView.GetLength(1)*tailleAffichageCellule) + (i/aiView.GetLength(0)) * tailleAffichageCellule + DECALAGE_NEURONNES_CACHES, decalageY + (i%aiView.GetLength(0)) * tailleAffichageCellule, tailleAffichageCellule, tailleAffichageCellule), couleurCache);
+            GUI.Label(new Rect(decalageX +  (vueIA.GetLength(1)*tailleAffichageCellule) + (i/vueIA.GetLength(0)) * tailleAffichageCellule + DECALAGE_NEURONNES_CACHES, decalageY + (i%vueIA.GetLength(0)) * tailleAffichageCellule, tailleAffichageCellule, tailleAffichageCellule), "", stylePixelBleu);
         }
 
         bool[] mouvementAJouer = neat.getMouvementAJouer();
 
         for(int i = 0; i < mouvementAJouer.Count(); i++){
-            Color color = new Color(0, 0, 0, 0.6f);
-            if(mouvementAJouer[i]) color = new Color(255, 255, 255, 0.6f);
-            EditorGUI.DrawRect (new Rect(tailleAffichageCellule * aiView.GetLength(1) + DECALAGE_NEURONNE_SORTIE + decalageX, (HAUTEUR_DONNE_SORTIE + 10) * i + decalageY, LARGEUR_DONNE_SORTIE, HAUTEUR_DONNE_SORTIE ), color);
-            GUI.Label(new Rect(tailleAffichageCellule * aiView.GetLength(1) + DECALAGE_NEURONNE_SORTIE + LARGEUR_DONNE_SORTIE + decalageX, (HAUTEUR_DONNE_SORTIE + 10) * i + decalageY, LARGEUR_DONNE_SORTIE, HAUTEUR_DONNE_SORTIE), bouton[i], style);
+            if(mouvementAJouer[i]) GUI.Label(new Rect(tailleAffichageCellule * vueIA.GetLength(1) + DECALAGE_NEURONNE_SORTIE + decalageX, (HAUTEUR_DONNE_SORTIE + 10) * i + decalageY, LARGEUR_DONNE_SORTIE, HAUTEUR_DONNE_SORTIE ), "", stylePixelBlanc);
+            else GUI.Label(new Rect(tailleAffichageCellule * vueIA.GetLength(1) + DECALAGE_NEURONNE_SORTIE + decalageX, (HAUTEUR_DONNE_SORTIE + 10) * i + decalageY, LARGEUR_DONNE_SORTIE, HAUTEUR_DONNE_SORTIE ), "", stylePixelNoir);
+            
+            GUI.Label(new Rect(tailleAffichageCellule * vueIA.GetLength(1) + DECALAGE_NEURONNE_SORTIE + LARGEUR_DONNE_SORTIE + decalageX, (HAUTEUR_DONNE_SORTIE + 10) * i + decalageY, LARGEUR_DONNE_SORTIE, HAUTEUR_DONNE_SORTIE), bouton[i], style);
         }
 
         var touteLesConnexions = neat.getConexionsActuelle();
@@ -94,32 +150,32 @@ public class IA_GUI : MonoBehaviour
 
             if(co.getPositionSortie() < 3) {
                 sortie = new Vector3(
-                    tailleAffichageCellule * aiView.GetLength(1) + 200 + LARGEUR_DONNE_SORTIE/2 + decalageX,
+                    tailleAffichageCellule * vueIA.GetLength(1) + 200 + LARGEUR_DONNE_SORTIE/2 + decalageX,
                     cam.pixelHeight - (HAUTEUR_DONNE_SORTIE + 10) * co.getPositionSortie() - decalageY - HAUTEUR_DONNE_SORTIE/2,
                     cam.nearClipPlane
                     );
                 
             } else {
                 sortie = new Vector3(
-                    decalageX + (aiView.GetLength(1)*tailleAffichageCellule) + (co.getPositionSortie() - (3 + aiView.GetLength(1) * aiView.GetLength(0)))/aiView.GetLength(0) * tailleAffichageCellule + DECALAGE_NEURONNES_CACHES,
-                    cam.pixelHeight - (decalageY + ((co.getPositionSortie() - (3 + aiView.GetLength(1) * aiView.GetLength(0)))%aiView.GetLength(0)) * tailleAffichageCellule),
+                    decalageX + (vueIA.GetLength(1)*tailleAffichageCellule) + (co.getPositionSortie() - (3 + vueIA.GetLength(1) * vueIA.GetLength(0)))/vueIA.GetLength(0) * tailleAffichageCellule + DECALAGE_NEURONNES_CACHES,
+                    cam.pixelHeight - (decalageY + ((co.getPositionSortie() - (3 + vueIA.GetLength(1) * vueIA.GetLength(0)))%vueIA.GetLength(0)) * tailleAffichageCellule),
                     cam.nearClipPlane
                 );
             }
             sortie = cam.ScreenToWorldPoint(sortie);
             sortie.z = 0;
         
-            if(co.getPositionEntre() >= 3 && co.getPositionEntre() < aiView.GetLength(0)*aiView.GetLength(1)){
+            if(co.getPositionEntre() >= 3 && co.getPositionEntre() < vueIA.GetLength(0)*vueIA.GetLength(1)){
                 entre = new Vector3(
-                    (co.getPositionEntre() % aiView.GetLength(1) * tailleAffichageCellule) + tailleAffichageCellule/2 + decalageX,
-                    cam.pixelHeight - ((co.getPositionEntre() / aiView.GetLength(1)*tailleAffichageCellule) + tailleAffichageCellule/2) - decalageY,
+                    (co.getPositionEntre() % vueIA.GetLength(1) * tailleAffichageCellule) + tailleAffichageCellule/2 + decalageX,
+                    cam.pixelHeight - ((co.getPositionEntre() / vueIA.GetLength(1)*tailleAffichageCellule) + tailleAffichageCellule/2) - decalageY,
                     cam.nearClipPlane
                 );
                 
             } else {
                 entre = new Vector3(
-                    decalageX + (aiView.GetLength(1)*tailleAffichageCellule) + (co.getPositionSortie() - (3 + aiView.GetLength(1) * aiView.GetLength(0)))/aiView.GetLength(0) * tailleAffichageCellule + DECALAGE_NEURONNES_CACHES,
-                    cam.pixelHeight - (decalageY + ((co.getPositionSortie() - (3 + aiView.GetLength(1) * aiView.GetLength(0)))%aiView.GetLength(0)) * tailleAffichageCellule),
+                    decalageX + (vueIA.GetLength(1)*tailleAffichageCellule) + (co.getPositionSortie() - (3 + vueIA.GetLength(1) * vueIA.GetLength(0)))/vueIA.GetLength(0) * tailleAffichageCellule + DECALAGE_NEURONNES_CACHES,
+                    cam.pixelHeight - (decalageY + ((co.getPositionSortie() - (3 + vueIA.GetLength(1) * vueIA.GetLength(0)))%vueIA.GetLength(0)) * tailleAffichageCellule),
                     cam.nearClipPlane
                 );
             }
