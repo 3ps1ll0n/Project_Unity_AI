@@ -186,13 +186,7 @@ public class VueIA : MonoBehaviour{
     }
 
     public Vector3 getPositionArrive(){
-        GameObject[] objets = getToutLesObjets(tileMapDuNiveau);
-
-        foreach (GameObject tile in objets){
-            if (tile.ToString().IndexOf("Arrivée(Clone)") > -1 ) return tile.transform.position;
-        }
-
-        return default;
+        return GameObject.Find("Arrivée").transform.position;
     }
     public bool getJoueurMort(){
         return !joueur.activeInHierarchy;

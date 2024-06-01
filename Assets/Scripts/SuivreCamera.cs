@@ -11,11 +11,11 @@ public class SuivreCamera : MonoBehaviour
     [SerializeField] private Transform cible;
 
     /// <summary>
-    /// Camera qui suit le personnage lorsque le mode jouer est activé
+    /// Camera qui suit le personnage lorsque le mode jouer est activï¿½
     /// </summary>
     private void Update()
     {
         Vector3 positionCible = cible.position + decalage;
-        transform.position = Vector3.SmoothDamp(transform.position, positionCible, ref velocite, temps);
+        transform.position = positionCible;
     }
 }

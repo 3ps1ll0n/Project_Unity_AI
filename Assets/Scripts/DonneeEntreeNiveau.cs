@@ -36,7 +36,6 @@ public class DonneeEntreeNiveau : MonoBehaviour
         string referenceDossier = "Assets/Screenshots/Niveau-Donnee.txt"; //Sauvegarder ce dossier
         File.WriteAllText(referenceDossier, www.downloadHandler.text);
 
-        AssetDatabase.Refresh();
         yield return new WaitForSeconds(1.0f);
         GameObject.FindGameObjectWithTag("NiveauManager").GetComponent<SauvegardeNiveau>().chargerNiveau();
         yield return new WaitForSeconds(2.0f);
